@@ -6,7 +6,8 @@ import {
 	VictoryLegend,
 	VictorySharedEvents,
 	VictoryLabel,
-	VictoryPortal
+	VictoryPortal,
+	VictoryTheme
 } from "victory";
 
 class Pie extends Component {
@@ -48,11 +49,14 @@ class Pie extends Component {
 				return (
 					<VictoryPortal className="percent">
 						<VictoryLabel
+							theme={this.props.theme}
 							animate={{ duration: 500 }}
 							text={this.state.currentPercent + "%"}
 							style={{
 								fontSize: 64,
-								color: "#1abc9c"
+								color: "#1abc9c",
+								fontFamily: "Asap, sans-serif",
+								fontWeight: 400
 							}}
 						/>
 					</VictoryPortal>
@@ -62,7 +66,6 @@ class Pie extends Component {
 		return (
 			<div className="Pie">
 				<VictorySharedEvents
-					theme={this.props.theme}
 					events={[
 						{
 							childName: ["pie", "legend"],

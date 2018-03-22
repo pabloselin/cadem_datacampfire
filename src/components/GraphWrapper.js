@@ -58,9 +58,9 @@ class GraphWrapper extends Component {
 
 	render() {
 		return (
-			<div className="GraphWrapper">
+			<div className="GraphWrapper" theme={cadem_theme}>
 				<div>
-					<p>Implementación gráfico de Pie con Victory y React</p>
+					<h2>Implementación gráfico de Pie con Victory y React</h2>
 					<Pie
 						title="Gráfico de Pie"
 						data={this.state.data.pie}
