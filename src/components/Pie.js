@@ -1,14 +1,21 @@
 import React, { Component } from "react";
 import "./Pie.css";
 
-import { VictoryPie, VictoryLegend, VictorySharedEvents } from "victory";
+import {
+	VictoryPie,
+	VictoryLegend,
+	VictorySharedEvents,
+	VictoryLabel,
+	VictoryPortal
+} from "victory";
 
 class Pie extends Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
-			data: this.props.data
+			data: this.props.data,
+			currentPercent: 0
 		};
 	}
 
@@ -16,11 +23,15 @@ class Pie extends Component {
 		let sum = 0;
 		data.map(item => {
 			sum += Number(item.y);
+			return true;
 		});
-		console.log(sum);
+
 		let legData = data.map(item => {
 			let percent = Number(item.y) / sum * 100;
-			return { name: item.x + " (" + percent.toFixed(1) + "%)" };
+			return {
+				name: item.x + " (" + percent.toFixed(1) + "%)",
+				percent: percent.toFixed(1)
+			};
 		});
 		return legData;
 	}
@@ -35,6 +46,7 @@ class Pie extends Component {
 		return (
 			<div className="Pie">
 				<VictorySharedEvents
+					theme={this.props.theme}
 					events={[
 						{
 							childName: ["pie", "legend"],
@@ -45,11 +57,15 @@ class Pie extends Component {
 										{
 											childName: ["pie", "legend"],
 											mutation: props => {
+												this.setState({
+													currentPercent:
+														props.datum.percent
+												});
 												return {
 													style: Object.assign(
 														{},
 														props.style,
-														{ fill: "tomato" }
+														{ fill: "#1abc9c" }
 													)
 												};
 											}
@@ -71,6 +87,7 @@ class Pie extends Component {
 					]}
 				>
 					<VictoryPie
+						theme={this.props.theme}
 						animate={{ duration: 500 }}
 						name="pie"
 						style={{
@@ -80,17 +97,29 @@ class Pie extends Component {
 						padAngle={0}
 						innerRadius={100}
 						data={this.getData(this.props.data)}
+						standalone={true}
 					/>
+					<VictoryPortal className="percent">
+						<VictoryLabel
+							text={this.state.currentPercent + "%"}
+							style={{
+								fontSize: 64,
+								color: "#1abc9c"
+							}}
+						/>
+					</VictoryPortal>
 					<VictoryLegend
+						theme={this.props.theme}
 						name="legend"
 						title={this.props.title}
 						centerTitle
 						orientation="vertical"
 						borderPadding={{ top: 40 }}
 						gutter={0}
+						height={600}
 						style={{
-							title: { fontSize: 32 },
-							labels: { fontSize: 24 },
+							title: { fontSize: 24, fontWeight: "bold" },
+							labels: { fontSize: 22 },
 							parent: { maxWidth: "40%" }
 						}}
 						data={this.makeLegend(this.props.data)}

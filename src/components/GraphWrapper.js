@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Pie from "./Pie.js";
+import cadem_theme from "../themes/cadem_theme.js";
 import "./GraphWrapper.css";
 
 const pie = () => {
@@ -16,6 +17,18 @@ const pie = () => {
 			{
 				x: "Dato 3",
 				y: 30
+			},
+			{
+				x: "Dato 4",
+				y: 60
+			},
+			{
+				x: "Dato 5",
+				y: 90
+			},
+			{
+				x: "Dato 6",
+				y: 70
 			}
 		]
 	};
@@ -51,7 +64,7 @@ class GraphWrapper extends Component {
 					<Pie
 						title="Gráfico de Pie"
 						data={this.state.data.pie}
-						externalEventMutations={this.state.updated}
+						theme={cadem_theme}
 					/>
 					<div className="changeInput">
 						<p>
@@ -59,7 +72,7 @@ class GraphWrapper extends Component {
 							gráfico se regenera automáticamente.
 						</p>
 						{this.state.data.pie.map((piedata, index) => (
-							<p>
+							<p key={"p-" + index}>
 								{" "}
 								{piedata.x}&nbsp;
 								<input

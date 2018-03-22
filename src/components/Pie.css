@@ -1,3 +1,14 @@
+.Pie {
+	position: relative;
+}
+
 .Pie > g {
 	display: flex;
+}
+
+.Pie .percent {
+	position: absolute;
+	left: 19%;
+	top: 35%;
+	text-align: center;
 }
