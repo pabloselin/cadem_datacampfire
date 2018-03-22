@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import config from "../config.json";
 import Pie from "./Pie.js";
 import "./GraphWrapper.css";
 
@@ -22,25 +21,6 @@ const pie = () => {
 	};
 };
 
-const pie2 = () => {
-	return {
-		pie: [
-			{
-				x: "Dato 0",
-				y: 50
-			},
-			{
-				x: "Dato 2",
-				y: 200
-			},
-			{
-				x: "Dato 4",
-				y: 301
-			}
-		]
-	};
-};
-
 class GraphWrapper extends Component {
 	constructor(props) {
 		super(props);
@@ -54,7 +34,7 @@ class GraphWrapper extends Component {
 	handleChange(event) {
 		//console.log(event.target.name);
 		let newdata = Object.assign(this.state.data);
-		newdata.pie[event.target.name].y = parseInt(event.target.value);
+		newdata.pie[event.target.name].y = Number(event.target.value);
 		this.setState((prevState, props) => ({
 			data: newdata,
 			updated: !this.state.updated

@@ -13,8 +13,14 @@ class Pie extends Component {
 	}
 
 	makeLegend(data) {
+		let sum = 0;
+		data.map(item => {
+			sum += Number(item.y);
+		});
+		console.log(sum);
 		let legData = data.map(item => {
-			return { name: item.x + " (" + item.y + ")" };
+			let percent = Number(item.y) / sum * 100;
+			return { name: item.x + " (" + percent.toFixed(1) + "%)" };
 		});
 		return legData;
 	}
@@ -26,7 +32,6 @@ class Pie extends Component {
 	componentWillReceiveProps(nextProps) {}
 
 	render() {
-		console.log(this.props.data);
 		return (
 			<div className="Pie">
 				<VictorySharedEvents
