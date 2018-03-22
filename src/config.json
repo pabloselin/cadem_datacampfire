@@ -1,0 +1,5 @@
+{
+	"config": {
+		"dataurl": "./dummy/dummy_data.json"
+	}
+}
