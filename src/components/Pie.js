@@ -43,6 +43,22 @@ class Pie extends Component {
 	componentWillReceiveProps(nextProps) {}
 
 	render() {
+		const percentPortal = () => {
+			if (this.state.currentPercent !== 0) {
+				return (
+					<VictoryPortal className="percent">
+						<VictoryLabel
+							animate={{ duration: 500 }}
+							text={this.state.currentPercent + "%"}
+							style={{
+								fontSize: 64,
+								color: "#1abc9c"
+							}}
+						/>
+					</VictoryPortal>
+				);
+			}
+		};
 		return (
 			<div className="Pie">
 				<VictorySharedEvents
@@ -77,6 +93,9 @@ class Pie extends Component {
 										{
 											childName: ["pie", "legend"],
 											mutation: () => {
+												this.setState({
+													currentPercent: 0
+												});
 												return null;
 											}
 										}
@@ -99,15 +118,7 @@ class Pie extends Component {
 						data={this.getData(this.props.data)}
 						standalone={true}
 					/>
-					<VictoryPortal className="percent">
-						<VictoryLabel
-							text={this.state.currentPercent + "%"}
-							style={{
-								fontSize: 64,
-								color: "#1abc9c"
-							}}
-						/>
-					</VictoryPortal>
+					{percentPortal()}
 					<VictoryLegend
 						theme={this.props.theme}
 						name="legend"
