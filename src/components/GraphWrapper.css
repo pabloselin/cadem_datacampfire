@@ -1,4 +1,6 @@
 .GraphWrapper {
 	background-color: #f0f0f0;
-	margin: 50px;
+	margin: 50px auto;
+	max-width: 800px;
+	padding: 12px;
 }
