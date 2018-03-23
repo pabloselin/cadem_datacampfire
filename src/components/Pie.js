@@ -6,8 +6,7 @@ import {
 	VictoryLegend,
 	VictorySharedEvents,
 	VictoryLabel,
-	VictoryPortal,
-	VictoryTheme
+	VictoryPortal
 } from "victory";
 
 class Pie extends Component {
