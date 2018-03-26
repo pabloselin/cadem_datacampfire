@@ -14,6 +14,8 @@ const colors = [
 ];
 
 const charcoal = "#252525";
+const green = "#1abc9c";
+
 // *
 // * Typography
 // *
@@ -232,5 +234,8 @@ export default {
       labels: baseLabelStyles,
       title: assign({}, baseLabelStyles, { padding: 5 })
     }
+  },
+  interactions: {
+    hover: green
   }
 };

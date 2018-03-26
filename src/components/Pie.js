@@ -12,7 +12,6 @@ import {
 class Pie extends Component {
 	constructor(props) {
 		super(props);
-
 		this.state = {
 			data: this.props.data,
 			currentPercent: 0
@@ -53,7 +52,7 @@ class Pie extends Component {
 							text={this.state.currentPercent + "%"}
 							style={{
 								fontSize: 64,
-								color: "#1abc9c",
+								color: this.props.theme.interactions.hover,
 								fontFamily: "Asap, sans-serif",
 								fontWeight: 400
 							}}
@@ -83,7 +82,12 @@ class Pie extends Component {
 													style: Object.assign(
 														{},
 														props.style,
-														{ fill: "#1abc9c" }
+														{
+															fill: this.props
+																.theme
+																.interactions
+																.hover
+														}
 													)
 												};
 											}
@@ -132,7 +136,7 @@ class Pie extends Component {
 						height={600}
 						style={{
 							title: { fontSize: 24, fontWeight: "bold" },
-							labels: { fontSize: 22 },
+							labels: { fontSize: 32 },
 							parent: { maxWidth: "40%" }
 						}}
 						data={this.makeLegend(this.props.data)}

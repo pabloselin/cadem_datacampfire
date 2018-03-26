@@ -14,3 +14,5 @@ if (module.hot) {
 		ReactDOM.render(<NextApp />, rootEl);
 	});
 }
+
+registerServiceWorker();
