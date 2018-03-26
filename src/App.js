@@ -36,11 +36,26 @@ const data = {
     }
   ],
   lines: [
-    { x: 1, y: 2 },
-    { x: 2, y: 3 },
-    { x: 3, y: 5 },
-    { x: 4, y: 4 },
-    { x: 5, y: 7 }
+    {
+      title: "Línea 1",
+      values: [
+        { x: 1, y: 2, label: "Línea 1" },
+        { x: 2, y: 3, label: "Línea 1" },
+        { x: 3, y: 5, label: "Línea 1" },
+        { x: 4, y: 4, label: "Línea 1" },
+        { x: 5, y: 7, label: "Línea 1" }
+      ]
+    },
+    {
+      title: "Línea 2",
+      values: [
+        { x: 3, y: 2, label: "Línea 2" },
+        { x: 23, y: 3, label: "Línea 2" },
+        { x: 4, y: 5, label: "Línea 2" },
+        { x: 2, y: 6, label: "Línea 2" },
+        { x: 1, y: 7.1, label: "Línea 2" }
+      ]
+    }
   ]
 };
 

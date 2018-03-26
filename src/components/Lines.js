@@ -21,17 +21,11 @@ class Lines extends Component {
 	}
 
 	makeLegend(data) {
-		let sum = 0;
-		data.map(item => {
-			sum += Number(item.y);
-			return true;
-		});
-
 		let legData = data.map(item => {
-			let percent = Number(item.y) / sum * 100;
 			return {
-				name: item.x + " (" + percent.toFixed(1) + "%)",
-				percent: percent.toFixed(1)
+				name: item.title,
+				label: item.title,
+				number: 0
 			};
 		});
 		return legData;
@@ -44,11 +38,72 @@ class Lines extends Component {
 	componentWillReceiveProps(nextProps) {}
 
 	render() {
+		const lines = () =>
+			this.state.data.map((line, idx) => {
+				return (
+					<VictoryLine
+						name={"line-" + idx}
+						key={"line-" + idx}
+						data={line.values}
+					/>
+				);
+			});
+		const linenames = ["line-0", "line-1"];
+		const childs = ["line-0", "line-1", "legend"];
 		return (
 			<div>
-				<VictoryChart theme={this.props.theme}>
-					<VictoryLine data={this.getData(this.props.data)} />
-				</VictoryChart>
+				<VictorySharedEvents
+					eventKey={datum => datum.label}
+					events={[
+						{
+							childName: childs,
+							target: "data",
+							eventHandlers: {
+								onMouseOver: () => {
+									return [
+										{
+											childName: "legend",
+											mutation: props => {
+												return {
+													style: Object.assign(
+														{},
+														props.style,
+														{
+															fill: this.props
+																.theme
+																.interactions
+																.hover
+														}
+													)
+												};
+											}
+										}
+									];
+								},
+								onMouseOut: () => {
+									return [
+										{
+											childName: childs,
+											mutation: () => {
+												return null;
+											}
+										}
+									];
+								}
+							}
+						}
+					]}
+				>
+					<VictoryChart name="lines" theme={this.props.theme}>
+						{lines()}
+					</VictoryChart>
+					<VictoryLegend
+						name="legend"
+						data={this.makeLegend(this.props.data)}
+						orientation="vertical"
+						itemsPerRow="3"
+					/>
+				</VictorySharedEvents>
 			</div>
 		);
 	}
