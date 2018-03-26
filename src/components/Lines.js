@@ -37,6 +37,10 @@ class Lines extends Component {
 
 	componentWillReceiveProps(nextProps) {}
 
+	LineHoverEvent() {}
+
+	LineOutEvent() {}
+
 	render() {
 		const lines = () =>
 			this.state.data.map((line, idx) => {
@@ -53,37 +57,64 @@ class Lines extends Component {
 		return (
 			<div>
 				<VictorySharedEvents
-					eventKey={datum => datum.label}
 					events={[
 						{
-							childName: childs,
+							childName: "all",
 							target: "data",
 							eventHandlers: {
 								onMouseOver: () => {
 									return [
 										{
-											childName: "legend",
-											mutation: props => {
-												return {
-													style: Object.assign(
-														{},
-														props.style,
-														{
-															fill: this.props
-																.theme
-																.interactions
-																.hover
-														}
-													)
-												};
-											}
+											target: "data",
+											mutation: props => ({
+												style: Object.assign(
+													{},
+													props.style,
+													{
+														stroke: this.props.theme
+															.interactions.hover
+													}
+												)
+											})
 										}
 									];
 								},
 								onMouseOut: () => {
 									return [
 										{
-											childName: childs,
+											target: "data",
+											mutation: () => {
+												return null;
+											}
+										}
+									];
+								}
+							}
+						},
+						{
+							childName: "legend",
+							eventHandlers: {
+								onMouseOver: () => {
+									return [
+										{
+											target: "data",
+											mutation: props => ({
+												style: Object.assign(
+													{},
+													props.style,
+													{
+														fill: this.props.theme
+															.interactions.hover
+													}
+												)
+											})
+										}
+									];
+								},
+								onMouseOut: () => {
+									return [
+										{
+											target: "data",
 											mutation: () => {
 												return null;
 											}
@@ -101,7 +132,7 @@ class Lines extends Component {
 						name="legend"
 						data={this.makeLegend(this.props.data)}
 						orientation="vertical"
-						itemsPerRow="3"
+						itemsPerRow={3}
 					/>
 				</VictorySharedEvents>
 			</div>

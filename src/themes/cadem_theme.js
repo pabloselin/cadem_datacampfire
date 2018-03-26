@@ -145,8 +145,8 @@ export default {
       style: {
         data: {
           fill: "transparent",
-          stroke: charcoal,
-          strokeWidth: 2
+          stroke: "#ccc",
+          strokeWidth: 1
         },
         labels: centeredLabelStyles
       }
