@@ -4,13 +4,18 @@ import { assign } from "lodash";
 // * Colors
 // *
 const colors = [
-  "#252525",
-  "#525252",
-  "#737373",
-  "#969696",
-  "#bdbdbd",
-  "#d9d9d9",
-  "#f0f0f0"
+  "#e5e5e6",
+  "#d1d1d2",
+  "#bdbdbe",
+  "#a9a9aa",
+  "#959596",
+  "#777778",
+  "#636364",
+  "#4f4f50",
+  "#3b3c3c",
+  "#272828",
+  "#131414",
+  "#333333"
 ];
 
 const charcoal = "#252525";
@@ -21,7 +26,7 @@ const green = "#1abc9c";
 // *
 const sansSerif = "'Asap', sans-serif";
 const letterSpacing = "normal";
-const fontSize = 14;
+const fontSize = 12;
 // *
 // * Layout
 // *
@@ -36,11 +41,18 @@ const baseProps = {
 // *
 const baseLabelStyles = {
   fontFamily: sansSerif,
-  fontSize,
+  fontSize: 10,
   letterSpacing,
-  padding: 10,
+  padding: 6,
   fill: charcoal,
   stroke: "transparent"
+};
+
+const tickLabelStyles = {
+  fontSize: 6,
+  fill: "#555",
+  padding: 6,
+  fontFamily: sansSerif
 };
 
 const centeredLabelStyles = assign({ textAnchor: "middle" }, baseLabelStyles);
@@ -49,6 +61,7 @@ const centeredLabelStyles = assign({ textAnchor: "middle" }, baseLabelStyles);
 // *
 const strokeLinecap = "round";
 const strokeLinejoin = "round";
+const strokeDasharray = "10, 5";
 
 export default {
   area: assign(
@@ -68,7 +81,7 @@ export default {
         axis: {
           fill: "transparent",
           stroke: charcoal,
-          strokeWidth: 1,
+          strokeWidth: 2,
           strokeLinecap,
           strokeLinejoin
         },
@@ -77,15 +90,19 @@ export default {
         }),
         grid: {
           fill: "none",
-          stroke: "none",
-          pointerEvents: "painted"
+          stroke: "#ccc",
+          strokeWidth: 0.4,
+          pointerEvents: "painted",
+          strokeDasharray,
+          strokeLinejoin,
+          strokeLinecap
         },
         ticks: {
           fill: "transparent",
           size: 1,
           stroke: "transparent"
         },
-        tickLabels: baseLabelStyles
+        tickLabels: tickLabelStyles
       }
     },
     baseProps
@@ -188,17 +205,17 @@ export default {
   ),
   tooltip: {
     style: assign({}, centeredLabelStyles, {
-      padding: 5,
+      padding: 2,
       pointerEvents: "none"
     }),
     flyoutStyle: {
       stroke: charcoal,
-      strokeWidth: 1,
+      strokeWidth: 0.5,
       fill: "#f0f0f0",
       pointerEvents: "none"
     },
-    cornerRadius: 5,
-    pointerLength: 10
+    cornerRadius: 2,
+    pointerLength: 6
   },
   voronoi: assign(
     {

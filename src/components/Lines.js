@@ -1,14 +1,16 @@
 import React, { Component } from "react";
 import "./Lines.css";
-
+import LineFlyOut from "./mini/LineFlyOut.js";
 import {
 	VictoryChart,
 	VictoryLine,
+	VictoryGroup,
 	VictoryTooltip,
 	VictoryLegend,
 	VictorySharedEvents,
 	VictoryLabel,
-	VictoryPortal
+	VictoryVoronoiContainer,
+	VictoryScatter
 } from "victory";
 
 class Lines extends Component {
@@ -16,16 +18,19 @@ class Lines extends Component {
 		super(props);
 		this.state = {
 			data: this.props.data,
-			currentPercent: 0
+			colorscale: this.props.theme.line.colorScale
 		};
 	}
 
 	makeLegend(data) {
-		let legData = data.map(item => {
+		let legData = data.map((item, idx) => {
+			let linename = "line-" + idx;
 			return {
 				name: item.title,
-				label: item.title,
-				number: 0
+				symbol: {
+					fill: this.state.colorscale[idx]
+				},
+				eventKey: linename
 			};
 		});
 		return legData;
@@ -35,106 +40,89 @@ class Lines extends Component {
 		return data;
 	}
 
-	componentWillReceiveProps(nextProps) {}
+	componentWillReceiveProps(nextProps) {
+		if (nextProps.data !== this.props.data) {
+			this.setState({
+				data: nextProps.data,
+				colorscale: nextProps.theme.line.colorScale
+			});
+		}
+	}
 
 	LineHoverEvent() {}
 
 	LineOutEvent() {}
 
 	render() {
+		const linenames = [];
+		const scatternames = [];
 		const lines = () =>
 			this.state.data.map((line, idx) => {
+				let linename = "line-" + idx;
+				linenames.push(linename);
 				return (
-					<VictoryLine
-						name={"line-" + idx}
-						key={"line-" + idx}
+					<VictoryGroup
+						name={linename}
+						key={linename}
 						data={line.values}
-					/>
+						labels={d => `${d.y}%`}
+						theme={this.props.theme}
+						labelComponent={
+							<VictoryTooltip
+								theme={this.props.theme}
+								activateData={true}
+								style={{ data: { fontSize: 8 } }}
+								flyoutComponent={
+									<LineFlyOut
+										graphHeight={300}
+										color={this.props.theme.interactions.hover}
+									/>
+								}
+								orientation="top"
+							/>
+						}
+					>
+						<VictoryLine
+							style={{
+								data: {
+									stroke: this.state.colorscale[idx],
+									pointerEvents: "none"
+								}
+							}}
+						/>
+						<VictoryScatter
+							size={(datum, active) => (active ? 6 : 3)}
+							style={{
+								data: {
+									fill: (datum, active) =>
+										active
+											? this.props.theme.interactions.hover
+											: this.state.colorscale[idx]
+								}
+							}}
+						/>
+					</VictoryGroup>
 				);
 			});
-		const linenames = ["line-0", "line-1"];
-		const childs = ["line-0", "line-1", "legend"];
 		return (
 			<div>
-				<VictorySharedEvents
-					events={[
-						{
-							childName: "all",
-							target: "data",
-							eventHandlers: {
-								onMouseOver: () => {
-									return [
-										{
-											target: "data",
-											mutation: props => ({
-												style: Object.assign(
-													{},
-													props.style,
-													{
-														stroke: this.props.theme
-															.interactions.hover
-													}
-												)
-											})
-										}
-									];
-								},
-								onMouseOut: () => {
-									return [
-										{
-											target: "data",
-											mutation: () => {
-												return null;
-											}
-										}
-									];
-								}
-							}
-						},
-						{
-							childName: "legend",
-							eventHandlers: {
-								onMouseOver: () => {
-									return [
-										{
-											target: "data",
-											mutation: props => ({
-												style: Object.assign(
-													{},
-													props.style,
-													{
-														fill: this.props.theme
-															.interactions.hover
-													}
-												)
-											})
-										}
-									];
-								},
-								onMouseOut: () => {
-									return [
-										{
-											target: "data",
-											mutation: () => {
-												return null;
-											}
-										}
-									];
-								}
-							}
-						}
-					]}
+				<VictoryChart
+					height={300}
+					width={600}
+					name="lines"
+					theme={this.props.theme}
+					domainPadding={{ x: 10, y: 20 }}
+					containerComponent={<VictoryVoronoiContainer />}
 				>
-					<VictoryChart name="lines" theme={this.props.theme}>
-						{lines()}
-					</VictoryChart>
-					<VictoryLegend
-						name="legend"
-						data={this.makeLegend(this.props.data)}
-						orientation="vertical"
-						itemsPerRow={3}
-					/>
-				</VictorySharedEvents>
+					{lines()}
+				</VictoryChart>
+				<VictoryLegend
+					theme={this.props.theme}
+					name="legend"
+					data={this.makeLegend(this.props.data)}
+					orientation="vertical"
+					itemsPerRow={3}
+				/>
 			</div>
 		);
 	}
