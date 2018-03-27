@@ -3,8 +3,7 @@ import { Flyout } from "victory";
 
 class LineFlyOut extends React.Component {
 	render() {
-		const { x, y, graphHeight, color, orientation } = this.props;
-		console.log(graphHeight);
+		const { x, y, graphHeight, color } = this.props;
 		return (
 			<g>
 				<Flyout {...this.props} />

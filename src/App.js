@@ -79,7 +79,12 @@ const PiePage = () => (
   <div className="showCase">
     <h2>Pie</h2>
     <GraphWrapper>
-      <Pie title="Gráfico de Pie" data={data.pie} theme={cadem_theme} />
+      <Pie
+        height={300}
+        title="Gráfico de Pie"
+        data={data.pie}
+        theme={cadem_theme}
+      />
     </GraphWrapper>
   </div>
 );
@@ -88,7 +93,12 @@ const LinePage = () => (
   <div className="showCase">
     <h2>Líneas</h2>
     <GraphWrapper>
-      <Lines title="Gráfico de Líneas" data={data.lines} theme={cadem_theme} />
+      <Lines
+        height={430}
+        title="Gráfico de Líneas"
+        data={data.lines}
+        theme={cadem_theme}
+      />
     </GraphWrapper>
   </div>
 );

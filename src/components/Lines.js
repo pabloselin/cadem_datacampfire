@@ -74,7 +74,7 @@ class Lines extends Component {
 								style={{ data: { fontSize: 8 } }}
 								flyoutComponent={
 									<LineFlyOut
-										graphHeight={300}
+										graphHeight={this.props.height}
 										color={this.props.theme.interactions.hover}
 									/>
 								}
@@ -107,7 +107,7 @@ class Lines extends Component {
 		return (
 			<div>
 				<VictoryChart
-					height={300}
+					height={this.props.height}
 					width={600}
 					name="lines"
 					theme={this.props.theme}
@@ -122,6 +122,11 @@ class Lines extends Component {
 					data={this.makeLegend(this.props.data)}
 					orientation="vertical"
 					itemsPerRow={3}
+					height={70}
+					style={{
+						title: { fontSize: 12, fontWeight: "bold" },
+						labels: { fontSize: 8 }
+					}}
 				/>
 			</div>
 		);

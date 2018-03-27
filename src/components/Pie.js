@@ -128,15 +128,14 @@ class Pie extends Component {
 					<VictoryLegend
 						theme={this.props.theme}
 						name="legend"
-						title={this.props.title}
 						centerTitle
 						orientation="vertical"
 						borderPadding={{ top: 40 }}
 						gutter={0}
 						height={600}
 						style={{
-							title: { fontSize: 24, fontWeight: "bold" },
-							labels: { fontSize: 32 },
+							title: { fontSize: 22, fontWeight: "bold" },
+							labels: { fontSize: 16 },
 							parent: { maxWidth: "40%" }
 						}}
 						data={this.makeLegend(this.props.data)}

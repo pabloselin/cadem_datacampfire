@@ -49,7 +49,7 @@ const baseLabelStyles = {
 };
 
 const tickLabelStyles = {
-  fontSize: 6,
+  fontSize: 10,
   fill: "#555",
   padding: 6,
   fontFamily: sansSerif
@@ -241,7 +241,7 @@ export default {
   ),
   legend: {
     colorScale: colors,
-    gutter: 10,
+    gutter: 5,
     orientation: "vertical",
     titleOrientation: "top",
     style: {
