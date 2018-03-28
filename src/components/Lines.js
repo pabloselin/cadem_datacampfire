@@ -8,7 +8,6 @@ import {
 	VictoryTooltip,
 	VictoryLegend,
 	VictorySharedEvents,
-	VictoryLabel,
 	VictoryVoronoiContainer,
 	VictoryScatter
 } from "victory";
@@ -18,7 +17,8 @@ class Lines extends Component {
 		super(props);
 		this.state = {
 			data: this.props.data,
-			colorscale: this.props.theme.line.colorScale
+			colorscale: this.props.theme.line.colorScale,
+			activeLine: null
 		};
 	}
 
@@ -55,7 +55,6 @@ class Lines extends Component {
 
 	render() {
 		const linenames = [];
-		const scatternames = [];
 		const lines = () =>
 			this.state.data.map((line, idx) => {
 				let linename = "line-" + idx;
@@ -65,6 +64,7 @@ class Lines extends Component {
 						name={linename}
 						key={linename}
 						data={line.values}
+						eventKey={linename}
 						labels={d => `${d.y}%`}
 						theme={this.props.theme}
 						labelComponent={
@@ -75,7 +75,9 @@ class Lines extends Component {
 								flyoutComponent={
 									<LineFlyOut
 										graphHeight={this.props.height}
-										color={this.props.theme.interactions.hover}
+										color={
+											this.props.theme.interactions.hover
+										}
 									/>
 								}
 								orientation="top"
@@ -85,8 +87,12 @@ class Lines extends Component {
 						<VictoryLine
 							style={{
 								data: {
-									stroke: this.state.colorscale[idx],
-									pointerEvents: "none"
+									stroke: () =>
+										this.state.activeLine === linename
+											? this.props.theme.interactions
+													.hover
+											: this.state.colorscale[idx]
+									//pointerEvents: "none"
 								}
 							}}
 						/>
@@ -96,7 +102,8 @@ class Lines extends Component {
 								data: {
 									fill: (datum, active) =>
 										active
-											? this.props.theme.interactions.hover
+											? this.props.theme.interactions
+													.hover
 											: this.state.colorscale[idx]
 								}
 							}}
@@ -106,28 +113,85 @@ class Lines extends Component {
 			});
 		return (
 			<div>
-				<VictoryChart
-					height={this.props.height}
-					width={600}
-					name="lines"
-					theme={this.props.theme}
-					domainPadding={{ x: 10, y: 20 }}
-					containerComponent={<VictoryVoronoiContainer />}
+				<VictorySharedEvents
+					events={[
+						{
+							childName: "legend",
+							target: "data",
+							eventHandlers: {
+								onClick: (evt, obj, key) => {
+									//console.log(linenames);
+									return [
+										{
+											target: "data",
+											childName: [...linenames],
+											eventKey: key,
+											mutation: props => {
+												console.log(evt);
+												this.setState({
+													activeLine: key
+												});
+												return {
+													style: Object.assign(
+														{},
+														props.style,
+														{
+															stroke: this.props
+																.theme
+																.interactions
+																.hover
+														}
+													)
+												};
+											}
+										},
+										{
+											target: "data",
+											childName: "legend",
+											mutation: props => {
+												return {
+													style: Object.assign(
+														{},
+														props.style,
+														{
+															fill: this.props
+																.theme
+																.interactions
+																.hover
+														}
+													)
+												};
+											}
+										}
+									];
+								}
+							}
+						}
+					]}
 				>
-					{lines()}
-				</VictoryChart>
-				<VictoryLegend
-					theme={this.props.theme}
-					name="legend"
-					data={this.makeLegend(this.props.data)}
-					orientation="vertical"
-					itemsPerRow={3}
-					height={70}
-					style={{
-						title: { fontSize: 12, fontWeight: "bold" },
-						labels: { fontSize: 8 }
-					}}
-				/>
+					<VictoryChart
+						height={this.props.height}
+						width={600}
+						name="lines"
+						theme={this.props.theme}
+						domainPadding={{ x: 10, y: 20 }}
+						containerComponent={<VictoryVoronoiContainer />}
+					>
+						{lines()}
+					</VictoryChart>
+					<VictoryLegend
+						theme={this.props.theme}
+						name="legend"
+						data={this.makeLegend(this.props.data)}
+						orientation="vertical"
+						itemsPerRow={3}
+						height={70}
+						style={{
+							title: { fontSize: 12, fontWeight: "bold" },
+							labels: { fontSize: 8 }
+						}}
+					/>
+				</VictorySharedEvents>
 			</div>
 		);
 	}

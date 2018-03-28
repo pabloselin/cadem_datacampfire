@@ -26,7 +26,7 @@ const green = "#1abc9c";
 // *
 const sansSerif = "'Asap', sans-serif";
 const letterSpacing = "normal";
-const fontSize = 12;
+//const fontSize = 12;
 // *
 // * Layout
 // *

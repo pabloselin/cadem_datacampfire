@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { Flyout } from "victory";
 
 class LineFlyOut extends React.Component {
