@@ -18,19 +18,28 @@ class Lines extends Component {
 		this.state = {
 			data: this.props.data,
 			colorscale: this.props.theme.line.colorScale,
-			activeLine: null
+			activeLine: null,
+			activeColor: this.props.theme.interactions.hover
 		};
 	}
 
 	makeLegend(data) {
 		let legData = data.map((item, idx) => {
 			let linename = "line-" + idx;
+			//let ballcolor = this.state.colorscale[idx];
+			let fill = () => {
+				if (linename === this.state.activeLine) {
+					return this.state.activeColor;
+				} else {
+					return this.state.colorscale[idx];
+				}
+			};
+			//console.log(ballcolor);
 			return {
 				name: item.title,
 				symbol: {
-					fill: this.state.colorscale[idx]
-				},
-				eventKey: linename
+					fill: fill()
+				}
 			};
 		});
 		return legData;
@@ -56,9 +65,14 @@ class Lines extends Component {
 	render() {
 		const linenames = [];
 		const lines = () =>
-			this.state.data.map((line, idx) => {
+			this.props.data.map((line, idx) => {
 				let linename = "line-" + idx;
 				linenames.push(linename);
+
+				const linecolor = () =>
+					this.state.activeLine === linename
+						? this.state.activeColor
+						: this.state.colorscale[idx];
 				return (
 					<VictoryGroup
 						name={linename}
@@ -75,9 +89,7 @@ class Lines extends Component {
 								flyoutComponent={
 									<LineFlyOut
 										graphHeight={this.props.height}
-										color={
-											this.props.theme.interactions.hover
-										}
+										color={this.state.activeColor}
 									/>
 								}
 								orientation="top"
@@ -87,12 +99,8 @@ class Lines extends Component {
 						<VictoryLine
 							style={{
 								data: {
-									stroke: () =>
-										this.state.activeLine === linename
-											? this.props.theme.interactions
-													.hover
-											: this.state.colorscale[idx]
-									//pointerEvents: "none"
+									stroke: linecolor(),
+									pointerEvents: "none"
 								}
 							}}
 						/>
@@ -100,11 +108,7 @@ class Lines extends Component {
 							size={(datum, active) => (active ? 6 : 3)}
 							style={{
 								data: {
-									fill: (datum, active) =>
-										active
-											? this.props.theme.interactions
-													.hover
-											: this.state.colorscale[idx]
+									fill: linecolor()
 								}
 							}}
 						/>
@@ -127,40 +131,19 @@ class Lines extends Component {
 											childName: [...linenames],
 											eventKey: key,
 											mutation: props => {
-												console.log(evt);
-												this.setState({
-													activeLine: key
-												});
-												return {
-													style: Object.assign(
-														{},
-														props.style,
-														{
-															stroke: this.props
-																.theme
-																.interactions
-																.hover
-														}
-													)
-												};
-											}
-										},
-										{
-											target: "data",
-											childName: "legend",
-											mutation: props => {
-												return {
-													style: Object.assign(
-														{},
-														props.style,
-														{
-															fill: this.props
-																.theme
-																.interactions
-																.hover
-														}
-													)
-												};
+												if (
+													this.state.activeLine ===
+													key
+												) {
+													this.setState({
+														activeLine: null
+													});
+												} else {
+													this.setState({
+														activeLine:
+															"line-" + key
+													});
+												}
 											}
 										}
 									];

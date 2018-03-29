@@ -4,12 +4,12 @@ import { assign } from "lodash";
 // * Colors
 // *
 const colors = [
-  "#e5e5e6",
-  "#d1d1d2",
-  "#bdbdbe",
-  "#a9a9aa",
-  "#959596",
-  "#777778",
+  "#d4cfc4",
+  "#b3aea4",
+  "#8c8981",
+  "#595753",
+  "#363531",
+  "#000000",
   "#636364",
   "#4f4f50",
   "#3b3c3c",
@@ -19,7 +19,8 @@ const colors = [
 ];
 
 const charcoal = "#252525";
-const green = "#1abc9c";
+//const green = "#1abc9c";
+const activeColor = "#0038F0";
 
 // *
 // * Typography
@@ -253,6 +254,7 @@ export default {
     }
   },
   interactions: {
-    hover: green
+    hover: activeColor,
+    active: activeColor
   }
 };

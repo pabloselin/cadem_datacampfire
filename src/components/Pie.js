@@ -14,7 +14,11 @@ class Pie extends Component {
 		super(props);
 		this.state = {
 			data: this.props.data,
-			currentPercent: 0
+			currentPercent: 0,
+			activeColor: this.props.theme.interactions.active,
+			clicked: false,
+			activeKey: undefined,
+			colorscale: this.props.theme.line.colorScale
 		};
 	}
 
@@ -25,11 +29,30 @@ class Pie extends Component {
 			return true;
 		});
 
-		let legData = data.map(item => {
+		let legData = data.map((item, idx) => {
 			let percent = Number(item.y) / sum * 100;
+			let activeStyle = () => {
+				if (idx === Number(this.state.activeKey)) {
+					return {
+						fill: this.state.activeColor,
+						fontWeight: "bold",
+						fontSize: 23
+					};
+				} else {
+					return {
+						fill: this.state.colorscale[idx],
+						fontWeight: "normal"
+					};
+				}
+			};
 			return {
 				name: item.x + " (" + percent.toFixed(1) + "%)",
-				percent: percent.toFixed(1)
+				percent: percent.toFixed(1),
+				symbol: { fill: activeStyle().fill },
+				labels: {
+					fontWeight: activeStyle().fontWeight,
+					fontSize: activeStyle().fontSize
+				}
 			};
 		});
 		return legData;
@@ -52,13 +75,21 @@ class Pie extends Component {
 							text={this.state.currentPercent + "%"}
 							style={{
 								fontSize: 64,
-								color: this.props.theme.interactions.hover,
+								color: this.state.activeColor,
 								fontFamily: "Asap, sans-serif",
 								fontWeight: 400
 							}}
 						/>
 					</VictoryPortal>
 				);
+			}
+		};
+
+		const piecolor = key => {
+			if (Number(this.state.activeKey) === key) {
+				return this.state.activeColor;
+			} else {
+				return this.state.colorscale[key];
 			}
 		};
 		return (
@@ -69,7 +100,47 @@ class Pie extends Component {
 							childName: ["pie", "legend"],
 							target: "data",
 							eventHandlers: {
-								onMouseOver: () => {
+								onMouseOver: (evt, obj, key) => {
+									if (this.state.clicked === false) {
+										return [
+											{
+												childName: ["pie", "legend"],
+												mutation: props => {
+													this.setState({
+														currentPercent:
+															props.datum.percent,
+														activeKey: key
+													});
+												}
+											}
+										];
+									}
+								},
+								onMouseOut: () => {
+									if (this.state.clicked === false) {
+										return [
+											{
+												childName: ["pie", "legend"],
+												mutation: () => {
+													this.setState({
+														currentPercent: 0,
+														activeKey: undefined
+													});
+													return null;
+												}
+											}
+										];
+									}
+								},
+								onClick: (evt, obj, key) => {
+									this.setState({
+										clicked: () =>
+											Number(this.state.activeKey) ===
+											Number(key)
+												? false
+												: true,
+										activeKey: Number(key)
+									});
 									return [
 										{
 											childName: ["pie", "legend"],
@@ -78,31 +149,6 @@ class Pie extends Component {
 													currentPercent:
 														props.datum.percent
 												});
-												return {
-													style: Object.assign(
-														{},
-														props.style,
-														{
-															fill: this.props
-																.theme
-																.interactions
-																.hover
-														}
-													)
-												};
-											}
-										}
-									];
-								},
-								onMouseOut: () => {
-									return [
-										{
-											childName: ["pie", "legend"],
-											mutation: () => {
-												this.setState({
-													currentPercent: 0
-												});
-												return null;
 											}
 										}
 									];
@@ -116,13 +162,17 @@ class Pie extends Component {
 						animate={{ duration: 500 }}
 						name="pie"
 						style={{
-							parent: { maxWidth: "60%" }
+							parent: { maxWidth: "60%" },
+							data: {
+								fill: d => piecolor(d.eventKey)
+							}
 						}}
 						width={480}
 						padAngle={0}
 						innerRadius={100}
 						data={this.getData(this.props.data)}
 						standalone={true}
+						labels={d => ""}
 					/>
 					{percentPortal()}
 					<VictoryLegend
@@ -135,7 +185,7 @@ class Pie extends Component {
 						height={600}
 						style={{
 							title: { fontSize: 22, fontWeight: "bold" },
-							labels: { fontSize: 16 },
+							labels: { fontSize: 22 },
 							parent: { maxWidth: "40%" }
 						}}
 						data={this.makeLegend(this.props.data)}
