@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./Lines.css";
+import jsondata from "../data/data.json";
 import LineFlyOut from "./mini/LineFlyOut.js";
 import {
 	VictoryChart,
@@ -16,7 +17,7 @@ class Lines extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			data: this.props.data,
+			data: jsondata.data,
 			colorscale: this.props.theme.line.colorScale,
 			activeLine: null,
 			activeColor: this.props.theme.interactions.hover
@@ -65,7 +66,7 @@ class Lines extends Component {
 	render() {
 		const linenames = [];
 		const lines = () =>
-			this.props.data.map((line, idx) => {
+			this.state.data.map((line, idx) => {
 				let linename = "line-" + idx;
 				linenames.push(linename);
 
@@ -165,7 +166,7 @@ class Lines extends Component {
 					<VictoryLegend
 						theme={this.props.theme}
 						name="legend"
-						data={this.makeLegend(this.props.data)}
+						data={this.makeLegend(this.state.data)}
 						orientation="vertical"
 						itemsPerRow={3}
 						height={70}

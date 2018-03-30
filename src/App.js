@@ -8,102 +8,36 @@ import cadem_theme from "./themes/cadem_theme.js";
 
 import "./App.css";
 
-const data = {
-  pie: [
-    {
-      x: "Dato 1",
-      y: 10
-    },
-    {
-      x: "Dato 2",
-      y: 20
-    },
-    {
-      x: "Dato 3",
-      y: 30
-    },
-    {
-      x: "Dato 4",
-      y: 60
-    },
-    {
-      x: "Dato 5",
-      y: 90
-    },
-    {
-      x: "Dato 6",
-      y: 70
-    }
-  ],
-  lines: [
-    {
-      title: "Línea 1",
-      values: [
-        { x: "Mar 17", y: 14 },
-        { x: "Abr 17", y: 26 },
-        { x: "May 17", y: 12 },
-        { x: "Jun 17", y: 11 },
-        { x: "Jul 17", y: 10 },
-        { x: "Ago 17", y: 20 },
-        { x: "Sept 17", y: 40 },
-        { x: "Oct 17", y: 40 },
-        { x: "Nov 17", y: 20 },
-        { x: "Dic 17", y: 10 }
-      ]
-    },
-    {
-      title: "Línea 2",
-      values: [
-        { x: "Mar 17", y: 10 },
-        { x: "Abr 17", y: 11 },
-        { x: "May 17", y: 45.2 },
-        { x: "Jun 17", y: 15.4 },
-        { x: "Jul 17", y: 20 },
-        { x: "Ago 17", y: 11 },
-        { x: "Sept 17", y: 33 },
-        { x: "Oct 17", y: 70.5 },
-        { x: "Nov 17", y: 14 },
-        { x: "Dic 17", y: 11 }
-      ]
-    }
-  ]
-};
+const Inicio = props => <div className="Inicio" />;
 
-const Inicio = () => (
-  <div className="Inicio">
-    <h2>Inicio</h2>
-  </div>
-);
-
-const PiePage = () => (
+const PiePage = props => (
   <div className="showCase">
     <h2>Pie</h2>
     <GraphWrapper>
-      <Pie
-        height={300}
-        title="Gráfico de Pie"
-        data={data.pie}
-        theme={cadem_theme}
-      />
+      <Pie {...props} height={300} title="Gráfico de Pie" />
     </GraphWrapper>
   </div>
 );
 
-const LinePage = () => (
+const LinePage = props => (
   <div className="showCase">
     <h2>Líneas</h2>
     <GraphWrapper>
-      <Lines
-        height={430}
-        title="Gráfico de Líneas"
-        data={data.lines}
-        theme={cadem_theme}
-      />
+      <Lines {...props} height={430} title="Gráfico de Líneas" />
     </GraphWrapper>
   </div>
 );
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: null
+    };
+  }
+
+  componentDidMount() {}
+
   render() {
     return (
       <Router>
@@ -125,9 +59,19 @@ class App extends Component {
             </ul>
           </nav>
 
-          <Route exact path="/" component={Inicio} />
-          <Route path="/pie" component={PiePage} />
-          <Route path="/lines" component={LinePage} />
+          <Route
+            render={props => (
+              <Inicio {...props} theme={cadem_theme} exact path="/" />
+            )}
+          />
+          <Route
+            render={props => <PiePage {...props} theme={cadem_theme} />}
+            path="/pie"
+          />
+          <Route
+            render={props => <LinePage {...props} theme={cadem_theme} />}
+            path="/lines"
+          />
         </div>
       </Router>
     );

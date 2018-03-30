@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import jsondata from "../data/pie.json";
 import "./Pie.css";
 
 import {
@@ -12,8 +13,9 @@ import {
 class Pie extends Component {
 	constructor(props) {
 		super(props);
+		console.log(props);
 		this.state = {
-			data: this.props.data,
+			data: jsondata.data,
 			currentPercent: 0,
 			activeColor: this.props.theme.interactions.active,
 			clicked: false,
@@ -92,6 +94,18 @@ class Pie extends Component {
 				return this.state.colorscale[key];
 			}
 		};
+
+		const clicked = key => {
+			if (
+				this.state.clicked === true &&
+				Number(this.state.activeKey) == Number(key)
+			) {
+				return false;
+			} else {
+				console.log(key, this.state.activeKey);
+				return true;
+			}
+		};
 		return (
 			<div className="Pie">
 				<VictorySharedEvents
@@ -133,21 +147,15 @@ class Pie extends Component {
 									}
 								},
 								onClick: (evt, obj, key) => {
-									this.setState({
-										clicked: () =>
-											Number(this.state.activeKey) ===
-											Number(key)
-												? false
-												: true,
-										activeKey: Number(key)
-									});
 									return [
 										{
 											childName: ["pie", "legend"],
 											mutation: props => {
 												this.setState({
 													currentPercent:
-														props.datum.percent
+														props.datum.percent,
+													clicked: clicked(key),
+													activeKey: Number(key)
 												});
 											}
 										}
@@ -170,7 +178,7 @@ class Pie extends Component {
 						width={480}
 						padAngle={0}
 						innerRadius={100}
-						data={this.getData(this.props.data)}
+						data={this.getData(this.state.data)}
 						standalone={true}
 						labels={d => ""}
 					/>
@@ -188,7 +196,7 @@ class Pie extends Component {
 							labels: { fontSize: 22 },
 							parent: { maxWidth: "40%" }
 						}}
-						data={this.makeLegend(this.props.data)}
+						data={this.makeLegend(this.state.data)}
 					/>
 				</VictorySharedEvents>
 			</div>
