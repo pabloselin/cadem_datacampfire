@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./Lines.css";
-import jsondata from "../data/data.json";
+import jsondata from "../data/lineas.json";
 import LineFlyOut from "./mini/LineFlyOut.js";
 import {
 	VictoryChart,
@@ -17,6 +17,7 @@ class Lines extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			title: jsondata.chart_title,
 			data: jsondata.data,
 			colorscale: this.props.theme.line.colorScale,
 			activeLine: null,
@@ -118,6 +119,7 @@ class Lines extends Component {
 			});
 		return (
 			<div>
+				<h2>{this.state.title}</h2>
 				<VictorySharedEvents
 					events={[
 						{

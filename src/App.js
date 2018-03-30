@@ -1,32 +1,11 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import GraphWrapper from "./components/GraphWrapper.js";
 import logo from "./assets/Data-Campfire-Logo.png";
-import Pie from "./components/Pie.js";
-import Lines from "./components/Lines.js";
 import cadem_theme from "./themes/cadem_theme.js";
-
+import Inicio from "./routes/Inicio.js";
+import LinePage from "./routes/LinePage.js";
+import PiePage from "./routes/PiePage.js";
 import "./App.css";
-
-const Inicio = props => <div className="Inicio" />;
-
-const PiePage = props => (
-  <div className="showCase">
-    <h2>Pie</h2>
-    <GraphWrapper>
-      <Pie {...props} height={300} title="Gráfico de Pie" />
-    </GraphWrapper>
-  </div>
-);
-
-const LinePage = props => (
-  <div className="showCase">
-    <h2>Líneas</h2>
-    <GraphWrapper>
-      <Lines {...props} height={430} title="Gráfico de Líneas" />
-    </GraphWrapper>
-  </div>
-);
 
 class App extends Component {
   constructor(props) {

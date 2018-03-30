@@ -1,23 +1,10 @@
-import React, { Component } from "react";
+import React from "react";
 import "./GraphWrapper.css";
 
-class GraphWrapper extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			updated: false
-		};
-	}
-
-	componentDidMount() {}
-
-	render() {
-		return (
-			<div className="GraphWrapper">
-				<div>{this.props.children}</div>
-			</div>
-		);
-	}
-}
+const GraphWrapper = props => (
+	<div className="GraphWrapper">
+		<div>{props.children}</div>
+	</div>
+);
 
 export default GraphWrapper;

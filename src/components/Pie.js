@@ -6,16 +6,15 @@ import {
 	VictoryPie,
 	VictoryLegend,
 	VictorySharedEvents,
-	VictoryLabel,
-	VictoryPortal
+	VictoryLabel
 } from "victory";
 
 class Pie extends Component {
 	constructor(props) {
 		super(props);
-		console.log(props);
 		this.state = {
 			data: jsondata.data,
+			title: jsondata.chart_title,
 			currentPercent: 0,
 			activeColor: this.props.theme.interactions.active,
 			clicked: false,
@@ -38,7 +37,7 @@ class Pie extends Component {
 					return {
 						fill: this.state.activeColor,
 						fontWeight: "bold",
-						fontSize: 23
+						fontSize: 25
 					};
 				} else {
 					return {
@@ -70,19 +69,18 @@ class Pie extends Component {
 		const percentPortal = () => {
 			if (this.state.currentPercent !== 0) {
 				return (
-					<VictoryPortal className="percent">
-						<VictoryLabel
-							theme={this.props.theme}
-							animate={{ duration: 500 }}
-							text={this.state.currentPercent + "%"}
-							style={{
-								fontSize: 64,
-								color: this.state.activeColor,
-								fontFamily: "Asap, sans-serif",
-								fontWeight: 400
-							}}
-						/>
-					</VictoryPortal>
+					<VictoryLabel
+						className="percent"
+						theme={this.props.theme}
+						animate={{ duration: 500 }}
+						text={this.state.currentPercent + "%"}
+						style={{
+							fontSize: 64,
+							color: this.state.activeColor,
+							fontFamily: "Asap, sans-serif",
+							fontWeight: 400
+						}}
+					/>
 				);
 			}
 		};
@@ -98,16 +96,16 @@ class Pie extends Component {
 		const clicked = key => {
 			if (
 				this.state.clicked === true &&
-				Number(this.state.activeKey) == Number(key)
+				Number(this.state.activeKey) === Number(key)
 			) {
 				return false;
 			} else {
-				console.log(key, this.state.activeKey);
 				return true;
 			}
 		};
 		return (
 			<div className="Pie">
+				<h2>{this.state.title}</h2>
 				<VictorySharedEvents
 					events={[
 						{
@@ -193,7 +191,7 @@ class Pie extends Component {
 						height={600}
 						style={{
 							title: { fontSize: 22, fontWeight: "bold" },
-							labels: { fontSize: 22 },
+							labels: { fontSize: 24 },
 							parent: { maxWidth: "40%" }
 						}}
 						data={this.makeLegend(this.state.data)}
