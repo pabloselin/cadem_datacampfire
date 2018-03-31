@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import jsondata from "../data/pie.json";
 import "./Pie.css";
-
+import DownloadButton from "./mini/DownloadButton.js";
 import {
 	VictoryPie,
 	VictoryLegend,
 	VictorySharedEvents,
-	VictoryLabel
+	VictoryLabel,
+	VictoryContainer
 } from "victory";
 
 class Pie extends Component {
@@ -19,7 +20,8 @@ class Pie extends Component {
 			activeColor: this.props.theme.interactions.active,
 			clicked: false,
 			activeKey: undefined,
-			colorscale: this.props.theme.line.colorScale
+			colorscale: this.props.theme.line.colorScale,
+			svgrefs: []
 		};
 	}
 
@@ -63,7 +65,11 @@ class Pie extends Component {
 		return data;
 	}
 
-	componentWillReceiveProps(nextProps) {}
+	componentDidMount() {
+		this.setState({
+			svgrefs: [this.pieref, this.legendref, this.percentref]
+		});
+	}
 
 	render() {
 		const percentPortal = () => {
@@ -80,6 +86,13 @@ class Pie extends Component {
 							fontFamily: "Asap, sans-serif",
 							fontWeight: 400
 						}}
+						containerComponent={
+							<VictoryContainer
+								containerRef={percentref =>
+									(this.percentref = percentref)
+								}
+							/>
+						}
 					/>
 				);
 			}
@@ -164,6 +177,7 @@ class Pie extends Component {
 					]}
 				>
 					<VictoryPie
+						ref={Pie => (this.Pie = Pie)}
 						theme={this.props.theme}
 						animate={{ duration: 500 }}
 						name="pie"
@@ -179,6 +193,11 @@ class Pie extends Component {
 						data={this.getData(this.state.data)}
 						standalone={true}
 						labels={d => ""}
+						containerComponent={
+							<VictoryContainer
+								containerRef={pieref => (this.pieref = pieref)}
+							/>
+						}
 					/>
 					{percentPortal()}
 					<VictoryLegend
@@ -195,8 +214,16 @@ class Pie extends Component {
 							parent: { maxWidth: "40%" }
 						}}
 						data={this.makeLegend(this.state.data)}
+						containerComponent={
+							<VictoryContainer
+								containerRef={legendref =>
+									(this.legendref = legendref)
+								}
+							/>
+						}
 					/>
 				</VictorySharedEvents>
+				<DownloadButton svgs={this.state.svgrefs} />
 			</div>
 		);
 	}
