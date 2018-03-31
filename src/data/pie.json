@@ -1,29 +1,26 @@
 {
-  "chart_title": "Gráfico de torta",
+  "chart_title": "Razones de no cumplimiento",
+  "chart_subtitle": "Región metropolitana",
   "data": [
     {
-      "x": "Dato 1",
-      "y": 10
+      "x": "No habían atendedores \nen la isla",
+      "y": 12
     },
     {
-      "x": "Dato 2",
-      "y": 20
+      "x": "Había atendedores desocupados\n y no me realizaron seña",
+      "y": 23
     },
     {
-      "x": "Dato 3",
-      "y": 30
+      "x": "El atendedor estaba distraído",
+      "y": 15
     },
     {
-      "x": "Dato 4",
-      "y": 60
+      "x": "El atendedor estaba \n resolviendo otros problemas",
+      "y": 15
     },
     {
-      "x": "Dato 5",
-      "y": 90
-    },
-    {
-      "x": "Dato 6",
-      "y": 70
+      "x": "Sin datos",
+      "y": "5"
     }
   ]
 }

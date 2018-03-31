@@ -16,6 +16,7 @@ class Pie extends Component {
 		this.state = {
 			data: jsondata.data,
 			title: jsondata.chart_title,
+			subtitle: jsondata.chart_subtitle,
 			currentPercent: 0,
 			activeColor: this.props.theme.interactions.active,
 			clicked: false,
@@ -39,7 +40,7 @@ class Pie extends Component {
 					return {
 						fill: this.state.activeColor,
 						fontWeight: "bold",
-						fontSize: 25
+						fontSize: 21
 					};
 				} else {
 					return {
@@ -67,34 +68,20 @@ class Pie extends Component {
 
 	componentDidMount() {
 		this.setState({
-			svgrefs: [this.pieref, this.legendref, this.percentref]
+			svgrefs: [this.pieref, this.legendref, this.percent]
 		});
+	}
+
+	componentDidUpdate(prevProps, prevState, snapshot) {
+		if (prevState.currentPercent !== this.state.currentPercent) {
+			console.log("percentref", this.percent);
+		}
 	}
 
 	render() {
 		const percentPortal = () => {
 			if (this.state.currentPercent !== 0) {
-				return (
-					<VictoryLabel
-						className="percent"
-						theme={this.props.theme}
-						animate={{ duration: 500 }}
-						text={this.state.currentPercent + "%"}
-						style={{
-							fontSize: 64,
-							color: this.state.activeColor,
-							fontFamily: "Asap, sans-serif",
-							fontWeight: 400
-						}}
-						containerComponent={
-							<VictoryContainer
-								containerRef={percentref =>
-									(this.percentref = percentref)
-								}
-							/>
-						}
-					/>
-				);
+				return this.state.currentPercent + "%";
 			}
 		};
 
@@ -119,6 +106,7 @@ class Pie extends Component {
 		return (
 			<div className="Pie">
 				<h2>{this.state.title}</h2>
+				<h3 className="subtitle">{this.state.subtitle}</h3>
 				<VictorySharedEvents
 					events={[
 						{
@@ -199,7 +187,19 @@ class Pie extends Component {
 							/>
 						}
 					/>
-					{percentPortal()}
+					<VictoryLabel
+						className="percent"
+						theme={this.props.theme}
+						animate={{ duration: 500 }}
+						text={percentPortal()}
+						style={{
+							fontSize: 64,
+							color: this.state.activeColor,
+							fontFamily: "Asap, sans-serif",
+							fontWeight: 400
+						}}
+						ref={percent => (this.percent = percent)}
+					/>
 					<VictoryLegend
 						theme={this.props.theme}
 						name="legend"
@@ -210,7 +210,7 @@ class Pie extends Component {
 						height={600}
 						style={{
 							title: { fontSize: 22, fontWeight: "bold" },
-							labels: { fontSize: 24 },
+							labels: { fontSize: 20 },
 							parent: { maxWidth: "40%" }
 						}}
 						data={this.makeLegend(this.state.data)}

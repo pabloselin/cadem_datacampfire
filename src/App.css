@@ -27,8 +27,13 @@ h3,
 h4 {
   font-family: "Asap", sans-serif;
   text-transform: uppercase;
-  text-align: center;
+  text-align: left;
   margin: 0;
+}
+
+h3.subtitle {
+  font-weight: normal;
+  margin-top: 6px;
 }
 
 .navigation li {
