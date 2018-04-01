@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import canvg from "canvg";
 import "./DownloadButton.css";
 import downloadIcon from "../../assets/download.svg";
 
@@ -19,8 +18,8 @@ class DownloadButton extends Component {
 		let piesvg = this.props.svgs[0].childNodes[0].innerHTML;
 		let legendsvg = this.props.svgs[1].childNodes[0].innerHTML;
 
-		canvg(this.canvas, piesvg, {});
-		canvg(this.canvas, "<svg>" + legendsvg + "</svg>", {
+		window.canvg(this.canvas, piesvg, {});
+		window.canvg(this.canvas, "<svg>" + legendsvg + "</svg>", {
 			ignoreClear: true,
 			offsetX: 400
 		});
