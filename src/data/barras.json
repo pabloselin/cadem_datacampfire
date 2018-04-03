@@ -1,0 +1,47 @@
+{
+	"chart_title": "Tipos de material por operador",
+	"chart_subtitle": "Recarga | período Feb 18",
+	"categories": ["Movistar", "Entel", "Claro", "Wom", "Virgin"],
+	"data": [
+		{
+			"title": "Pendón",
+			"data": [
+				{ "x": "Movistar", "y": 10.4 },
+				{ "x": "Entel", "y": 21.2 },
+				{ "x": "Claro", "y": 31.1 },
+				{ "x": "Wom", "y": 43.1 },
+				{ "x": "Virgin", "y": 50.1 }
+			]
+		},
+		{
+			"title": "Afiche",
+			"data": [
+				{ "x": "Movistar", "y": 12 },
+				{ "x": "Entel", "y": 6.31 },
+				{ "x": "Claro", "y": 67.2 },
+				{ "x": "Wom", "y": 56.3 },
+				{ "x": "Virgin", "y": 51.2 }
+			]
+		},
+		{
+			"title": "Sticker",
+			"data": [
+				{ "x": "Movistar", "y": 34.1 },
+				{ "x": "Entel", "y": 12.4 },
+				{ "x": "Claro", "y": 31.5 },
+				{ "x": "Wom", "y": 40.4 },
+				{ "x": "Virgin", "y": 56.7 }
+			]
+		},
+		{
+			"title": "Stopper",
+			"data": [
+				{ "x": "Movistar", "y": 20.1 },
+				{ "x": "Entel", "y": 9.8 },
+				{ "x": "Claro", "y": 10.2 },
+				{ "x": "Wom", "y": 14.5 },
+				{ "x": "Virgin", "y": 51.1 }
+			]
+		}
+	]
+}

@@ -42,3 +42,12 @@ h3.subtitle {
   margin: 0;
   padding: 12px;
 }
+
+.navigation li a {
+  color: #333;
+  text-decoration: none;
+}
+
+.navigation li a:hover {
+  text-decoration: underline;
+}

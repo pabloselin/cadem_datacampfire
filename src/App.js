@@ -3,8 +3,10 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import logo from "./assets/Data-Campfire-Logo.png";
 import cadem_theme from "./themes/cadem_theme.js";
 import Inicio from "./routes/Inicio.js";
-import LinePage from "./routes/LinePage.js";
-import PiePage from "./routes/PiePage.js";
+import ChartPage from "./components/ChartPage.js";
+import Lines from "./components/Lines.js";
+import Pie from "./components/Pie.js";
+import GroupedBars from "./components/GroupedBars.js";
 import "./App.css";
 
 class App extends Component {
@@ -30,10 +32,25 @@ class App extends Component {
                 <Link to="/">Inicio</Link>
               </li>
               <li>
-                <Link to="/pie">Pie</Link>
+                <Link to="/pie">1. Pie</Link>
               </li>
               <li>
-                <Link to="/lines">líneas</Link>
+                <Link to="/lines">2. Líneas</Link>
+              </li>
+              <li>
+                <Link to="/grouped-bars">3a. Barra integrado</Link>
+              </li>
+              <li>
+                <Link to="/barra">3b. Barra</Link>
+              </li>
+              <li>
+                <Link to="/bar-and-line">4. Barra y línea</Link>
+              </li>
+              <li>
+                <Link to="/scatter">5a. Posicionamiento</Link>
+              </li>
+              <li>
+                <Link to="/scatter-2">5b. Posicionamiento 2</Link>
               </li>
             </ul>
           </nav>
@@ -44,12 +61,27 @@ class App extends Component {
             )}
           />
           <Route
-            render={props => <PiePage {...props} theme={cadem_theme} />}
+            render={props => (
+              <ChartPage chart={<Pie {...props} theme={cadem_theme} />} />
+            )}
             path="/pie"
           />
           <Route
-            render={props => <LinePage {...props} theme={cadem_theme} />}
+            render={props => (
+              <ChartPage chart={<Lines {...props} theme={cadem_theme} />} />
+            )}
             path="/lines"
+          />
+
+          <Route
+            render={props => (
+              <ChartPage
+                chart={
+                  <GroupedBars {...props} height={240} theme={cadem_theme} />
+                }
+              />
+            )}
+            path="/grouped-bars"
           />
         </div>
       </Router>
