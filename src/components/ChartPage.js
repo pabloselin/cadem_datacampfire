@@ -3,7 +3,7 @@ import GraphWrapper from "../components/GraphWrapper.js";
 
 const ChartPage = props => (
 	<div className="showCase">
-		<GraphWrapper>{props.chart}</GraphWrapper>
+		<GraphWrapper size={props.size}>{props.chart}</GraphWrapper>
 	</div>
 );
 

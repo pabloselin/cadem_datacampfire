@@ -1,6 +1,7 @@
 {
 	"chart_title": "Satisfacción Global",
 	"chart_subtitle": "Últimos 4 meses",
+	"line_title": "Neto",
 	"data": [
 		{
 			"data_a": "Nivel de Satisfacción",

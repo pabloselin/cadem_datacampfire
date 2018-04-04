@@ -4,3 +4,7 @@
 	max-width: 800px;
 	padding: 12px;
 }
+
+.GraphWrapper.mini {
+	max-width: 400px;
+}

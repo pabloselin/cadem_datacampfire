@@ -37,7 +37,7 @@ class SingleBars extends Component {
 						title={this.state.title}
 						data={this.state.data.data}
 						style={{
-							labels: { fontSize: 4, textAlign: "center" },
+							labels: { fontSize: 10, textAlign: "center" },
 							data: {
 								width: 18,
 								fill: d =>

@@ -9,6 +9,8 @@ import Pie from "./components/Pie.js";
 import GroupedBars from "./components/GroupedBars.js";
 import SingleBars from "./components/SingleBars.js";
 import LineBars from "./components/LineBars.js";
+import Scatter from "./components/Scatter.js";
+import ScatterMini from "./components/ScatterMini.js";
 import "./App.css";
 
 class App extends Component {
@@ -52,7 +54,7 @@ class App extends Component {
                 <Link to="/scatter">5a. Posicionamiento</Link>
               </li>
               <li>
-                <Link to="/scatter-2">5b. Posicionamiento 2</Link>
+                <Link to="/scatter-mini">5b. Posicionamiento 2</Link>
               </li>
             </ul>
           </nav>
@@ -91,11 +93,12 @@ class App extends Component {
           <Route
             render={props => (
               <ChartPage
+                size="mini"
                 chart={
                   <SingleBars
                     {...props}
                     height={300}
-                    width={500}
+                    width={300}
                     theme={cadem_theme}
                   />
                 }
@@ -118,6 +121,39 @@ class App extends Component {
               />
             )}
             path="/line-bars"
+          />
+
+          <Route
+            render={props => (
+              <ChartPage
+                chart={
+                  <Scatter
+                    {...props}
+                    height={300}
+                    width={600}
+                    theme={cadem_theme}
+                  />
+                }
+              />
+            )}
+            path="/scatter"
+          />
+
+          <Route
+            render={props => (
+              <ChartPage
+                size="mini"
+                chart={
+                  <ScatterMini
+                    {...props}
+                    height={300}
+                    width={300}
+                    theme={cadem_theme}
+                  />
+                }
+              />
+            )}
+            path="/scatter-mini"
           />
         </div>
       </Router>

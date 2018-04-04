@@ -1,5 +1,5 @@
 import React from "react";
 
-const Inicio = props => <div className="Inicio">Contenido</div>;
+const Inicio = props => <div className="Inicio" />;
 
 export default Inicio;

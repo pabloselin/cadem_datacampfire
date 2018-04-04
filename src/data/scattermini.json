@@ -1,0 +1,12 @@
+{
+	"chart_title": "Experiencia de compra",
+	"chart_subtitle": "",
+	"labels": ["Recomendación", "Satisfacción", "Cartera"],
+	"data": [
+		{ "x": 11, "y": 20, "cantidad": 30 },
+		{ "x": 20, "y": 31, "cantidad": 40 },
+		{ "x": 30, "y": 53, "cantidad": 25 },
+		{ "x": 40, "y": 41, "cantidad": 10 },
+		{ "x": 50, "y": 71, "cantidad": 45 }
+	]
+}
