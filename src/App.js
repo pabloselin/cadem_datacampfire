@@ -8,6 +8,7 @@ import Lines from "./components/Lines.js";
 import Pie from "./components/Pie.js";
 import GroupedBars from "./components/GroupedBars.js";
 import SingleBars from "./components/SingleBars.js";
+import LineBars from "./components/LineBars.js";
 import "./App.css";
 
 class App extends Component {
@@ -45,7 +46,7 @@ class App extends Component {
                 <Link to="/single-bars">3b. Barra</Link>
               </li>
               <li>
-                <Link to="/bar-and-line">4. Barra y línea</Link>
+                <Link to="/line-bars">4. Barra y línea</Link>
               </li>
               <li>
                 <Link to="/scatter">5a. Posicionamiento</Link>
@@ -94,13 +95,29 @@ class App extends Component {
                   <SingleBars
                     {...props}
                     height={300}
-                    width={300}
+                    width={500}
                     theme={cadem_theme}
                   />
                 }
               />
             )}
             path="/single-bars"
+          />
+
+          <Route
+            render={props => (
+              <ChartPage
+                chart={
+                  <LineBars
+                    {...props}
+                    height={300}
+                    width={600}
+                    theme={cadem_theme}
+                  />
+                }
+              />
+            )}
+            path="/line-bars"
           />
         </div>
       </Router>

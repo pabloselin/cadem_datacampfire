@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, VictoryGroup } from "victory";
+import { Text } from "victory";
 
 const ChartHeader = props => {
 	return (

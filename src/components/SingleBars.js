@@ -2,13 +2,7 @@ import React, { Component } from "react";
 import "./GroupedBars.css";
 import jsondata from "../data/barras_single.json";
 import ChartHeader from "./mini/ChartHeader.js";
-import {
-	VictoryChart,
-	VictoryBar,
-	VictoryGroup,
-	VictoryLegend,
-	VictoryLabel
-} from "victory";
+import { VictoryChart, VictoryBar, VictoryLabel } from "victory";
 
 class SingleBars extends Component {
 	constructor(props) {
@@ -39,13 +33,11 @@ class SingleBars extends Component {
 					<VictoryBar
 						domain={{ y: [0, 100] }}
 						key={"bar"}
-						style={{
-							labels: { fontSize: 4, textAlign: "center" }
-						}}
 						theme={this.props.theme}
 						title={this.state.title}
 						data={this.state.data.data}
 						style={{
+							labels: { fontSize: 4, textAlign: "center" },
 							data: {
 								width: 18,
 								fill: d =>
