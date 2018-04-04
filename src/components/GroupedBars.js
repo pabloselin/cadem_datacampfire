@@ -6,11 +6,7 @@ import {
 	VictoryChart,
 	VictoryBar,
 	VictoryGroup,
-	VictoryTooltip,
 	VictoryLegend,
-	VictorySharedEvents,
-	VictoryVoronoiContainer,
-	VictoryScatter,
 	VictoryLabel
 } from "victory";
 
@@ -26,9 +22,19 @@ class GroupedBars extends Component {
 	}
 
 	makeLegend(data) {
-		let legData = data.data.map(item => {
+		let legData = data.data.map((item, idx) => {
+			let fill = () => {
+				if (item.title === this.state.activeKey) {
+					return this.state.activeColor;
+				} else {
+					return this.props.theme.bar.colorScale[idx];
+				}
+			};
 			return {
-				name: item.title
+				name: item.title,
+				symbol: {
+					fill: fill()
+				}
 			};
 		});
 
@@ -37,18 +43,24 @@ class GroupedBars extends Component {
 
 	render() {
 		const groups = () =>
-			this.state.data.data.map(group => {
+			this.state.data.data.map((group, idx) => {
 				return (
 					<VictoryBar
-						name={"bar"}
-						key={"bar"}
+						key={"bar-" + idx}
 						style={{
 							labels: { fontSize: 6, textAlign: "center" }
 						}}
 						colorscale={this.props.theme.colorscale}
 						title={group.title}
 						data={group.data}
-						labels={d => `${d.y}%`}
+						labelComponent={
+							<VictoryLabel
+								style={{
+									display: "none"
+								}}
+								text={d => `${d.y}%`}
+							/>
+						}
 					/>
 				);
 			});
@@ -88,6 +100,61 @@ class GroupedBars extends Component {
 						name="BarGroup"
 						categories={{ x: this.state.data.categories }}
 						offset={14}
+						events={[
+							{
+								childName: "all",
+								target: "data",
+								eventHandlers: {
+									onMouseOver: (evt, obj, idx) => {
+										this.setState({
+											activeKey: obj.data[0].label
+										});
+										return [
+											{
+												target: "data",
+												mutation: props => ({
+													style: Object.assign(
+														{},
+														props.style,
+														{
+															fill: this.state
+																.activeColor
+														}
+													)
+												})
+											},
+											{
+												target: "labels",
+												mutation: props => ({
+													style: Object.assign(
+														{},
+														props.style,
+														{
+															display: "block",
+															fill: this.state
+																.activeColor
+														}
+													)
+												})
+											}
+										];
+									},
+									onMouseOut: () => {
+										this.setState({ activeKey: null });
+										return [
+											{
+												target: "data",
+												mutation: props => null
+											},
+											{
+												target: "labels",
+												mutation: props => null
+											}
+										];
+									}
+								}
+							}
+						]}
 					>
 						{groups()}
 					</VictoryGroup>

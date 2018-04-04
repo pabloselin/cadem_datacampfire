@@ -6,41 +6,41 @@
 		{
 			"title": "Pendón",
 			"data": [
-				{ "x": "Movistar", "y": 10.4 },
-				{ "x": "Entel", "y": 21.2 },
-				{ "x": "Claro", "y": 31.1 },
-				{ "x": "Wom", "y": 43.1 },
-				{ "x": "Virgin", "y": 50.1 }
+				{ "x": "Movistar", "y": 10.4, "label": "Pendón" },
+				{ "x": "Entel", "y": 21.2, "label": "Pendón" },
+				{ "x": "Claro", "y": 31.1, "label": "Pendón" },
+				{ "x": "Wom", "y": 43.1, "label": "Pendón" },
+				{ "x": "Virgin", "y": 50.1, "label": "Pendón" }
 			]
 		},
 		{
 			"title": "Afiche",
 			"data": [
-				{ "x": "Movistar", "y": 12 },
-				{ "x": "Entel", "y": 6.31 },
-				{ "x": "Claro", "y": 67.2 },
-				{ "x": "Wom", "y": 56.3 },
-				{ "x": "Virgin", "y": 51.2 }
+				{ "x": "Movistar", "y": 12, "label": "Afiche" },
+				{ "x": "Entel", "y": 6.31, "label": "Afiche" },
+				{ "x": "Claro", "y": 67.2, "label": "Afiche" },
+				{ "x": "Wom", "y": 56.3, "label": "Afiche" },
+				{ "x": "Virgin", "y": 51.2, "label": "Afiche" }
 			]
 		},
 		{
 			"title": "Sticker",
 			"data": [
-				{ "x": "Movistar", "y": 34.1 },
-				{ "x": "Entel", "y": 12.4 },
-				{ "x": "Claro", "y": 31.5 },
-				{ "x": "Wom", "y": 40.4 },
-				{ "x": "Virgin", "y": 56.7 }
+				{ "x": "Movistar", "y": 34.1, "label": "Sticker" },
+				{ "x": "Entel", "y": 12.4, "label": "Sticker" },
+				{ "x": "Claro", "y": 31.5, "label": "Sticker" },
+				{ "x": "Wom", "y": 40.4, "label": "Sticker" },
+				{ "x": "Virgin", "y": 56.7, "label": "Sticker" }
 			]
 		},
 		{
 			"title": "Stopper",
 			"data": [
-				{ "x": "Movistar", "y": 20.1 },
-				{ "x": "Entel", "y": 9.8 },
-				{ "x": "Claro", "y": 10.2 },
-				{ "x": "Wom", "y": 14.5 },
-				{ "x": "Virgin", "y": 51.1 }
+				{ "x": "Movistar", "y": 20.1, "label": "Stopper" },
+				{ "x": "Entel", "y": 9.8, "label": "Stopper" },
+				{ "x": "Claro", "y": 10.2, "label": "Stopper" },
+				{ "x": "Wom", "y": 14.5, "label": "Stopper" },
+				{ "x": "Virgin", "y": 51.1, "label": "Stopper" }
 			]
 		}
 	]
