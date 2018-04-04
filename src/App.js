@@ -7,6 +7,7 @@ import ChartPage from "./components/ChartPage.js";
 import Lines from "./components/Lines.js";
 import Pie from "./components/Pie.js";
 import GroupedBars from "./components/GroupedBars.js";
+import SingleBars from "./components/SingleBars.js";
 import "./App.css";
 
 class App extends Component {
@@ -41,7 +42,7 @@ class App extends Component {
                 <Link to="/grouped-bars">3a. Barra integrado</Link>
               </li>
               <li>
-                <Link to="/barra">3b. Barra</Link>
+                <Link to="/single-bars">3b. Barra</Link>
               </li>
               <li>
                 <Link to="/bar-and-line">4. Barra y línea</Link>
@@ -68,7 +69,9 @@ class App extends Component {
           />
           <Route
             render={props => (
-              <ChartPage chart={<Lines {...props} theme={cadem_theme} />} />
+              <ChartPage
+                chart={<Lines {...props} height={300} theme={cadem_theme} />}
+              />
             )}
             path="/lines"
           />
@@ -82,6 +85,22 @@ class App extends Component {
               />
             )}
             path="/grouped-bars"
+          />
+
+          <Route
+            render={props => (
+              <ChartPage
+                chart={
+                  <SingleBars
+                    {...props}
+                    height={300}
+                    width={300}
+                    theme={cadem_theme}
+                  />
+                }
+              />
+            )}
+            path="/single-bars"
           />
         </div>
       </Router>

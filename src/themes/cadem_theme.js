@@ -110,9 +110,9 @@ export default {
   ),
   bar: assign(
     {
+      colorScale: colors,
       style: {
         data: {
-          fill: charcoal,
           padding: 8,
           strokeWidth: 0
         },
