@@ -48,9 +48,6 @@ class GroupedBars extends Component {
 				return (
 					<VictoryBar
 						key={"bar-" + idx}
-						style={{
-							labels: { fontSize: 6, textAlign: "center" }
-						}}
 						colorscale={this.props.theme.colorscale}
 						title={group.title}
 						data={group.data}
