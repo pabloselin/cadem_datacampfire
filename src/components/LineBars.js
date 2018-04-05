@@ -82,7 +82,9 @@ class LineBars extends Component {
 									width: 10,
 									fill: this.state.activeColor
 								},
-								labels: { fill: this.state.activeColor }
+								labels: {
+									fill: this.state.activeColor
+								}
 							}}
 							alignment="middle"
 							barRatio={0.2}

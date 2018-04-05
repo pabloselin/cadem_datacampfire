@@ -54,7 +54,9 @@ class GroupedBars extends Component {
 						labelComponent={
 							<VictoryLabel
 								style={{
-									display: "none"
+									display: "none",
+									fontSize: 6,
+									fill: "transparent"
 								}}
 								text={d => `${d.y}%`}
 							/>
@@ -128,7 +130,7 @@ class GroupedBars extends Component {
 														{},
 														props.style,
 														{
-															display: "block",
+															fontSize: 6,
 															fill: this.state
 																.activeColor
 														}

@@ -10,26 +10,22 @@ const ChartHeader = props => {
 				dx={0}
 				style={{
 					fontSize: 24,
-					fontFamily: "Asap",
-					textTransform: "uppercase",
-					fontWeight: "bold",
-					textAlign: "left",
-					float: "left"
+					fontFamily: "Asap"
 				}}
+				x={0}
+				y={2}
 			/>
+			<br />
 			<Text
 				title={props.subtitle}
 				desc={props.subtitle}
 				dx={0}
 				style={{
 					fontSize: 18,
-					fontFamily: "Asap",
-					textTransform: "uppercase",
-					fontWeight: "normal",
-					textAlign: "left",
-					float: "left",
-					clear: "left"
+					fontFamily: "Asap"
 				}}
+				x={0}
+				y={20}
 			/>
 		</g>
 	);

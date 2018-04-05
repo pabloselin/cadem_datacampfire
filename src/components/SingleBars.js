@@ -49,7 +49,7 @@ class SingleBars extends Component {
 						labelComponent={
 							<VictoryLabel
 								style={{
-									display: "none"
+									fill: "transparent"
 								}}
 								text={d => `${d.y}%`}
 							/>
