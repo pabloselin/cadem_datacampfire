@@ -73,12 +73,6 @@ class Pie extends Component {
 		});
 	}
 
-	componentDidUpdate(prevProps, prevState, snapshot) {
-		if (prevState.currentPercent !== this.state.currentPercent) {
-			console.log("percentref", this.percent);
-		}
-	}
-
 	render() {
 		const percentPortal = () => {
 			if (this.state.currentPercent !== 0) {
@@ -230,7 +224,11 @@ class Pie extends Component {
 						}
 					/>
 				</VictorySharedEvents>
-				<DownloadButton svgs={this.state.svgrefs} />
+				<DownloadButton
+					svgs={this.state.svgrefs}
+					title={this.state.title}
+					subtitle={this.state.subtitle}
+				/>
 			</div>
 		);
 	}

@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import "./DownloadButton.css";
 import downloadIcon from "../../assets/download.svg";
 import cadem_theme from "../../themes/cadem_theme.js";
-import asapfont from "../../assets/fonts/Asap-Regular.ttf";
 
 class DownloadButton extends Component {
 	constructor(props) {
@@ -26,14 +25,40 @@ class DownloadButton extends Component {
 			cadem_theme.interactions.hover
 		}">${percent}</text></svg>`;
 
-		window.canvg(this.canvas, piesvg, {});
+		let title = `<svg><text style="font-size:22; fill: #333;">${this.props.title.toUpperCase()}</text></svg>`;
+		let subtitle = `<svg><text style="font-size:18; fill: #333;">${
+			this.props.subtitle
+		}</text></svg>`;
+
+		//Fondo
+		let ctx = this.canvas.getContext("2d");
+		ctx.fillStyle = "#f0f0f0";
+		ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+
+		window.canvg(this.canvas, title, {
+			offsetY: 30,
+			offsetX: 10,
+			ignoreClear: true
+		});
+		window.canvg(this.canvas, subtitle, {
+			offsetY: 50,
+			offsetX: 10,
+			ignoreClear: true
+		});
+
+		window.canvg(this.canvas, `<svg>${piesvg}</svg>`, {
+			ignoreClear: true,
+			offsetY: 40
+		});
 		window.canvg(this.canvas, `<svg>${legendsvg}</svg>`, {
 			ignoreClear: true,
-			offsetX: 400
+			offsetX: 420,
+			offsetY: 40,
+			scaleWidth: 300
 		});
 		window.canvg(this.canvas, percentsvg, {
 			ignoreClear: true,
-			offsetY: 220,
+			offsetY: 260,
 			offsetX: 150
 		});
 
@@ -56,8 +81,8 @@ class DownloadButton extends Component {
 				<canvas
 					id="canvas"
 					className="canvas"
-					width={880}
-					height={405}
+					width={800}
+					height={440}
 					ref={canvas => (this.canvas = canvas)}
 				/>
 			</div>
