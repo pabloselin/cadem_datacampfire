@@ -95,6 +95,7 @@ class GroupedBars extends Component {
 					theme={this.props.theme}
 					height={this.props.height}
 					domain={{ y: [0, 100] }}
+					domainPadding={{ x: 40, y: 0 }}
 				>
 					<VictoryGroup
 						name="BarGroup"

@@ -6,6 +6,10 @@
 	display: flex;
 }
 
+.Pie > g.ChartHeader {
+	display: block;
+}
+
 .Pie .percent {
 	position: absolute;
 	left: 20%;

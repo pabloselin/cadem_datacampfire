@@ -1,12 +1,13 @@
 import React from "react";
 import { Text } from "victory";
+import "./ChartHeader.css";
 
 const ChartHeader = props => {
 	return (
-		<g>
+		<g className="ChartHeader">
 			<Text
-				title={props.title}
-				desc={props.title}
+				title={props.title.toUpperCase()}
+				desc={props.title.toUpperCase()}
 				dx={0}
 				style={{
 					fontSize: 24,

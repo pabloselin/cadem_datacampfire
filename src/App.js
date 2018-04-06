@@ -66,7 +66,16 @@ class App extends Component {
           />
           <Route
             render={props => (
-              <ChartPage chart={<Pie {...props} theme={cadem_theme} />} />
+              <ChartPage
+                chart={
+                  <Pie
+                    {...props}
+                    height={400}
+                    width={600}
+                    theme={cadem_theme}
+                  />
+                }
+              />
             )}
             path="/pie"
           />

@@ -25,7 +25,7 @@ const activeColor = "#0038F0";
 // *
 // * Typography
 // *
-const sansSerif = "Asap, Arial, Helvetica, sans-serif";
+const sansSerif = "Asap";
 const letterSpacing = "normal";
 //const fontSize = 12;
 // *

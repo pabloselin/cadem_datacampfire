@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import jsondata from "../data/pie.json";
 import "./Pie.css";
 import DownloadButton from "./mini/DownloadButton.js";
+import ChartHeader from "./mini/ChartHeader.js";
 import {
 	VictoryPie,
 	VictoryLegend,
@@ -105,9 +106,13 @@ class Pie extends Component {
 		};
 		return (
 			<div className="Pie">
-				<h2>{this.state.title}</h2>
-				<h3 className="subtitle">{this.state.subtitle}</h3>
+				<ChartHeader
+					title={this.state.title}
+					subtitle={this.state.subtitle}
+					className="ChartHeader"
+				/>
 				<VictorySharedEvents
+					className="pieWrapper"
 					events={[
 						{
 							childName: ["pie", "legend"],
@@ -195,7 +200,7 @@ class Pie extends Component {
 						style={{
 							fontSize: 64,
 							color: this.state.activeColor,
-							fontFamily: "Asap, sans-serif",
+							fontFamily: "Asap",
 							fontWeight: 400
 						}}
 						ref={percent => (this.percent = percent)}
@@ -209,8 +214,10 @@ class Pie extends Component {
 						gutter={0}
 						height={600}
 						style={{
-							title: { fontSize: 22, fontWeight: "bold" },
-							labels: { fontSize: 20 },
+							labels: {
+								fontFamily: "Asap",
+								fontSize: 20
+							},
 							parent: { maxWidth: "40%" }
 						}}
 						data={this.makeLegend(this.state.data)}

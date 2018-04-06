@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./Lines.css";
 import jsondata from "../data/lineas.json";
 import LineFlyOut from "./mini/LineFlyOut.js";
+import ChartHeader from "./mini/ChartHeader.js";
 import {
 	VictoryChart,
 	VictoryLine,
@@ -119,7 +120,11 @@ class Lines extends Component {
 			});
 		return (
 			<div>
-				<h2>{this.state.title}</h2>
+				<ChartHeader
+					title={this.state.title}
+					subtitle={this.state.data.chart_subtitle}
+					className="ChartHeader"
+				/>
 				<VictorySharedEvents
 					events={[
 						{

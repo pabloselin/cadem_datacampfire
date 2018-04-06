@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import "./DownloadButton.css";
 import downloadIcon from "../../assets/download.svg";
+import cadem_theme from "../../themes/cadem_theme.js";
+import asapfont from "../../assets/fonts/Asap-Regular.ttf";
 
 class DownloadButton extends Component {
 	constructor(props) {
@@ -15,14 +17,27 @@ class DownloadButton extends Component {
 	}
 
 	makePNG() {
+		//Pie Specific
 		let piesvg = this.props.svgs[0].childNodes[0].innerHTML;
 		let legendsvg = this.props.svgs[1].childNodes[0].innerHTML;
+		let percent = this.props.svgs[2].props.text;
+
+		let percentsvg = `<svg><text style="font-size: 60; fill:${
+			cadem_theme.interactions.hover
+		}">${percent}</text></svg>`;
 
 		window.canvg(this.canvas, piesvg, {});
-		window.canvg(this.canvas, "<svg>" + legendsvg + "</svg>", {
+		window.canvg(this.canvas, `<svg>${legendsvg}</svg>`, {
 			ignoreClear: true,
 			offsetX: 400
 		});
+		window.canvg(this.canvas, percentsvg, {
+			ignoreClear: true,
+			offsetY: 220,
+			offsetX: 150
+		});
+
+		//Common
 		let png = this.canvas.toDataURL("image/png");
 		this.setState({ generated: true, image: png });
 		var newTab = window.open();
