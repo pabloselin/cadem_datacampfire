@@ -29,7 +29,6 @@ class Lines extends Component {
 	makeLegend(data) {
 		let legData = data.map((item, idx) => {
 			let linename = "line-" + idx;
-			//let ballcolor = this.state.colorscale[idx];
 			let fill = () => {
 				if (linename === this.state.activeLine) {
 					return this.state.activeColor;
@@ -108,7 +107,7 @@ class Lines extends Component {
 							}}
 						/>
 						<VictoryScatter
-							size={(datum, active) => (active ? 6 : 3)}
+							size={(datum, active) => (active ? 4 : 2)}
 							style={{
 								data: {
 									fill: linecolor()
@@ -122,7 +121,7 @@ class Lines extends Component {
 			<div>
 				<ChartHeader
 					title={this.state.title}
-					subtitle={this.state.data.chart_subtitle}
+					subtitle={jsondata.chart_subtitle}
 					className="ChartHeader"
 				/>
 				<VictorySharedEvents
@@ -165,7 +164,7 @@ class Lines extends Component {
 						width={600}
 						name="lines"
 						theme={this.props.theme}
-						domainPadding={{ x: 10, y: 20 }}
+						domainPadding={{ x: 20, y: 20 }}
 						containerComponent={<VictoryVoronoiContainer />}
 					>
 						{lines()}

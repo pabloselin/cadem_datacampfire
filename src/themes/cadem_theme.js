@@ -18,6 +18,15 @@ const colors = [
   "#333333"
 ];
 
+const colors_b = [
+  "#828282",
+  "#969696",
+  "#aaaaaa",
+  "#bebebe",
+  "#d2d2d2",
+  "#dcdcdc"
+];
+
 const charcoal = "#252525";
 //const green = "#1abc9c";
 const activeColor = "#0038F0";
@@ -158,19 +167,20 @@ export default {
     },
     baseProps
   ),
-  line: assign(
-    {
-      style: {
-        data: {
-          fill: "transparent",
-          stroke: "#ccc",
-          strokeWidth: 1
-        },
-        labels: centeredLabelStyles
-      }
+  line: assign({
+    style: {
+      data: {
+        fill: "transparent",
+        stroke: "#ccc",
+        strokeWidth: 1
+      },
+      labels: centeredLabelStyles
     },
-    baseProps
-  ),
+    colorScale: colors_b,
+    width: 450,
+    height: 300,
+    padding: 50
+  }),
   pie: {
     style: {
       data: {

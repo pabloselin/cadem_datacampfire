@@ -225,6 +225,7 @@ class Pie extends Component {
 					/>
 				</VictorySharedEvents>
 				<DownloadButton
+					type="pie"
 					svgs={this.state.svgrefs}
 					title={this.state.title}
 					subtitle={this.state.subtitle}
