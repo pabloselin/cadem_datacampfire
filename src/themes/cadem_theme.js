@@ -59,7 +59,7 @@ const baseLabelStyles = {
 };
 
 const tickLabelStyles = {
-  fontSize: 10,
+  fontSize: 8,
   fill: "#555",
   padding: 6,
   fontFamily: sansSerif
@@ -91,7 +91,7 @@ export default {
         axis: {
           fill: "transparent",
           stroke: charcoal,
-          strokeWidth: 2,
+          strokeWidth: 1,
           strokeLinecap,
           strokeLinejoin
         },

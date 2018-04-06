@@ -7,7 +7,8 @@ import {
 	VictoryBar,
 	VictoryGroup,
 	VictoryLegend,
-	VictoryLabel
+	VictoryLabel,
+	VictoryAxis
 } from "victory";
 
 class GroupedBars extends Component {
