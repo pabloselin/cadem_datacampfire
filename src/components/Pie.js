@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import jsondata from "../data/pie.json";
 import "./Pie.css";
 import DownloadButton from "./mini/DownloadButton.js";
 import ChartHeader from "./mini/ChartHeader.js";
@@ -15,9 +14,9 @@ class Pie extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			data: jsondata.data,
-			title: jsondata.chart_title,
-			subtitle: jsondata.chart_subtitle,
+			data: this.props.data.data,
+			title: this.props.data.chart_title,
+			subtitle: this.props.data.chart_subtitle,
 			currentPercent: 0,
 			activeColor: this.props.theme.interactions.active,
 			clicked: false,

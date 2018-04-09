@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import "./Lines.css";
-import jsondata from "../data/lineas.json";
 import LineFlyOut from "./mini/LineFlyOut.js";
 import ChartHeader from "./mini/ChartHeader.js";
 import {
@@ -19,8 +18,8 @@ class Lines extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			title: jsondata.chart_title,
-			data: jsondata.data,
+			title: this.props.data.chart_title,
+			data: this.props.data.data,
 			colorscale: this.props.theme.line.colorScale,
 			activeLine: null,
 			activeColor: this.props.theme.interactions.hover
@@ -125,7 +124,7 @@ class Lines extends Component {
 			<div>
 				<ChartHeader
 					title={this.state.title}
-					subtitle={jsondata.chart_subtitle}
+					subtitle={this.props.data.chart_subtitle}
 					className="ChartHeader"
 				/>
 				<VictorySharedEvents

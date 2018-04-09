@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import "./GroupedBars.css";
-import jsondata from "../data/barras.json";
 import ChartHeader from "./mini/ChartHeader.js";
 import {
 	VictoryChart,
@@ -15,8 +14,8 @@ class GroupedBars extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			title: jsondata.chart_title,
-			data: jsondata,
+			title: this.props.data.chart_title,
+			data: this.props.data,
 			activeKey: null,
 			activeColor: this.props.theme.interactions.hover,
 			clicked: false
