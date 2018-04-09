@@ -98,6 +98,8 @@ class GroupedBars extends Component {
 					domain={{ y: [0, 100] }}
 					domainPadding={{ x: 40, y: 0 }}
 				>
+					<VictoryAxis />
+					<VictoryAxis dependentAxis />
 					<VictoryGroup
 						name="BarGroup"
 						categories={{ x: this.state.data.categories }}

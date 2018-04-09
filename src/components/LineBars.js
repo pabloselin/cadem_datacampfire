@@ -63,6 +63,33 @@ class LineBars extends Component {
 					]}
 				/>
 				<VictoryChart domainPadding={this.state.domainPadding}>
+					<VictoryAxis
+						key="horizontalAxis"
+						height={this.props.height}
+						width={this.props.width}
+						style={{
+							tickLabels: { fontSize: 6 }
+						}}
+						tickLabelComponent={
+							<VictoryLabel textAnchor="middle" dy={20} />
+						}
+						tickValues={this.state.data.data[0].data.map(
+							point => point.x
+						)}
+					/>
+					<VictoryAxis
+						key="verticalAxis"
+						dependentAxis
+						height={this.props.height}
+						width={this.props.width}
+						style={{
+							tickLabels: { fontSize: 6 },
+							grid: { stroke: "#ccc", strokeWidth: 0.4 }
+						}}
+						tickLabelComponent={
+							<VictoryLabel textAnchor="middle" />
+						}
+					/>
 					<VictoryStack
 						theme={this.props.theme}
 						height={this.props.height}
@@ -119,33 +146,6 @@ class LineBars extends Component {
 						)}
 						domain={{ y: [0, 250] }}
 						standalone={true}
-					/>
-					<VictoryAxis
-						key="horizontalAxis"
-						height={this.props.height}
-						width={this.props.width}
-						style={{
-							tickLabels: { fontSize: 6 }
-						}}
-						tickLabelComponent={
-							<VictoryLabel textAnchor="middle" dy={20} />
-						}
-						tickValues={this.state.data.data[0].data.map(
-							point => point.x
-						)}
-					/>
-					<VictoryAxis
-						key="verticalAxis"
-						dependentAxis
-						height={this.props.height}
-						width={this.props.width}
-						style={{
-							tickLabels: { fontSize: 6 },
-							grid: { stroke: "#ccc", strokeWidth: 0.4 }
-						}}
-						tickLabelComponent={
-							<VictoryLabel textAnchor="middle" />
-						}
 					/>
 				</VictoryChart>
 			</div>

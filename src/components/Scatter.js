@@ -5,7 +5,8 @@ import ChartHeader from "./mini/ChartHeader.js";
 import {
 	VictoryChart,
 	VictoryScatter,
-	VictoryLegend
+	VictoryLegend,
+	VictoryAxis
 	//VictoryTooltip
 } from "victory";
 
@@ -64,6 +65,8 @@ class Scatter extends Component {
 					height={this.props.height}
 					domainPadding={40}
 				>
+					<VictoryAxis />
+					<VictoryAxis dependentAxis />
 					{scatters()}
 				</VictoryChart>
 			</div>

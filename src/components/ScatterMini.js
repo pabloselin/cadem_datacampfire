@@ -6,7 +6,8 @@ import {
 	VictoryChart,
 	VictoryScatter,
 	//VictoryLegend,
-	VictoryTooltip
+	VictoryTooltip,
+	VictoryAxis
 } from "victory";
 
 class ScatterMini extends Component {
@@ -45,6 +46,8 @@ class ScatterMini extends Component {
 					height={this.props.height}
 					domainPadding={40}
 				>
+					<VictoryAxis />
+					<VictoryAxis dependentAxis />
 					<VictoryScatter
 						theme={this.props.theme}
 						key={this.state.title}

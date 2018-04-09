@@ -54,14 +54,14 @@ class DownloadButton extends Component {
 		});
 
 		if (percent !== undefined) {
-			let percentsvg = `<svg><text style="font-size: 60; fill:${
+			let percentsvg = `<svg><text style="font-size: 44; fill:${
 				cadem_theme.interactions.hover
 			}">${percent}</text></svg>`;
 
 			window.canvg(this.canvas, percentsvg, {
 				ignoreClear: true,
-				offsetY: 260,
-				offsetX: 150
+				offsetY: 255,
+				offsetX: 180
 			});
 		}
 

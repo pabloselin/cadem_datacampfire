@@ -41,12 +41,14 @@ class Pie extends Component {
 					return {
 						fill: this.state.activeColor,
 						fontWeight: "bold",
-						fontSize: 21
+						fontSize: 18.6,
+						fontColor: this.state.activeColor
 					};
 				} else {
 					return {
 						fill: this.state.colorscale[idx],
-						fontWeight: "normal"
+						fontWeight: "normal",
+						fontColor: "#555"
 					};
 				}
 			};
@@ -56,7 +58,8 @@ class Pie extends Component {
 				symbol: { fill: activeStyle().fill },
 				labels: {
 					fontWeight: activeStyle().fontWeight,
-					fontSize: activeStyle().fontSize
+					fontSize: activeStyle().fontSize,
+					fill: activeStyle().fontColor
 				}
 			};
 		});
@@ -176,7 +179,7 @@ class Pie extends Component {
 						}}
 						width={480}
 						padAngle={0}
-						innerRadius={100}
+						innerRadius={70}
 						data={this.getData(this.state.data)}
 						standalone={true}
 						labels={d => ""}
@@ -192,7 +195,7 @@ class Pie extends Component {
 						animate={{ duration: 500 }}
 						text={percentPortal()}
 						style={{
-							fontSize: 64,
+							fontSize: 48,
 							color: this.state.activeColor,
 							fontFamily: "Asap",
 							fontWeight: 400

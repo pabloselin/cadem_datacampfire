@@ -11,7 +11,8 @@ import {
 	VictoryLegend,
 	VictorySharedEvents,
 	VictoryVoronoiContainer,
-	VictoryScatter
+	VictoryScatter,
+	VictoryAxis
 } from "victory";
 
 class Lines extends Component {
@@ -75,6 +76,8 @@ class Lines extends Component {
 					this.state.activeLine === linename
 						? this.state.activeColor
 						: this.state.colorscale[idx];
+				const linewidth = () =>
+					this.state.activeLine === linename ? 1.5 : 0.5;
 				return (
 					<VictoryGroup
 						name={linename}
@@ -102,7 +105,8 @@ class Lines extends Component {
 							style={{
 								data: {
 									stroke: linecolor(),
-									pointerEvents: "none"
+									pointerEvents: "none",
+									strokeWidth: linewidth()
 								}
 							}}
 						/>

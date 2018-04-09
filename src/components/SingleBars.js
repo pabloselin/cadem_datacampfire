@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "./GroupedBars.css";
 import jsondata from "../data/barras_single.json";
 import ChartHeader from "./mini/ChartHeader.js";
-import { VictoryChart, VictoryBar, VictoryLabel } from "victory";
+import { VictoryChart, VictoryBar, VictoryLabel, VictoryAxis } from "victory";
 
 class SingleBars extends Component {
 	constructor(props) {
@@ -30,6 +30,8 @@ class SingleBars extends Component {
 					width={this.props.width}
 					domainPadding={{ y: 0, x: 40 }}
 				>
+					<VictoryAxis />
+					<VictoryAxis dependentAxis />
 					<VictoryBar
 						domain={{ y: [0, 100] }}
 						key={"bar"}
