@@ -135,7 +135,6 @@ class Lines extends Component {
 							target: "data",
 							eventHandlers: {
 								onClick: (evt, obj, key) => {
-									//console.log(linenames);
 									return [
 										{
 											target: "data",
