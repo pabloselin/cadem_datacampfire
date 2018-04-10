@@ -10,7 +10,7 @@ const ChartHeader = props => {
 				desc={props.title.toUpperCase()}
 				dx={0}
 				style={{
-					fontSize: 24,
+					fontSize: 18,
 					fontFamily: "Asap"
 				}}
 				x={0}
@@ -22,7 +22,7 @@ const ChartHeader = props => {
 				desc={props.subtitle}
 				dx={0}
 				style={{
-					fontSize: 18,
+					fontSize: 16,
 					fontFamily: "Asap"
 				}}
 				x={0}

@@ -3,20 +3,32 @@ import { assign } from "lodash";
 // *
 // * Colors
 // *
+
 const colors = [
-  "#d4cfc4",
-  "#b3aea4",
-  "#8c8981",
-  "#595753",
-  "#363531",
   "#000000",
-  "#636364",
-  "#4f4f50",
-  "#3b3c3c",
-  "#272828",
-  "#131414",
-  "#333333"
+  "#363531",
+  "#595753",
+  "#8c8981",
+  "#b3aea4",
+  "#d4cfc4",
+  "#f0efeb"
 ];
+
+const azules = ["#08009e", "#71b0e5", "#95c7ce", "#aec5c1"];
+const activeColor = "#0038f0";
+
+const semaforo = {
+  rojo: ["#e74c3c", "#eb9d93"],
+  amarillo: ["#ffb800", "#f8d376"],
+  verde: ["#1abc9c", "#85d5cd"]
+};
+
+const paleta = {
+  escala_grises: colors,
+  escala_azules: azules,
+  escala_semaforo: semaforo,
+  destacado: activeColor
+};
 
 const colors_b = [
   "#828282",
@@ -29,7 +41,6 @@ const colors_b = [
 
 const charcoal = "#252525";
 //const green = "#1abc9c";
-const activeColor = "#0038F0";
 
 // *
 // * Typography

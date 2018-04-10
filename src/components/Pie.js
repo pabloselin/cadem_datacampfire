@@ -21,7 +21,7 @@ class Pie extends Component {
 			activeColor: this.props.theme.interactions.active,
 			clicked: false,
 			activeKey: undefined,
-			colorscale: this.props.theme.line.colorScale,
+			colorscale: this.props.theme.pie.colorScale,
 			svgrefs: []
 		};
 	}
@@ -171,7 +171,7 @@ class Pie extends Component {
 						animate={{ duration: 500 }}
 						name="pie"
 						style={{
-							parent: { maxWidth: "60%" },
+							parent: { maxWidth: "50%" },
 							data: {
 								fill: d => piecolor(d.eventKey)
 							}
@@ -208,13 +208,13 @@ class Pie extends Component {
 						orientation="vertical"
 						borderPadding={{ top: 40 }}
 						gutter={0}
-						height={600}
+						height={400}
 						style={{
 							labels: {
 								fontFamily: "Asap",
 								fontSize: 20
 							},
-							parent: { maxWidth: "40%" }
+							parent: { maxWidth: "50%" }
 						}}
 						data={this.makeLegend(this.state.data)}
 						containerComponent={
