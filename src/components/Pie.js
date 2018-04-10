@@ -7,7 +7,9 @@ import {
 	VictoryLegend,
 	VictorySharedEvents,
 	VictoryLabel,
-	VictoryContainer
+	VictoryContainer,
+	VictoryPortal,
+	VictoryGroup
 } from "victory";
 
 class Pie extends Component {
@@ -107,6 +109,7 @@ class Pie extends Component {
 					subtitle={this.state.subtitle}
 					className="ChartHeader"
 				/>
+
 				<VictorySharedEvents
 					className="pieWrapper"
 					events={[
@@ -165,66 +168,88 @@ class Pie extends Component {
 						}
 					]}
 				>
-					<VictoryPie
-						ref={Pie => (this.Pie = Pie)}
-						theme={this.props.theme}
-						animate={{ duration: 500 }}
-						name="pie"
+					<div
 						style={{
-							parent: { maxWidth: "50%" },
-							data: {
-								fill: d => piecolor(d.eventKey)
+							display: "flex",
+							flexWrap: "wrap"
+						}}
+					>
+						<VictoryGroup
+							style={{
+								parent: { maxWidth: "65%", marginTop: 12 }
+							}}
+							width={290}
+						>
+							<svg viewbox="50 40 195 195">
+								<VictoryPie
+									width={260}
+									height={260}
+									ref={Pie => (this.Pie = Pie)}
+									theme={this.props.theme}
+									name="pie"
+									style={{
+										data: {
+											fill: d => piecolor(d.eventKey)
+										}
+									}}
+									padAngle={0}
+									innerRadius={65}
+									data={this.getData(this.state.data)}
+									standalone={false}
+									labels={d => ""}
+									containerComponent={
+										<VictoryContainer
+											containerRef={pieref =>
+												(this.pieref = pieref)
+											}
+										/>
+									}
+								/>
+							</svg>
+							<VictoryLabel
+								className="percent"
+								theme={this.props.theme}
+								animate={{ duration: 500 }}
+								text={percentPortal()}
+								textAnchor="middle"
+								verticalAnchor="middle"
+								x={130}
+								y={130}
+								style={{
+									fontSize: 32,
+									fill: this.state.activeColor,
+									fontFamily: "Asap",
+									fontWeight: "bold"
+								}}
+								ref={percent => (this.percent = percent)}
+							/>
+						</VictoryGroup>
+						<VictoryLegend
+							theme={this.props.theme}
+							name="legend"
+							centerTitle
+							orientation="vertical"
+							borderPadding={{ top: 40 }}
+							rowGutter={-10}
+							width={200}
+							height={400}
+							style={{
+								labels: {
+									fontFamily: "Asap",
+									fontSize: 20
+								},
+								parent: { maxWidth: "35%" }
+							}}
+							data={this.makeLegend(this.state.data)}
+							containerComponent={
+								<VictoryContainer
+									containerRef={legendref =>
+										(this.legendref = legendref)
+									}
+								/>
 							}
-						}}
-						width={480}
-						padAngle={0}
-						innerRadius={70}
-						data={this.getData(this.state.data)}
-						standalone={true}
-						labels={d => ""}
-						containerComponent={
-							<VictoryContainer
-								containerRef={pieref => (this.pieref = pieref)}
-							/>
-						}
-					/>
-					<VictoryLabel
-						className="percent"
-						theme={this.props.theme}
-						animate={{ duration: 500 }}
-						text={percentPortal()}
-						style={{
-							fontSize: 48,
-							color: this.state.activeColor,
-							fontFamily: "Asap",
-							fontWeight: 400
-						}}
-						ref={percent => (this.percent = percent)}
-					/>
-					<VictoryLegend
-						theme={this.props.theme}
-						name="legend"
-						centerTitle
-						orientation="vertical"
-						borderPadding={{ top: 40 }}
-						gutter={0}
-						height={400}
-						style={{
-							labels: {
-								fontFamily: "Asap",
-								fontSize: 20
-							},
-							parent: { maxWidth: "50%" }
-						}}
-						data={this.makeLegend(this.state.data)}
-						containerComponent={
-							<VictoryContainer
-								containerRef={legendref =>
-									(this.legendref = legendref)
-								}
-							/>
-						}
-					/>
+						/>
+					</div>
 				</VictorySharedEvents>
 				<DownloadButton
 					type="pie"

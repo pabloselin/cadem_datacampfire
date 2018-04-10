@@ -30,7 +30,12 @@ const Dashboard = () => (
 					</Menu>
 				</Grid.Column>
 				<Grid.Column width={4}>
-					<Pie data={pie_data} theme={cadem_theme} />
+					<Pie
+						data={pie_data}
+						width={400}
+						height={320}
+						theme={cadem_theme}
+					/>
 				</Grid.Column>
 				<Grid.Column width={4}>
 					<GroupedBars data={groupbar_data} theme={cadem_theme} />

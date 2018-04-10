@@ -4,29 +4,33 @@ import "./ChartHeader.css";
 
 const ChartHeader = props => {
 	return (
-		<g className="ChartHeader">
+		<g>
 			<Text
 				title={props.title.toUpperCase()}
 				desc={props.title.toUpperCase()}
 				dx={0}
 				style={{
-					fontSize: 18,
-					fontFamily: "Asap"
+					fontSize: 14,
+					fontFamily: "Asap",
+					display: "block",
+					fontWeight: "bold",
+					lineHeight: "1em",
+					padding: 0,
+					parent: {
+						display: "block"
+					}
 				}}
-				x={0}
-				y={2}
 			/>
-			<br />
+
 			<Text
 				title={props.subtitle}
 				desc={props.subtitle}
 				dx={0}
 				style={{
-					fontSize: 16,
+					lineHeight: "1em",
+					fontSize: 12,
 					fontFamily: "Asap"
 				}}
-				x={0}
-				y={20}
 			/>
 		</g>
 	);

@@ -3,24 +3,24 @@
   "chart_subtitle": "Región metropolitana",
   "data": [
     {
-      "x": "No habían atendedores \nen la isla",
+      "x": "ConRec /\nSinSim",
       "y": 12
     },
     {
-      "x": "Había atendedores desocupados\n y no me realizaron seña",
+      "x": "SinRec /\nSinSim",
       "y": 23
     },
     {
-      "x": "El atendedor estaba distraído",
+      "x": "ConRec /\nConSim",
       "y": 15
     },
     {
-      "x": "El atendedor estaba \n resolviendo otros problemas",
+      "x": "SinRec /\nSinSim",
       "y": 15
     },
     {
-      "x": "Sin datos",
-      "y": "5"
+      "x": "ConRec /\nConSim",
+      "y": 5
     }
   ]
 }
