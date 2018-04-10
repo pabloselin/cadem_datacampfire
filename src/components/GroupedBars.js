@@ -66,7 +66,7 @@ class GroupedBars extends Component {
 			});
 
 		return (
-			<div>
+			<div className="chart-widget">
 				<ChartHeader
 					title={this.state.title}
 					subtitle={this.state.data.chart_subtitle}

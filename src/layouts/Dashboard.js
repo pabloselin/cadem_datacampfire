@@ -1,9 +1,11 @@
 import React from "react";
-import { Grid, Sidebar, Menu } from "semantic-ui-react";
+import { Grid, Sidebar, Menu, Container } from "semantic-ui-react";
 import cadem_theme from "../themes/cadem_theme.js";
+import "./Dashboard.css";
 import Pie from "../components/Pie.js";
 import GroupedBars from "../components/GroupedBars.js";
 import logo from "../assets/Data-Campfire-Logo.png";
+import { Link } from "react-router-dom";
 //Data
 import linebars_data from "../data/linebars.json";
 import pie_data from "../data/pie.json";
@@ -14,22 +16,16 @@ import scatter_data from "../data/scatter.json";
 import scattermini_data from "../data/scattermini.json";
 
 const Dashboard = () => (
-	<Grid center aligned columns={14}>
+	<Grid className="dashboard" columns={14}>
 		<Grid.Row className="dashboard-header">
-			<Grid.Column width={2}>
-				<img src={logo} alt="" />
-			</Grid.Column>
+			<Grid.Column width={2} />
+			<Grid.Column width={12} />
 		</Grid.Row>
 		<Grid.Row>
 			<Grid.Column width={2}>
-				<Sidebar
-					className="vertical inverted"
-					style={{ backgroundColor: "#000" }}
-					visible={true}
-				>
-					<img src={logo} alt="" />
-					<Menu.Item name="inicio">Inicio</Menu.Item>
-				</Sidebar>
+				<Menu text vertical>
+					<Menu.Item>Inicio</Menu.Item>
+				</Menu>
 			</Grid.Column>
 			<Grid.Column width={6}>
 				<Pie data={pie_data} theme={cadem_theme} />

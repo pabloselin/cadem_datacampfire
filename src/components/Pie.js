@@ -101,7 +101,7 @@ class Pie extends Component {
 			}
 		};
 		return (
-			<div className="Pie">
+			<div className="Pie chart-widget">
 				<ChartHeader
 					title={this.state.title}
 					subtitle={this.state.subtitle}

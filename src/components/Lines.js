@@ -121,7 +121,7 @@ class Lines extends Component {
 				);
 			});
 		return (
-			<div>
+			<div className="chart-widget">
 				<ChartHeader
 					title={this.state.title}
 					subtitle={this.props.data.chart_subtitle}
