@@ -159,7 +159,7 @@ const Main = () => (
 								{...props}
 								data={stacked_data}
 								height={300}
-								width={600}
+								width={300}
 								theme={cadem_theme}
 							/>
 						}

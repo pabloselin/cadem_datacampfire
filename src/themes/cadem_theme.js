@@ -70,7 +70,7 @@ const baseLabelStyles = {
 };
 
 const tickLabelStyles = {
-  fontSize: 8,
+  fontSize: 12,
   fill: "#555",
   padding: 6,
   fontFamily: sansSerif
@@ -102,7 +102,7 @@ export default {
         axis: {
           fill: "transparent",
           stroke: charcoal,
-          strokeWidth: 1,
+          strokeWidth: 1.5,
           strokeLinecap,
           strokeLinejoin
         },
@@ -190,7 +190,7 @@ export default {
     colorScale: colors_b,
     width: 450,
     height: 300,
-    padding: 50
+    padding: 20
   }),
   pie: {
     style: {

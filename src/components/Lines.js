@@ -36,18 +36,28 @@ class Lines extends Component {
 	makeLegend(data) {
 		let legData = data.map((item, idx) => {
 			let linename = "line-" + idx;
-			let fill = () => {
+			let eventStyles = () => {
 				if (linename === this.state.activeLine) {
-					return this.state.activeColor;
+					return {
+						fill: this.state.activeColor,
+						fontWeight: "bold"
+					};
 				} else {
-					return this.state.colorscale[idx];
+					return {
+						fill: this.state.colorscale[idx],
+						fontWeight: "normal"
+					};
 				}
 			};
 			//console.log(ballcolor);
 			return {
 				name: item.title,
 				symbol: {
-					fill: fill()
+					fill: eventStyles().fill
+				},
+				labels: {
+					fill: eventStyles().fill,
+					fontWeight: eventStyles().fontWeight
 				}
 			};
 		});
@@ -192,7 +202,7 @@ class Lines extends Component {
 						width={this.props.width}
 						name="lines"
 						theme={this.props.theme}
-						domainPadding={{ x: 20, y: 20 }}
+						domainPadding={{ x: 10, y: 20 }}
 						containerComponent={
 							<VictoryVoronoiContainer
 								onActivated={(points, props) => {
@@ -235,13 +245,12 @@ class Lines extends Component {
 						/>
 						<VictoryAxis
 							width={this.props.width}
-							domain={[0, this.state.domainLength]}
+							domain={[this.state.domainLength]}
 							theme={this.props.theme}
 							tickValues={this.state.xLabels}
 							tickLabelComponent={
-								<VictoryLabel dy={-4} dx={-14} angle={-45} />
+								<VictoryLabel dy={4} dx={-14} angle={-45} />
 							}
-							label="Meses"
 							style={{
 								axisLabel: {
 									textAlign: "right",
@@ -249,8 +258,6 @@ class Lines extends Component {
 									padding: 40
 								},
 								tickLabels: {
-									fontSize: 8,
-
 									fontWeight: a =>
 										a === this.state.activeMonth
 											? "bold"
@@ -270,10 +277,10 @@ class Lines extends Component {
 						data={this.makeLegend(this.state.data)}
 						orientation="vertical"
 						itemsPerRow={3}
-						height={40}
+						height={60}
 						style={{
 							title: { fontSize: 12, fontWeight: "bold" },
-							labels: { fontSize: 8 }
+							labels: { fontSize: 12 }
 						}}
 					/>
 				</VictorySharedEvents>
