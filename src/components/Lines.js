@@ -10,7 +10,8 @@ import {
 	VictoryLegend,
 	VictorySharedEvents,
 	VictoryVoronoiContainer,
-	VictoryScatter
+	VictoryScatter,
+	VictoryLabel
 } from "victory";
 
 class Lines extends Component {
@@ -213,6 +214,16 @@ class Lines extends Component {
 									<VictoryTooltip
 										theme={this.props.theme}
 										activateData={true}
+										labelComponent={
+											<VictoryLabel
+												style={{
+													fill: this.state
+														.activeColor,
+													fontWeight: "bold",
+													fontSize: 10
+												}}
+											/>
+										}
 										flyoutComponent={
 											<LineFlyOut
 												graphHeight={this.props.height}
@@ -234,7 +245,7 @@ class Lines extends Component {
 						data={this.makeLegend(this.state.data)}
 						orientation="vertical"
 						itemsPerRow={3}
-						height={70}
+						height={40}
 						style={{
 							title: { fontSize: 12, fontWeight: "bold" },
 							labels: { fontSize: 8 }
