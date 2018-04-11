@@ -16,7 +16,7 @@ import Dashboard from "../../layouts/Dashboard.js";
 //Data
 import linebars_data from "../../data/linebars.json";
 import pie_data from "../../data/pie.json";
-import lines_data from "../../data/lineas.json";
+import lines_data from "../../data/lineas_corto.json";
 import groupbar_data from "../../data/barras.json";
 import singlebar_data from "../../data/barras_single.json";
 import scatter_data from "../../data/scatter.json";
@@ -25,149 +25,150 @@ import stacked_data from "../../data/stacked.json";
 //import stackedmini_data from "../../data/stackedmini.json";
 
 const Main = () => (
-	<Switch>
-		<Route
-			exact
-			path="/"
-			render={props => <Inicio {...props} theme={cadem_theme} />}
-		/>
-		<Route path="/dashboard" component={Dashboard} />
-		<Route
-			render={props => (
-				<ChartPage
-					chart={
-						<Pie
-							{...props}
-							data={pie_data}
-							height={400}
-							width={600}
-							theme={cadem_theme}
-						/>
-					}
-				/>
-			)}
-			path="/pie"
-		/>
-		<Route
-			render={props => (
-				<ChartPage
-					chart={
-						<Lines
-							data={lines_data}
-							{...props}
-							height={300}
-							theme={cadem_theme}
-						/>
-					}
-				/>
-			)}
-			path="/lines"
-		/>
+	<Router>
+		<Switch>
+			<Route
+				exact
+				path="/"
+				render={props => <Inicio {...props} theme={cadem_theme} />}
+			/>
+			<Route path="/dashboard" component={Dashboard} />
+			<Route
+				render={props => (
+					<ChartPage
+						chart={
+							<Pie
+								{...props}
+								data={pie_data}
+								height={400}
+								width={600}
+								theme={cadem_theme}
+							/>
+						}
+					/>
+				)}
+				path="/pie"
+			/>
+			<Route
+				render={props => (
+					<ChartPage
+						chart={
+							<Lines
+								data={lines_data}
+								{...props}
+								height={300}
+								theme={cadem_theme}
+							/>
+						}
+					/>
+				)}
+				path="/lines"
+			/>
 
-		<Route
-			render={props => (
-				<ChartPage
-					chart={
-						<GroupedBars
-							{...props}
-							data={groupbar_data}
-							height={240}
-							theme={cadem_theme}
-						/>
-					}
-				/>
-			)}
-			path="/grouped-bars"
-		/>
+			<Route
+				render={props => (
+					<ChartPage
+						chart={
+							<GroupedBars
+								{...props}
+								data={groupbar_data}
+								height={240}
+								theme={cadem_theme}
+							/>
+						}
+					/>
+				)}
+				path="/grouped-bars"
+			/>
 
-		<Route
-			render={props => (
-				<ChartPage
-					size="mini"
-					chart={
-						<SingleBars
-							{...props}
-							data={singlebar_data}
-							height={300}
-							width={300}
-							theme={cadem_theme}
-						/>
-					}
-				/>
-			)}
-			path="/single-bars"
-		/>
+			<Route
+				render={props => (
+					<ChartPage
+						size="mini"
+						chart={
+							<SingleBars
+								{...props}
+								data={singlebar_data}
+								height={300}
+								width={300}
+								theme={cadem_theme}
+							/>
+						}
+					/>
+				)}
+				path="/single-bars"
+			/>
 
-		<Route
-			render={props => (
-				<ChartPage
-					chart={
-						<LineBars
-							{...props}
-							data={linebars_data}
-							height={300}
-							width={600}
-							theme={cadem_theme}
-						/>
-					}
-				/>
-			)}
-			path="/line-bars"
-		/>
+			<Route
+				render={props => (
+					<ChartPage
+						chart={
+							<LineBars
+								{...props}
+								data={linebars_data}
+								height={300}
+								width={600}
+								theme={cadem_theme}
+							/>
+						}
+					/>
+				)}
+				path="/line-bars"
+			/>
 
-		<Route
-			render={props => (
-				<ChartPage
-					chart={
-						<Scatter
-							{...props}
-							data={scatter_data}
-							height={300}
-							width={600}
-							theme={cadem_theme}
-						/>
-					}
-				/>
-			)}
-			path="/scatter"
-		/>
+			<Route
+				render={props => (
+					<ChartPage
+						chart={
+							<Scatter
+								{...props}
+								data={scatter_data}
+								height={300}
+								width={600}
+								theme={cadem_theme}
+							/>
+						}
+					/>
+				)}
+				path="/scatter"
+			/>
 
-		<Route
-			render={props => (
-				<ChartPage
-					size="mini"
-					chart={
-						<ScatterMini
-							{...props}
-							data={scattermini_data}
-							height={300}
-							width={300}
-							theme={cadem_theme}
-						/>
-					}
-				/>
-			)}
-			path="/scatter-mini"
-		/>
+			<Route
+				render={props => (
+					<ChartPage
+						size="mini"
+						chart={
+							<ScatterMini
+								{...props}
+								data={scattermini_data}
+								height={300}
+								width={300}
+								theme={cadem_theme}
+							/>
+						}
+					/>
+				)}
+				path="/scatter-mini"
+			/>
 
-		<Route
-			render={props => (
-				<ChartPage
-					chart={
-						<Stacked
-							{...props}
-							data={stacked_data}
-							height={300}
-							width={600}
-							theme={cadem_theme}
-						/>
-					}
-				/>
-			)}
-			path="/stacked"
-		/>
+			<Route
+				render={props => (
+					<ChartPage
+						chart={
+							<Stacked
+								{...props}
+								data={stacked_data}
+								height={300}
+								width={600}
+								theme={cadem_theme}
+							/>
+						}
+					/>
+				)}
+				path="/stacked"
+			/>
 
-		{/*<Route
+			{/*<Route
 			render={props => (
 				<ChartPage
 					size="mini"
@@ -184,7 +185,8 @@ const Main = () => (
 			)}
 			path="/stacked-mini"
 		/>*/}
-	</Switch>
+		</Switch>
+	</Router>
 );
 
 export default Main;

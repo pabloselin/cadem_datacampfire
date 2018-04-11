@@ -1,12 +1,11 @@
 import React from "react";
-import { Flyout } from "victory";
 
 class LineFlyOut extends React.Component {
 	render() {
 		const { x, y, graphHeight, color } = this.props;
 		return (
 			<g>
-				<Flyout {...this.props} />
+				<circle cx={x} cy={y + 4} r={5} fill={color} />
 				<line
 					x1={x}
 					x2={x}

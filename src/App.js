@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Header from "./components/mini/Header.js";
 import Main from "./components/parts/Main.js";
 import { BrowserRouter } from "react-router-dom";
 

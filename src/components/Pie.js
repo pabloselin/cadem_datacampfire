@@ -8,7 +8,6 @@ import {
 	VictorySharedEvents,
 	VictoryLabel,
 	VictoryContainer,
-	VictoryPortal,
 	VictoryGroup
 } from "victory";
 

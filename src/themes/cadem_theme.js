@@ -276,6 +276,7 @@ export default {
   },
   interactions: {
     hover: activeColor,
-    active: activeColor
+    active: activeColor,
+    paleta: paleta
   }
 };

@@ -10,8 +10,7 @@ import {
 	VictoryLegend,
 	VictorySharedEvents,
 	VictoryVoronoiContainer,
-	VictoryScatter,
-	VictoryAxis
+	VictoryScatter
 } from "victory";
 
 class Lines extends Component {
@@ -22,7 +21,8 @@ class Lines extends Component {
 			data: this.props.data.data,
 			colorscale: this.props.theme.line.colorScale,
 			activeLine: null,
-			activeColor: this.props.theme.interactions.hover
+			activeColor: this.props.theme.interactions.hover,
+			clicked: false
 		};
 	}
 
@@ -76,20 +76,20 @@ class Lines extends Component {
 						? this.state.activeColor
 						: this.state.colorscale[idx];
 				const linewidth = () =>
-					this.state.activeLine === linename ? 1.5 : 0.5;
-				return (
-					<VictoryGroup
-						name={linename}
-						key={linename}
-						data={line.values}
-						eventKey={linename}
-						labels={d => `${d.y}%`}
-						theme={this.props.theme}
-						labelComponent={
+					this.state.activeLine === linename ? 1.8 : 0.7;
+				const labels = d => {
+					if (this.state.activeLine === linename) {
+						return `${d.y}%`;
+					} else {
+						return "";
+					}
+				};
+				const tooltip = () => {
+					if (this.state.activeLine === linename) {
+						return (
 							<VictoryTooltip
 								theme={this.props.theme}
 								activateData={true}
-								style={{ data: { fontSize: 8 } }}
 								flyoutComponent={
 									<LineFlyOut
 										graphHeight={this.props.height}
@@ -98,19 +98,37 @@ class Lines extends Component {
 								}
 								orientation="top"
 							/>
-						}
+						);
+					}
+				};
+				return (
+					<VictoryGroup
+						name={"group-" + idx}
+						key={"group-" + idx}
+						data={line.values}
+						eventKey={"group-" + idx}
+						labels={d => labels(d)}
+						theme={this.props.theme}
+						style={{
+							labels: {
+								fill: this.state.activeColor,
+								fontWeight: "bold"
+							}
+						}}
+						labelComponent={tooltip()}
 					>
 						<VictoryLine
+							name={linename}
 							style={{
 								data: {
 									stroke: linecolor(),
-									pointerEvents: "none",
 									strokeWidth: linewidth()
 								}
 							}}
+							containerComponent={<VictoryVoronoiContainer />}
 						/>
 						<VictoryScatter
-							size={(datum, active) => (active ? 4 : 2)}
+							size={(datum, active) => (active ? 5 : 2)}
 							style={{
 								data: {
 									fill: linecolor()
@@ -120,6 +138,76 @@ class Lines extends Component {
 					</VictoryGroup>
 				);
 			});
+
+		const events = [
+			{
+				childName: "all",
+				target: "data",
+				eventHandlers: {
+					onClick: (evt, obj, key) => {
+						return [
+							{
+								target: "data",
+								childName: [...linenames],
+								eventKey: key,
+								mutation: props => {
+									if (this.state.activeLine === key) {
+										this.setState({
+											activeLine: null,
+											clicked: false
+										});
+									} else {
+										this.setState({
+											activeLine: "line-" + key,
+											clicked: true
+										});
+									}
+								}
+							}
+						];
+					},
+					onMouseOver: (evt, obj, key) => {
+						return [
+							{
+								target: "data",
+								childName: [...linenames],
+								eventKey: key,
+								mutation: props => {
+									if (this.state.clicked !== true) {
+										if (this.state.activeLine === key) {
+											this.setState({
+												activeLine: null
+											});
+										} else {
+											this.setState({
+												activeLine: "line-" + key
+											});
+										}
+									}
+								}
+							}
+						];
+					},
+					onMouseOut: (evt, obj, key) => {
+						return [
+							{
+								target: "data",
+								childName: [...linenames],
+								eventKey: key,
+								mutation: props => {
+									if (this.state.clicked !== true) {
+										this.setState({
+											activeLine: null,
+											clicked: false
+										});
+									}
+								}
+							}
+						];
+					}
+				}
+			}
+		];
 		return (
 			<div className="chart-widget">
 				<ChartHeader
@@ -127,47 +215,13 @@ class Lines extends Component {
 					subtitle={this.props.data.chart_subtitle}
 					className="ChartHeader"
 				/>
-				<VictorySharedEvents
-					events={[
-						{
-							childName: "legend",
-							target: "data",
-							eventHandlers: {
-								onClick: (evt, obj, key) => {
-									return [
-										{
-											target: "data",
-											childName: [...linenames],
-											eventKey: key,
-											mutation: props => {
-												if (
-													this.state.activeLine ===
-													key
-												) {
-													this.setState({
-														activeLine: null
-													});
-												} else {
-													this.setState({
-														activeLine:
-															"line-" + key
-													});
-												}
-											}
-										}
-									];
-								}
-							}
-						}
-					]}
-				>
+				<VictorySharedEvents events={events}>
 					<VictoryChart
 						height={this.props.height}
 						width={600}
 						name="lines"
 						theme={this.props.theme}
 						domainPadding={{ x: 20, y: 20 }}
-						containerComponent={<VictoryVoronoiContainer />}
 					>
 						{lines()}
 					</VictoryChart>

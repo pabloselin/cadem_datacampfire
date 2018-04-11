@@ -6,8 +6,7 @@ import {
 	VictoryBar,
 	VictoryStack,
 	VictoryLabel,
-	VictoryAxis,
-	VictoryPortal
+	VictoryAxis
 } from "victory";
 
 class Stacked extends Component {
