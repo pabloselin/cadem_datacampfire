@@ -12,7 +12,7 @@ class LineFlyOut extends React.Component {
 					y1={y}
 					y2={graphHeight - 52}
 					stroke={color}
-					strokeWidth={0.5}
+					strokeWidth={0.8}
 				/>
 			</g>
 		);

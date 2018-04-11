@@ -11,7 +11,8 @@ import {
 	VictorySharedEvents,
 	VictoryVoronoiContainer,
 	VictoryScatter,
-	VictoryLabel
+	VictoryLabel,
+	VictoryAxis
 } from "victory";
 
 class Lines extends Component {
@@ -22,8 +23,13 @@ class Lines extends Component {
 			data: this.props.data.data,
 			colorscale: this.props.theme.line.colorScale,
 			activeLine: null,
+			activeMonth: null,
 			activeColor: this.props.theme.interactions.hover,
-			clicked: false
+			clicked: false,
+			domainLength: this.props.data.data[0].values.length,
+			xLabels: this.props.data.data[0].values.map(item => {
+				return item.x;
+			})
 		};
 	}
 
@@ -85,36 +91,12 @@ class Lines extends Component {
 						return "";
 					}
 				};
-				const tooltip = () => {
-					if (this.state.activeLine === linename) {
-						return (
-							<VictoryTooltip
-								theme={this.props.theme}
-								activateData={true}
-								flyoutComponent={
-									<LineFlyOut
-										graphHeight={this.props.height}
-										color={this.state.activeColor}
-									/>
-								}
-								orientation="top"
-							/>
-						);
-					}
-				};
+
 				return (
 					<VictoryLine
-						labels={d => labels(d)}
 						data={line.values}
 						eventKey={linename}
 						theme={this.props.theme}
-						style={{
-							labels: {
-								fill: this.state.activeColor,
-								fontWeight: "bold"
-							}
-						}}
-						labelComponent={tooltip()}
 						name={linename}
 						style={{
 							data: {
@@ -146,7 +128,8 @@ class Lines extends Component {
 									} else {
 										this.setState({
 											activeLine: "line-" + key,
-											clicked: true
+											clicked: true,
+											activeMonth: null
 										});
 									}
 								}
@@ -185,6 +168,7 @@ class Lines extends Component {
 									if (this.state.clicked !== true) {
 										this.setState({
 											activeLine: null,
+											activeMonth: null,
 											clicked: false
 										});
 									}
@@ -205,17 +189,18 @@ class Lines extends Component {
 				<VictorySharedEvents events={events}>
 					<VictoryChart
 						height={this.props.height}
-						width={600}
+						width={this.props.width}
 						name="lines"
 						theme={this.props.theme}
 						domainPadding={{ x: 20, y: 20 }}
 						containerComponent={
 							<VictoryVoronoiContainer
-								onActivated={(points, props) =>
+								onActivated={(points, props) => {
 									this.setState({
-										activeLine: points[0].childName
-									})
-								}
+										activeLine: points[0].childName,
+										activeMonth: points[0].x
+									});
+								}}
 								labelComponent={
 									<VictoryTooltip
 										theme={this.props.theme}
@@ -243,6 +228,40 @@ class Lines extends Component {
 							/>
 						}
 					>
+						<VictoryAxis
+							theme={this.props.theme}
+							dependentAxis
+							domain={[0, 100]}
+						/>
+						<VictoryAxis
+							width={this.props.width}
+							domain={[0, this.state.domainLength]}
+							theme={this.props.theme}
+							tickValues={this.state.xLabels}
+							tickLabelComponent={
+								<VictoryLabel dy={-4} dx={-14} angle={-45} />
+							}
+							label="Meses"
+							style={{
+								axisLabel: {
+									textAlign: "right",
+									fontSize: 10,
+									padding: 40
+								},
+								tickLabels: {
+									fontSize: 8,
+
+									fontWeight: a =>
+										a === this.state.activeMonth
+											? "bold"
+											: "normal",
+									fill: a =>
+										a === this.state.activeMonth
+											? this.state.activeColor
+											: "#555"
+								}
+							}}
+						/>
 						{lines()}
 					</VictoryChart>
 					<VictoryLegend
