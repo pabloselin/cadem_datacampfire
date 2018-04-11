@@ -106,6 +106,7 @@ class Lines extends Component {
 					<VictoryLine
 						labels={d => labels(d)}
 						data={line.values}
+						eventKey={linename}
 						theme={this.props.theme}
 						style={{
 							labels: {
@@ -210,6 +211,11 @@ class Lines extends Component {
 						domainPadding={{ x: 20, y: 20 }}
 						containerComponent={
 							<VictoryVoronoiContainer
+								onActivated={(points, props) =>
+									this.setState({
+										activeLine: points[0].childName
+									})
+								}
 								labelComponent={
 									<VictoryTooltip
 										theme={this.props.theme}
