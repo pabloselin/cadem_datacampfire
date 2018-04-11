@@ -1,0 +1,28 @@
+{
+	"chart_title": "Venta Recarga",
+	"chart_subtitle": "Últimos 4 meses",
+	"data": [
+		{
+			"title": "Sí",
+			"data": [
+				{ "x": "Mar 17", "y": 5.5 },
+				{ "x": "Abr 17", "y": 20.14 },
+				{ "x": "May 17", "y": 30.1 },
+				{ "x": "Jun 17", "y": 40 },
+				{ "x": "Jul 17", "y": 50 },
+				{ "x": "Ago 17", "y": 5 }
+			]
+		},
+		{
+			"title": "No",
+			"data": [
+				{ "x": "Mar 17", "y": 5 },
+				{ "x": "Abr 17", "y": 40 },
+				{ "x": "May 17", "y": 30 },
+				{ "x": "Jun 17", "y": 60 },
+				{ "x": "Jul 17", "y": 10 },
+				{ "x": "Ago 17", "y": 50 }
+			]
+		}
+	]
+}

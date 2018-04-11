@@ -10,6 +10,8 @@ import SingleBars from "../../components/SingleBars.js";
 import LineBars from "../../components/LineBars.js";
 import Scatter from "../../components/Scatter.js";
 import ScatterMini from "../../components/ScatterMini.js";
+import Stacked from "../../components/Stacked.js";
+
 import Dashboard from "../../layouts/Dashboard.js";
 //Data
 import linebars_data from "../../data/linebars.json";
@@ -19,6 +21,8 @@ import groupbar_data from "../../data/barras.json";
 import singlebar_data from "../../data/barras_single.json";
 import scatter_data from "../../data/scatter.json";
 import scattermini_data from "../../data/scattermini.json";
+import stacked_data from "../../data/stacked.json";
+//import stackedmini_data from "../../data/stackedmini.json";
 
 const Main = () => (
 	<Switch>
@@ -145,6 +149,41 @@ const Main = () => (
 			)}
 			path="/scatter-mini"
 		/>
+
+		<Route
+			render={props => (
+				<ChartPage
+					chart={
+						<Stacked
+							{...props}
+							data={stacked_data}
+							height={300}
+							width={600}
+							theme={cadem_theme}
+						/>
+					}
+				/>
+			)}
+			path="/stacked"
+		/>
+
+		{/*<Route
+			render={props => (
+				<ChartPage
+					size="mini"
+					chart={
+						<StackedMini
+							{...props}
+							data={stackedmini_data}
+							height={300}
+							width={300}
+							theme={cadem_theme}
+						/>
+					}
+				/>
+			)}
+			path="/stacked-mini"
+		/>*/}
 	</Switch>
 );
 

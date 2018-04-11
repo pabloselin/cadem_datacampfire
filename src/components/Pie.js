@@ -54,7 +54,7 @@ class Pie extends Component {
 				}
 			};
 			return {
-				name: item.x + " (" + percent.toFixed(1) + "%)",
+				name: item.x,
 				percent: percent.toFixed(1),
 				symbol: { fill: activeStyle().fill },
 				labels: {
@@ -180,7 +180,7 @@ class Pie extends Component {
 							}}
 							width={290}
 						>
-							<svg viewbox="50 40 195 195">
+							<svg viewBox="0 0 260 260">
 								<VictoryPie
 									width={260}
 									height={260}
@@ -213,10 +213,10 @@ class Pie extends Component {
 								text={percentPortal()}
 								textAnchor="middle"
 								verticalAnchor="middle"
-								x={130}
-								y={130}
+								x={140}
+								y={150}
 								style={{
-									fontSize: 32,
+									fontSize: 42,
 									fill: this.state.activeColor,
 									fontFamily: "Asap",
 									fontWeight: "bold"
@@ -230,7 +230,7 @@ class Pie extends Component {
 							centerTitle
 							orientation="vertical"
 							borderPadding={{ top: 40 }}
-							rowGutter={-10}
+							rowGutter={{ top: 0, bottom: 0 }}
 							width={200}
 							height={400}
 							style={{

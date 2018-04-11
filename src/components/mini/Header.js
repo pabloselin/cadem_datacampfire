@@ -34,6 +34,12 @@ const Header = () => (
           <Link to="/scatter-mini">5b. Posicionamiento 2</Link>
         </li>
         <li>
+          <Link to="/stacked">6a. Stacked bar</Link>
+        </li>
+        <li>
+          <Link to="/stacked-mini">6b. Stacked bar mini</Link>
+        </li>
+        <li>
           <Link to="/dashboard">Dashboard</Link>
         </li>
       </ul>

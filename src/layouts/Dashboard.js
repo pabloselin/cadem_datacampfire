@@ -37,10 +37,10 @@ const Dashboard = () => (
 						theme={cadem_theme}
 					/>
 				</Grid.Column>
-				<Grid.Column width={4}>
+				<Grid.Column width={6}>
 					<GroupedBars data={groupbar_data} theme={cadem_theme} />
 				</Grid.Column>
-				<Grid.Column width={4}>
+				<Grid.Column width={2}>
 					<SingleBars data={singlebar_data} theme={cadem_theme} />
 				</Grid.Column>
 			</Grid.Row>
