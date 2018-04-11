@@ -1,0 +1,14 @@
+{
+  "chart_title": "Efectividad",
+  "chart_subtitle": "Período Feb 18",
+  "data": [
+    {
+      "x": "Positivo",
+      "y": 87
+    },
+    {
+      "x": "Negativo",
+      "y": 13
+    }
+  ]
+}
