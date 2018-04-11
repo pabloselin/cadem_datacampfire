@@ -5,7 +5,7 @@ class LineFlyOut extends React.Component {
 		const { x, y, graphHeight, color } = this.props;
 		return (
 			<g>
-				<circle cx={x} cy={y + 4} r={5} fill={color} />
+				<circle cx={x} cy={y} r={3} fill={color} />
 				<line
 					x1={x}
 					x2={x}

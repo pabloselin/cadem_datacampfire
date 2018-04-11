@@ -102,12 +102,9 @@ class Lines extends Component {
 					}
 				};
 				return (
-					<VictoryGroup
-						name={"group-" + idx}
-						key={"group-" + idx}
-						data={line.values}
-						eventKey={"group-" + idx}
+					<VictoryLine
 						labels={d => labels(d)}
+						data={line.values}
 						theme={this.props.theme}
 						style={{
 							labels: {
@@ -116,26 +113,14 @@ class Lines extends Component {
 							}
 						}}
 						labelComponent={tooltip()}
-					>
-						<VictoryLine
-							name={linename}
-							style={{
-								data: {
-									stroke: linecolor(),
-									strokeWidth: linewidth()
-								}
-							}}
-							containerComponent={<VictoryVoronoiContainer />}
-						/>
-						<VictoryScatter
-							size={(datum, active) => (active ? 5 : 2)}
-							style={{
-								data: {
-									fill: linecolor()
-								}
-							}}
-						/>
-					</VictoryGroup>
+						name={linename}
+						style={{
+							data: {
+								stroke: linecolor(),
+								strokeWidth: linewidth()
+							}
+						}}
+					/>
 				);
 			});
 
@@ -222,6 +207,24 @@ class Lines extends Component {
 						name="lines"
 						theme={this.props.theme}
 						domainPadding={{ x: 20, y: 20 }}
+						containerComponent={
+							<VictoryVoronoiContainer
+								labelComponent={
+									<VictoryTooltip
+										theme={this.props.theme}
+										activateData={true}
+										flyoutComponent={
+											<LineFlyOut
+												graphHeight={this.props.height}
+												color={this.state.activeColor}
+											/>
+										}
+										orientation="top"
+									/>
+								}
+								labels={d => `${d.y}%`}
+							/>
+						}
 					>
 						{lines()}
 					</VictoryChart>
