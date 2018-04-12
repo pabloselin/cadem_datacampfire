@@ -30,24 +30,28 @@ import scattermini_data from "../data/scattermini.json";
 const Dashboard = () => (
 	<Container fluid>
 		<Grid className="dashboard" columns={14}>
-			<Grid.Row className="dashboard-header">
-				<Grid.Column width={2} />
-				<Grid.Column width={12} />
-			</Grid.Row>
 			<Grid.Row>
-				<Grid.Column width={4}>
+				{/*<Grid.Column width={4}>
 					<KPI_semicirculo
 						percent={26}
 						title="Efectividad"
 						subtitle="Período Feb 18"
 						theme={cadem_theme}
 					/>
-				</Grid.Column>
+				</Grid.Column>*/}
 				<Grid.Column width={6}>
 					<Stacked
 						width={600}
 						height={300}
 						data={stacked_data}
+						theme={cadem_theme}
+					/>
+				</Grid.Column>
+				<Grid.Column width={8}>
+					<LineBars
+						width={300}
+						height={300}
+						data={linebars_data}
 						theme={cadem_theme}
 					/>
 				</Grid.Column>
@@ -65,22 +69,6 @@ const Dashboard = () => (
 						theme={cadem_theme}
 					/>
 				</Grid.Column>
-				<Grid.Column width={12}>
-					<GroupedBars
-						data={groupbar_data}
-						theme={cadem_theme}
-						width={600}
-						height={200}
-					/>
-				</Grid.Column>
-				<Grid.Column width={8}>
-					<LineBars
-						width={300}
-						height={300}
-						data={linebars_data}
-						theme={cadem_theme}
-					/>
-				</Grid.Column>
 				<Grid.Column width={4}>
 					<SingleBars data={singlebar_data} theme={cadem_theme} />
 					<Scatter
@@ -88,6 +76,14 @@ const Dashboard = () => (
 						height={300}
 						data={scatter_data}
 						theme={cadem_theme}
+					/>
+				</Grid.Column>
+				<Grid.Column width={12}>
+					<GroupedBars
+						data={groupbar_data}
+						theme={cadem_theme}
+						width={600}
+						height={200}
 					/>
 				</Grid.Column>
 			</Grid.Row>

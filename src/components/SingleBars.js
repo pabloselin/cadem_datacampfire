@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import "./GroupedBars.css";
-import ChartHeader from "./mini/ChartHeader.js";
+
 import DownloadButton from "./mini/DownloadButton.js";
 import {
 	VictoryChart,
@@ -34,12 +33,22 @@ class SingleBars extends Component {
 	render() {
 		return (
 			<div className="chart-widget">
-				<ChartHeader
-					title={this.state.title}
-					subtitle={this.state.data.chart_subtitle}
-					className="ChartHeader"
+				<VictoryLabel
+					text={[this.state.title.toUpperCase(), this.state.subtitle]}
+					style={[
+						{
+							fontFamily: "Asap",
+							fontSize: 16,
+							fontWeight: "bold",
+							display: "block"
+						},
+						{
+							fontFamily: "Asap",
+							fontSize: 12,
+							fontWeight: "normal"
+						}
+					]}
 				/>
-
 				<VictoryChart
 					theme={this.props.theme}
 					height={this.props.height}

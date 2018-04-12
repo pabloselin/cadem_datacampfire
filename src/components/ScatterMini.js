@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-import "./Scatter.css";
-import ChartHeader from "./mini/ChartHeader.js";
 import {
 	VictoryChart,
 	VictoryScatter,
@@ -34,11 +32,6 @@ class ScatterMini extends Component {
 	render() {
 		return (
 			<div className="chart-widget">
-				<ChartHeader
-					title={this.state.title}
-					subtitle={this.state.data.chart_subtitle}
-					className="ChartHeader"
-				/>
 				<VictoryChart
 					theme={this.props.theme}
 					width={this.props.width}

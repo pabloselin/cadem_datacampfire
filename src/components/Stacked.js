@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-import "./Stacked.css";
-import ChartHeader from "./mini/ChartHeader.js";
 import DownloadButton from "./mini/DownloadButton.js";
 import {
 	VictoryChart,

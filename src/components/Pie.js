@@ -1,7 +1,5 @@
 import React, { Component } from "react";
-import "./Pie.css";
 import DownloadButton from "./mini/DownloadButton.js";
-import ChartHeader from "./mini/ChartHeader.js";
 import {
 	VictoryPie,
 	VictoryLegend,

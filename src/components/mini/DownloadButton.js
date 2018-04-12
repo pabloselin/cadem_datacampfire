@@ -20,29 +20,29 @@ class DownloadButton extends Component {
 	}
 
 	makePNG() {
-		let title = `<svg><text style="font-size:22; fill: #333;">${this.props.title.toUpperCase()}</text></svg>`;
-		let subtitle = `<svg><text style="font-size:18; fill: #333;">${
-			this.props.subtitle
-		}</text></svg>`;
-
 		//Fondo
 		let ctx = this.canvas.getContext("2d");
 		ctx.fillStyle = "#f0f0f0";
 		ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
-		//Cabecera
-		window.canvg(this.canvas, title, {
-			offsetY: 30,
-			offsetX: 10,
-			ignoreClear: true
-		});
-		window.canvg(this.canvas, subtitle, {
-			offsetY: 50,
-			offsetX: 10,
-			ignoreClear: true
-		});
-
+		//Sólo para gráfico de PIE
 		if (this.props.type === "pie") {
+			let title = `<svg><text style="font-size:22; fill: #333;">${this.props.title.toUpperCase()}</text></svg>`;
+			let subtitle = `<svg><text style="font-size:18; fill: #333;">${
+				this.props.subtitle
+			}</text></svg>`;
+
+			//Cabecera
+			window.canvg(this.canvas, title, {
+				offsetY: 30,
+				offsetX: 10,
+				ignoreClear: true
+			});
+			window.canvg(this.canvas, subtitle, {
+				offsetY: 50,
+				offsetX: 10,
+				ignoreClear: true
+			});
 			//Pie
 			let piesvg = this.props.svgs[0].childNodes[0].innerHTML;
 			let legendsvg = this.props.svgs[1].childNodes[0].innerHTML;

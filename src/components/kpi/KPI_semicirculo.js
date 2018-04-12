@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import DownloadButton from "../mini/DownloadButton.js";
-import ChartHeader from "../mini/ChartHeader.js";
 import {
 	VictoryPie,
 	VictoryLegend,
@@ -66,12 +65,6 @@ class KPI_Semicirculo extends Component {
 		};
 		return (
 			<div className="Pie chart-widget">
-				<ChartHeader
-					title={this.state.title}
-					subtitle={this.state.subtitle}
-					className="ChartHeader"
-				/>
-
 				<VictoryGroup>
 					<VictoryPie
 						width={600}

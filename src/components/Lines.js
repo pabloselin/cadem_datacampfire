@@ -1,7 +1,5 @@
 import React, { Component } from "react";
-import "./Lines.css";
 import LineFlyOut from "./mini/LineFlyOut.js";
-import ChartHeader from "./mini/ChartHeader.js";
 import DownloadButton from "./mini/DownloadButton.js";
 import {
 	VictoryChart,

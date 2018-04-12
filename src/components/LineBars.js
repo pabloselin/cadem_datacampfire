@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-import "./LineBars.css";
-import ChartHeader from "./mini/ChartHeader.js";
 import DownloadButton from "./mini/DownloadButton.js";
 import {
 	VictoryChart,
