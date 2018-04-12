@@ -31,14 +31,6 @@ const Dashboard = () => (
 	<Container fluid>
 		<Grid className="dashboard" columns={14}>
 			<Grid.Row>
-				{/*<Grid.Column width={4}>
-					<KPI_semicirculo
-						percent={26}
-						title="Efectividad"
-						subtitle="Período Feb 18"
-						theme={cadem_theme}
-					/>
-				</Grid.Column>*/}
 				<Grid.Column width={6}>
 					<Stacked
 						width={600}
