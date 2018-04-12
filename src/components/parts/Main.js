@@ -162,6 +162,7 @@ const Main = () => (
 								height={300}
 								width={600}
 								theme={cadem_theme}
+								colorscale={["#595753", "#cccccc"]}
 							/>
 						}
 					/>

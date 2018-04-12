@@ -37,6 +37,7 @@ const Dashboard = () => (
 						height={300}
 						data={stacked_data}
 						theme={cadem_theme}
+						colorscale={["#595753", "#cccccc"]}
 					/>
 				</Grid.Column>
 				<Grid.Column width={8}>

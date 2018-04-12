@@ -8,6 +8,7 @@ import {
 	VictoryAxis,
 	VictoryContainer,
 	VictoryLegend,
+	VictorySharedEvents,
 	Point
 } from "victory";
 
@@ -32,9 +33,12 @@ class Stacked extends Component {
 	}
 
 	makeLegend() {
-		return this.state.data.data.map(item => {
+		return this.state.data.data.map((item, idx) => {
 			return {
-				name: item.title
+				name: item.title,
+				symbol: {
+					fill: this.props.colorscale[idx]
+				}
 			};
 		});
 	}
@@ -66,6 +70,7 @@ class Stacked extends Component {
 						];
 					},
 					onClick: (evt, obj, idx) => {
+						console.log(obj);
 						return [
 							{
 								target: "data",
@@ -98,11 +103,21 @@ class Stacked extends Component {
 						];
 					}
 				}
+			},
+			{
+				childName: "legend",
+				target: "all",
+				eventHandlers: {
+					onMouseOver: () => {
+						console.log("overmouse");
+					}
+				}
 			}
 		];
 
 		const bars = () =>
 			this.state.data.data.map((bar, idx) => {
+				//Hay que calcular la altura para poder posicionar el label arriba, esto debería cambiar al haber 3 o más stacks
 				const offset = d => {
 					let dy = 0;
 					if (idx === 0) {
@@ -116,9 +131,10 @@ class Stacked extends Component {
 						theme={this.props.theme}
 						title={bar.title}
 						data={bar.data}
+						eventKey={"bar-" + idx}
 						alignment="middle"
 						barRatio={0.2}
-						colorscale={this.props.theme.colorscale}
+						style={{ data: { fill: this.props.colorscale[idx] } }}
 						labelComponent={
 							<VictoryLabel
 								style={{ fill: "transparent" }}
@@ -126,7 +142,6 @@ class Stacked extends Component {
 								text={d => `${d.y}%`}
 							/>
 						}
-						events={events}
 					/>
 				);
 			});
@@ -134,74 +149,80 @@ class Stacked extends Component {
 		const labels = () => this.state.data.data[0].data.map(item => item.x);
 		return (
 			<div className="chart-widget">
-				<VictoryChart
-					theme={this.props.theme}
-					height={this.props.height}
-					width={this.props.width}
-					domainPadding={{ y: 0, x: 40 }}
-					containerComponent={
-						<VictoryContainer
-							containerRef={containerRef =>
-								(this.containerRef = containerRef)
-							}
-						/>
-					}
-				>
-					<VictoryAxis
-						key="x"
-						tickValues={labels()}
-						tickLabelComponent={
-							<VictoryLabel dy={-4} dx={-14} angle={-45} />
-						}
-					/>
-					<VictoryAxis key="y" dependentAxis />
-					<VictoryStack
-						domain={{ y: [0, 100] }}
-						labels={["ene", "feb", "mar", "abr", "may"]}
-						style={{
-							labels: { fontSize: 10, textAlign: "center" },
-							data: {
-								width: 18
-							}
-						}}
-					>
-						{bars()}
-					</VictoryStack>
-					<VictoryLegend
-						title={[
-							this.state.title.toUpperCase(),
-							this.state.subtitle
-						]}
-						x={this.props.width - 220}
-						width={this.props.width}
-						titleOrientation="left"
-						gutter={20}
+				<VictorySharedEvents events={events}>
+					<VictoryChart
 						theme={this.props.theme}
-						name="legend"
-						data={this.makeLegend(this.state.data)}
-						orientation="horizontal"
-						itemsPerRow={3}
-						height={60}
-						style={{
-							labels: { fontSize: 12 }
-						}}
-						titleComponent={
-							<VictoryLabel
-								dx={-360}
-								style={[
-									{
-										fontSize: 16,
-										fontWeight: "bold"
-									},
-									{
-										fontSize: 12,
-										fontWeight: "normal"
-									}
-								]}
+						height={this.props.height}
+						width={this.props.width}
+						domainPadding={{ y: 0, x: 40 }}
+						containerComponent={
+							<VictoryContainer
+								containerRef={containerRef =>
+									(this.containerRef = containerRef)
+								}
 							/>
 						}
-					/>
-				</VictoryChart>
+					>
+						<VictoryAxis
+							key="x"
+							tickValues={labels()}
+							tickLabelComponent={
+								<VictoryLabel dy={-4} dx={-14} angle={-45} />
+							}
+						/>
+						<VictoryAxis key="y" dependentAxis />
+						<VictoryStack
+							domain={{ y: [0, 100] }}
+							style={{
+								labels: {
+									fontSize: 10,
+									textAlign: "center",
+									fontWeight: "bold"
+								},
+								data: {
+									width: 18
+								}
+							}}
+						>
+							{bars()}
+						</VictoryStack>
+						<VictoryLegend
+							title={[
+								this.state.title.toUpperCase(),
+								this.state.subtitle
+							]}
+							x={this.props.width - 220}
+							width={this.props.width}
+							titleOrientation="left"
+							gutter={20}
+							theme={this.props.theme}
+							name="legend"
+							data={this.makeLegend(this.state.data)}
+							orientation="horizontal"
+							itemsPerRow={3}
+							colorscale={this.props.colorscale}
+							height={60}
+							style={{
+								labels: { fontSize: 12 }
+							}}
+							titleComponent={
+								<VictoryLabel
+									dx={-360}
+									style={[
+										{
+											fontSize: 16,
+											fontWeight: "bold"
+										},
+										{
+											fontSize: 12,
+											fontWeight: "normal"
+										}
+									]}
+								/>
+							}
+						/>
+					</VictoryChart>
+				</VictorySharedEvents>
 
 				<DownloadButton
 					type="stacked"
