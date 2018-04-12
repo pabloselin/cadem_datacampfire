@@ -31,7 +31,54 @@ class SingleBars extends Component {
 		});
 	}
 
+	removeKey(array, element) {
+		return array.filter(e => e !== element);
+	}
+
+	updateClickeds(array, element) {
+		//Debe ser un listado de valores únicos
+		array.push(element);
+		return array.filter((v, i, a) => a.indexOf(v) === i);
+	}
+
+	checkLength(array) {
+		if (array.length == 0) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
 	render() {
+		const activeStyle = [
+			{
+				target: "data",
+				mutation: props => ({
+					style: Object.assign({}, props.style, {
+						fill: this.state.activeColor
+					})
+				})
+			},
+			{
+				target: "labels",
+				mutation: props => ({
+					style: Object.assign({}, props.style, {
+						display: "block",
+						fill: this.state.activeColor
+					})
+				})
+			}
+		];
+		const normalStyle = [
+			{
+				target: "data",
+				mutation: props => null
+			},
+			{
+				target: "labels",
+				mutation: props => null
+			}
+		];
 		return (
 			<div className="chart-widget">
 				<VictoryLabel
@@ -117,146 +164,55 @@ class SingleBars extends Component {
 												activeKey: Number(idx) + 1
 											});
 
-											return [
-												{
-													target: "data",
-													mutation: props => ({
-														style: Object.assign(
-															{},
-															props.style,
-															{
-																fill: this.state
-																	.activeColor
-															}
-														)
-													})
-												},
-												{
-													target: "labels",
-													mutation: props => ({
-														style: Object.assign(
-															{},
-															props.style,
-															{
-																display:
-																	"block",
-																fill: this.state
-																	.activeColor
-															}
-														)
-													})
-												}
-											];
+											return activeStyle;
 										}
 									},
 									onClick: (evt, obj, idx) => {
+										let refKey = Number(idx) + 1;
 										if (this.state.clicked !== true) {
 											this.setState({
-												activeKey: Number(idx) + 1,
-												clicked: true
+												clicked: true,
+												clickedKeys: this.updateClickeds(
+													this.state.clickedKeys,
+													refKey
+												)
 											});
-											return [
-												{
-													target: "data",
-													mutation: props => ({
-														style: Object.assign(
-															{},
-															props.style,
-															{
-																fill: this.state
-																	.activeColor
-															}
-														)
-													})
-												},
-												{
-													target: "labels",
-													mutation: props => ({
-														style: Object.assign(
-															{},
-															props.style,
-															{
-																display:
-																	"block",
-																fill: this.state
-																	.activeColor
-															}
-														)
-													})
-												}
-											];
+											return activeStyle;
 										} else {
+											//Desactivo una barra ya activada
 											if (
-												this.state.activeKey ===
-												Number(idx) + 1
+												this.state.clickedKeys.indexOf(
+													refKey
+												) !== -1
 											) {
 												this.setState({
-													activeKey: null,
-													clicked: false
+													clicked: this.checkLength(
+														this.state.clickedKeys
+													),
+													clickedKeys: this.removeKey(
+														this.state.clickedKeys,
+														refKey
+													)
 												});
-												return [
-													{
-														target: "data",
-														mutation: props => null
-													},
-													{
-														target: "labels",
-														mutation: props => null
-													}
-												];
+												return normalStyle;
 											} else {
 												this.setState({
-													activeKey: Number(idx) + 1,
-													clicked: true
+													clickedKeys: this.updateClickeds(
+														this.state.clickedKeys,
+														refKey
+													),
+													clicked: this.checkLength(
+														this.state.clickedKeys
+													)
 												});
-												return [
-													{
-														target: "data",
-														mutation: props => ({
-															style: Object.assign(
-																{},
-																props.style,
-																{
-																	fill: this
-																		.state
-																		.activeColor
-																}
-															)
-														})
-													},
-													{
-														target: "labels",
-														mutation: props => ({
-															style: Object.assign(
-																{},
-																props.style,
-																{
-																	display:
-																		"block",
-																	fill: this
-																		.state
-																		.activeColor
-																}
-															)
-														})
-													}
-												];
+												return activeStyle;
 											}
 										}
 									},
 									onMouseOut: () => {
 										if (this.state.clicked !== true) {
 											this.setState({ activeKey: null });
-											return [
-												{
-													target: "data",
-													mutation: props => null
-												},
-												{
-													target: "labels",
-													mutation: props => null
-												}
-											];
+											return normalStyle;
 										}
 									}
 								}

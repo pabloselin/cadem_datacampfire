@@ -79,7 +79,7 @@ class LineBars extends Component {
 							tickLabels: { fontSize: 6 }
 						}}
 						tickLabelComponent={
-							<VictoryLabel textAnchor="middle" dy={20} />
+							<VictoryLabel textAnchor="middle" dy={25} />
 						}
 						tickValues={this.state.data.data[0].data.map(
 							point => point.x
@@ -115,7 +115,7 @@ class LineBars extends Component {
 							style={{
 								data: {
 									width: 10,
-									fill: this.state.activeColor
+									fill: "#8c8981"
 								},
 								labels: {
 									fill: this.state.activeColor
@@ -133,7 +133,7 @@ class LineBars extends Component {
 							style={{
 								data: {
 									width: 10,
-									fill: "#555"
+									fill: "#cccccc"
 								}
 							}}
 							alignment="middle"
