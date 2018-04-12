@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./Lines.css";
 import LineFlyOut from "./mini/LineFlyOut.js";
 import ChartHeader from "./mini/ChartHeader.js";
+import DownloadButton from "./mini/DownloadButton.js";
 import {
 	VictoryChart,
 	VictoryLine,
@@ -12,7 +13,8 @@ import {
 	VictoryVoronoiContainer,
 	VictoryScatter,
 	VictoryLabel,
-	VictoryAxis
+	VictoryAxis,
+	Point
 } from "victory";
 
 class Lines extends Component {
@@ -20,6 +22,7 @@ class Lines extends Component {
 		super(props);
 		this.state = {
 			title: this.props.data.chart_title,
+			subtitle: this.props.data.chart_subtitle,
 			data: this.props.data.data,
 			colorscale: this.props.theme.line.colorScale,
 			activeLine: null,
@@ -29,7 +32,8 @@ class Lines extends Component {
 			domainLength: this.props.data.data[0].values.length,
 			xLabels: this.props.data.data[0].values.map(item => {
 				return item.x;
-			})
+			}),
+			svgrefs: []
 		};
 	}
 
@@ -77,9 +81,11 @@ class Lines extends Component {
 		}
 	}
 
-	LineHoverEvent() {}
-
-	LineOutEvent() {}
+	componentDidMount() {
+		this.setState({
+			svgrefs: [this.containerRef]
+		});
+	}
 
 	render() {
 		const linenames = [];
@@ -191,11 +197,6 @@ class Lines extends Component {
 		];
 		return (
 			<div className="chart-widget">
-				<ChartHeader
-					title={this.state.title}
-					subtitle={this.props.data.chart_subtitle}
-					className="ChartHeader"
-				/>
 				<VictorySharedEvents events={events}>
 					<VictoryChart
 						height={this.props.height}
@@ -205,11 +206,18 @@ class Lines extends Component {
 						domainPadding={{ x: 10, y: 20 }}
 						containerComponent={
 							<VictoryVoronoiContainer
+								activateLabels={false}
+								radius={40}
+								containerRef={containerRef =>
+									(this.containerRef = containerRef)
+								}
 								onActivated={(points, props) => {
-									this.setState({
-										activeLine: points[0].childName,
-										activeMonth: points[0].x
-									});
+									if (points[0] !== undefined) {
+										this.setState({
+											activeLine: points[0].childName,
+											activeMonth: points[0].x
+										});
+									}
 								}}
 								labelComponent={
 									<VictoryTooltip
@@ -245,7 +253,7 @@ class Lines extends Component {
 						/>
 						<VictoryAxis
 							width={this.props.width}
-							domain={[this.state.domainLength]}
+							domain={[1, this.state.domainLength]}
 							theme={this.props.theme}
 							tickValues={this.state.xLabels}
 							tickLabelComponent={
@@ -270,20 +278,48 @@ class Lines extends Component {
 							}}
 						/>
 						{lines()}
+						<VictoryLegend
+							title={[
+								this.state.title.toUpperCase(),
+								this.state.subtitle
+							]}
+							width={this.props.width}
+							titleOrientation="left"
+							theme={this.props.theme}
+							name="legend"
+							data={this.makeLegend(this.state.data)}
+							orientation="vertical"
+							itemsPerRow={3}
+							height={60}
+							style={{
+								title: { fontSize: 12, fontWeight: "bold" },
+								labels: { fontSize: 12 },
+								symbol: {
+									point: {
+										fill: "red"
+									}
+								}
+							}}
+							dataComponent={<Point x={230} />}
+							labelComponent={<VictoryLabel x={240} />}
+							titleComponent={
+								<VictoryLabel
+									style={[
+										{ fontSize: 16 },
+										{ fontSize: 12, fontWeight: "normal" }
+									]}
+								/>
+							}
+						/>
 					</VictoryChart>
-					<VictoryLegend
-						theme={this.props.theme}
-						name="legend"
-						data={this.makeLegend(this.state.data)}
-						orientation="vertical"
-						itemsPerRow={3}
-						height={60}
-						style={{
-							title: { fontSize: 12, fontWeight: "bold" },
-							labels: { fontSize: 12 }
-						}}
-					/>
 				</VictorySharedEvents>
+				<DownloadButton
+					type="groupedbars"
+					svgs={this.state.svgrefs}
+					title={this.state.title}
+					subtitle={this.state.subtitle}
+					percent={this.state.currentPercent}
+				/>
 			</div>
 		);
 	}

@@ -1,18 +1,34 @@
 import React, { Component } from "react";
 import "./GroupedBars.css";
 import ChartHeader from "./mini/ChartHeader.js";
-import { VictoryChart, VictoryBar, VictoryLabel, VictoryAxis } from "victory";
+import DownloadButton from "./mini/DownloadButton.js";
+import {
+	VictoryChart,
+	VictoryBar,
+	VictoryLabel,
+	VictoryAxis,
+	VictoryContainer
+} from "victory";
 
 class SingleBars extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			title: this.props.data.chart_title,
+			subtitle: this.props.data.chart_subtitle,
 			data: this.props.data,
 			activeKey: null,
 			activeColor: this.props.theme.interactions.hover,
-			clicked: false
+			clicked: false,
+			svgrefs: []
 		};
+	}
+
+	componentDidMount() {
+		console.log(this.containerRef);
+		this.setState({
+			svgrefs: [this.containerRef]
+		});
 	}
 
 	render() {
@@ -23,14 +39,30 @@ class SingleBars extends Component {
 					subtitle={this.state.data.chart_subtitle}
 					className="ChartHeader"
 				/>
+
 				<VictoryChart
 					theme={this.props.theme}
 					height={this.props.height}
 					width={this.props.width}
 					domainPadding={{ y: 0, x: 40 }}
+					containerComponent={
+						<VictoryContainer
+							containerRef={ref => {
+								this.containerRef = ref;
+							}}
+						/>
+					}
 				>
-					<VictoryAxis />
-					<VictoryAxis dependentAxis />
+					<VictoryAxis theme={this.props.theme} />
+					<VictoryAxis
+						style={{
+							tickLabels: {
+								textAlign: "left"
+							}
+						}}
+						theme={this.props.theme}
+						dependentAxis
+					/>
 					<VictoryBar
 						domain={{ y: [0, 100] }}
 						key={"bar"}
@@ -38,7 +70,7 @@ class SingleBars extends Component {
 						title={this.state.title}
 						data={this.state.data.data}
 						style={{
-							labels: { fontSize: 10, textAlign: "center" },
+							labels: { fontSize: 10, textAlign: "left" },
 							data: {
 								width: 18,
 								fill: d =>
@@ -139,6 +171,13 @@ class SingleBars extends Component {
 						]}
 					/>
 				</VictoryChart>
+				<DownloadButton
+					type="singlebars"
+					svgs={this.state.svgrefs}
+					title={this.state.title}
+					subtitle={this.state.subtitle}
+					percent={this.state.currentPercent}
+				/>
 			</div>
 		);
 	}

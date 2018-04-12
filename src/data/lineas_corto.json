@@ -1,9 +1,9 @@
 {
-    "chart_title": "Experiencia de compra",
-    "chart_subtitle": "Últimos 13 meses",
+    "chart_title": "Cumplimiento",
+    "chart_subtitle": "Últimos 4 meses",
     "data": [
         {
-            "title": "41 - Huechuraba",
+            "title": "Sí",
             "values": [
                 { "x": "Mar 17", "y": 14 },
                 { "x": "Abr 17", "y": 26 },
@@ -13,7 +13,7 @@
             ]
         },
         {
-            "title": "81 - Arica",
+            "title": "No",
             "values": [
                 { "x": "Mar 17", "y": 10 },
                 { "x": "Abr 17", "y": 11 },

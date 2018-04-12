@@ -42,31 +42,40 @@ class DownloadButton extends Component {
 			ignoreClear: true
 		});
 
-		//Pie
-		let piesvg = this.props.svgs[0].childNodes[0].innerHTML;
-		let legendsvg = this.props.svgs[1].childNodes[0].innerHTML;
-		let percent = this.props.percent;
+		if (this.props.type === "pie") {
+			//Pie
+			let piesvg = this.props.svgs[0].childNodes[0].innerHTML;
+			let legendsvg = this.props.svgs[1].childNodes[0].innerHTML;
+			let percent = this.props.percent;
 
-		window.canvg(this.canvas, `<svg>${piesvg}</svg>`, {
-			ignoreClear: true,
-			offsetY: 80,
-			offsetX: 20
-		});
-		window.canvg(this.canvas, `<svg>${legendsvg}</svg>`, {
-			ignoreClear: true,
-			offsetX: 300,
-			offsetY: 40
-		});
-
-		if (percent !== 0) {
-			let percentsvg = `<svg><text style="font-size: 36;font-weight: bold; font-family:'Asap'; fill:${
-				cadem_theme.interactions.hover
-			}">${percent}%</text></svg>`;
-
-			window.canvg(this.canvas, percentsvg, {
+			window.canvg(this.canvas, `<svg>${piesvg}</svg>`, {
 				ignoreClear: true,
-				offsetY: 225,
-				offsetX: 100
+				offsetY: 80,
+				offsetX: 20
+			});
+			window.canvg(this.canvas, `<svg>${legendsvg}</svg>`, {
+				ignoreClear: true,
+				offsetX: 300,
+				offsetY: 40
+			});
+
+			if (percent !== 0) {
+				let percentsvg = `<svg><text style="font-size: 36;font-weight: bold; font-family:'Asap'; fill:${
+					cadem_theme.interactions.hover
+				}">${percent}%</text></svg>`;
+
+				window.canvg(this.canvas, percentsvg, {
+					ignoreClear: true,
+					offsetY: 225,
+					offsetX: 100
+				});
+			}
+		} else {
+			let anysvg = this.props.svgs[0].innerHTML;
+			window.canvg(this.canvas, `<svg>${anysvg}</svg>`, {
+				ignoreClear: true,
+				offsetY: 40,
+				offsetX: 0
 			});
 		}
 

@@ -56,6 +56,7 @@ const Main = () => (
 							<Lines
 								data={lines_data}
 								{...props}
+								width={300}
 								height={300}
 								theme={cadem_theme}
 							/>
@@ -159,7 +160,7 @@ const Main = () => (
 								{...props}
 								data={stacked_data}
 								height={300}
-								width={300}
+								width={600}
 								theme={cadem_theme}
 							/>
 						}

@@ -15,6 +15,8 @@ import Lines from "../components/Lines.js";
 import Stacked from "../components/Stacked.js";
 import LineBars from "../components/LineBars.js";
 import Scatter from "../components/Scatter.js";
+//Kpis
+import KPI_semicirculo from "../components/kpi/KPI_semicirculo.js";
 //Data
 import stacked_data from "../data/stacked.json";
 import linebars_data from "../data/linebars.json";
@@ -34,22 +36,59 @@ const Dashboard = () => (
 			</Grid.Row>
 			<Grid.Row>
 				<Grid.Column width={4}>
+					<KPI_semicirculo
+						percent={26}
+						title="Efectividad"
+						subtitle="Período Feb 18"
+						theme={cadem_theme}
+					/>
+				</Grid.Column>
+				<Grid.Column width={6}>
+					<Stacked
+						width={600}
+						height={300}
+						data={stacked_data}
+						theme={cadem_theme}
+					/>
+				</Grid.Column>
+				<Grid.Column width={4}>
 					<Pie
 						data={pie_data}
 						width={400}
 						height={320}
 						theme={cadem_theme}
 					/>
-					<Lines height={300} data={lines_data} theme={cadem_theme} />
-					<Stacked data={stacked_data} theme={cadem_theme} />
+					<Lines
+						height={300}
+						width={300}
+						data={lines_data}
+						theme={cadem_theme}
+					/>
+				</Grid.Column>
+				<Grid.Column width={12}>
+					<GroupedBars
+						data={groupbar_data}
+						theme={cadem_theme}
+						width={600}
+						height={200}
+					/>
 				</Grid.Column>
 				<Grid.Column width={8}>
-					<GroupedBars data={groupbar_data} theme={cadem_theme} />
-					<LineBars data={linebars_data} theme={cadem_theme} />
+					<LineBars
+						width={300}
+						height={300}
+						data={linebars_data}
+						theme={cadem_theme}
+					/>
 				</Grid.Column>
 				<Grid.Column width={4}>
 					<SingleBars data={singlebar_data} theme={cadem_theme} />
-					<Scatter data={scatter_data} theme={cadem_theme} />
+					<Scatter
+						width={300}
+						height={300}
+						data={scatter_data}
+						theme={cadem_theme}
+					/>
 				</Grid.Column>
 			</Grid.Row>
 		</Grid>

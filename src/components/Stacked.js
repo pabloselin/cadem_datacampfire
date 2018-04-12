@@ -1,12 +1,16 @@
 import React, { Component } from "react";
 import "./Stacked.css";
 import ChartHeader from "./mini/ChartHeader.js";
+import DownloadButton from "./mini/DownloadButton.js";
 import {
 	VictoryChart,
 	VictoryBar,
 	VictoryStack,
 	VictoryLabel,
-	VictoryAxis
+	VictoryAxis,
+	VictoryContainer,
+	VictoryLegend,
+	Point
 } from "victory";
 
 class Stacked extends Component {
@@ -14,11 +18,27 @@ class Stacked extends Component {
 		super(props);
 		this.state = {
 			title: this.props.data.chart_title,
+			subtitle: this.props.data.chart_subtitle,
 			data: this.props.data,
 			activeKey: null,
 			activeColor: this.props.theme.interactions.hover,
-			clicked: false
+			clicked: false,
+			svgrefs: []
 		};
+	}
+
+	componentDidMount() {
+		this.setState({
+			svgrefs: [this.containerRef]
+		});
+	}
+
+	makeLegend() {
+		return this.state.data.data.map(item => {
+			return {
+				name: item.title
+			};
+		});
 	}
 
 	render() {
@@ -116,16 +136,18 @@ class Stacked extends Component {
 		const labels = () => this.state.data.data[0].data.map(item => item.x);
 		return (
 			<div className="chart-widget">
-				<ChartHeader
-					title={this.state.title}
-					subtitle={this.state.data.chart_subtitle}
-					className="ChartHeader"
-				/>
 				<VictoryChart
 					theme={this.props.theme}
 					height={this.props.height}
 					width={this.props.width}
 					domainPadding={{ y: 0, x: 40 }}
+					containerComponent={
+						<VictoryContainer
+							containerRef={containerRef =>
+								(this.containerRef = containerRef)
+							}
+						/>
+					}
 				>
 					<VictoryAxis
 						key="x"
@@ -147,7 +169,49 @@ class Stacked extends Component {
 					>
 						{bars()}
 					</VictoryStack>
+					<VictoryLegend
+						title={[
+							this.state.title.toUpperCase(),
+							this.state.subtitle
+						]}
+						x={this.props.width - 220}
+						width={this.props.width}
+						titleOrientation="left"
+						gutter={20}
+						theme={this.props.theme}
+						name="legend"
+						data={this.makeLegend(this.state.data)}
+						orientation="horizontal"
+						itemsPerRow={3}
+						height={60}
+						style={{
+							labels: { fontSize: 12 }
+						}}
+						titleComponent={
+							<VictoryLabel
+								dx={-360}
+								style={[
+									{
+										fontSize: 16,
+										fontWeight: "bold"
+									},
+									{
+										fontSize: 12,
+										fontWeight: "normal"
+									}
+								]}
+							/>
+						}
+					/>
 				</VictoryChart>
+
+				<DownloadButton
+					type="stacked"
+					svgs={this.state.svgrefs}
+					title={this.state.title}
+					subtitle={this.state.subtitle}
+					percent={this.state.currentPercent}
+				/>
 			</div>
 		);
 	}

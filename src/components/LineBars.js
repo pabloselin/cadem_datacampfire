@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./LineBars.css";
 import ChartHeader from "./mini/ChartHeader.js";
+import DownloadButton from "./mini/DownloadButton.js";
 import {
 	VictoryChart,
 	VictoryBar,
@@ -8,7 +9,8 @@ import {
 	VictoryLegend,
 	VictoryLabel,
 	VictoryStack,
-	VictoryAxis
+	VictoryAxis,
+	VictoryContainer
 	//VictoryTooltip
 } from "victory";
 
@@ -17,11 +19,13 @@ class LineBars extends Component {
 		super(props);
 		this.state = {
 			title: this.props.data.chart_title,
+			subtitle: this.props.data.chart_subtitle,
 			data: this.props.data,
 			activeKey: null,
 			activeColor: this.props.theme.interactions.hover,
 			clicked: false,
-			domainPadding: { y: 0, x: 20 }
+			domainPadding: { y: 0, x: 20 },
+			svgrefs: []
 		};
 	}
 
@@ -34,34 +38,41 @@ class LineBars extends Component {
 		return neto;
 	}
 
+	makeLegend() {
+		return [
+			{
+				name: this.state.data.data[0].data_a,
+				symbol: { fill: this.state.activeColor }
+			},
+			{
+				name: this.state.data.data[1].data_b,
+				symbol: { fill: "#555" }
+			},
+			{
+				name: this.state.data.line_title,
+				symbol: { fill: "#555", type: "minus" }
+			}
+		];
+	}
+
+	componentDidMount() {
+		this.setState({ svgrefs: [this.containerRef] });
+	}
+
 	render() {
 		return (
 			<div className="chart-widget">
-				<ChartHeader
-					title={this.state.title}
-					subtitle={this.state.data.chart_subtitle}
-					className="ChartHeader"
-				/>
-				<VictoryLegend
-					height={15}
-					orientation="horizontal"
+				<VictoryChart
 					theme={this.props.theme}
-					data={[
-						{
-							name: this.state.data.data[0].data_a,
-							symbol: { fill: this.state.activeColor }
-						},
-						{
-							name: this.state.data.data[1].data_b,
-							symbol: { fill: "#555" }
-						},
-						{
-							name: this.state.data.line_title,
-							symbol: { fill: "#555", type: "minus" }
-						}
-					]}
-				/>
-				<VictoryChart domainPadding={this.state.domainPadding}>
+					domainPadding={this.state.domainPadding}
+					containerComponent={
+						<VictoryContainer
+							containerRef={containerRef =>
+								(this.containerRef = containerRef)
+							}
+						/>
+					}
+				>
 					<VictoryAxis
 						key="horizontalAxis"
 						height={this.props.height}
@@ -146,7 +157,48 @@ class LineBars extends Component {
 						domain={{ y: [0, 250] }}
 						standalone={true}
 					/>
+					<VictoryLegend
+						title={[
+							this.state.title.toUpperCase(),
+							this.state.subtitle
+						]}
+						width={this.props.width}
+						x={this.props.width - 140}
+						titleOrientation="left"
+						gutter={0}
+						theme={this.props.theme}
+						name="legend"
+						data={this.makeLegend(this.state.data)}
+						orientation="vertical"
+						itemsPerRow={2}
+						height={60}
+						style={{
+							labels: { fontSize: 8 }
+						}}
+						titleComponent={
+							<VictoryLabel
+								dx={-160}
+								style={[
+									{
+										fontSize: 16,
+										fontWeight: "bold"
+									},
+									{
+										fontSize: 12,
+										fontWeight: "normal"
+									}
+								]}
+							/>
+						}
+					/>
 				</VictoryChart>
+				<DownloadButton
+					type="linebars"
+					svgs={this.state.svgrefs}
+					title={this.state.title}
+					subtitle={this.state.subtitle}
+					percent={this.state.currentPercent}
+				/>
 			</div>
 		);
 	}
