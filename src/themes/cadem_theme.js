@@ -111,10 +111,9 @@ export default {
         }),
         grid: {
           fill: "none",
-          stroke: "#ccc",
+          stroke: "#dcdcdc",
           strokeWidth: 0.4,
           pointerEvents: "painted",
-          strokeDasharray,
           strokeLinejoin,
           strokeLinecap
         },

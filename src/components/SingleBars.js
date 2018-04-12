@@ -19,6 +19,7 @@ class SingleBars extends Component {
 			activeKey: null,
 			activeColor: this.props.theme.interactions.hover,
 			clicked: false,
+			clickedKeys: [],
 			svgrefs: []
 		};
 	}
@@ -62,17 +63,26 @@ class SingleBars extends Component {
 						/>
 					}
 				>
-					<VictoryAxis theme={this.props.theme} />
 					<VictoryAxis
-						style={{
-							tickLabels: {
-								textAlign: "left"
-							}
-						}}
 						theme={this.props.theme}
-						dependentAxis
+						tickLabelComponent={
+							<VictoryLabel
+								style={{
+									fontWeight: a =>
+										a === this.state.activeKey
+											? "bold"
+											: "normal",
+									fill: a =>
+										a === this.state.activeKey
+											? this.state.activeColor
+											: "#555"
+								}}
+							/>
+						}
 					/>
+					<VictoryAxis theme={this.props.theme} dependentAxis />
 					<VictoryBar
+						name={"singlebar"}
 						domain={{ y: [0, 100] }}
 						key={"bar"}
 						theme={this.props.theme}
@@ -102,78 +112,152 @@ class SingleBars extends Component {
 								target: "data",
 								eventHandlers: {
 									onMouseOver: (evt, obj, idx) => {
-										return [
-											{
-												target: "data",
-												mutation: props => ({
-													style: Object.assign(
-														{},
-														props.style,
-														{
-															fill: this.state
-																.activeColor
-														}
-													)
-												})
-											},
-											{
-												target: "labels",
-												mutation: props => ({
-													style: Object.assign(
-														{},
-														props.style,
-														{
-															display: "block",
-															fill: this.state
-																.activeColor
-														}
-													)
-												})
-											}
-										];
+										if (this.state.clicked !== true) {
+											this.setState({
+												activeKey: Number(idx) + 1
+											});
+
+											return [
+												{
+													target: "data",
+													mutation: props => ({
+														style: Object.assign(
+															{},
+															props.style,
+															{
+																fill: this.state
+																	.activeColor
+															}
+														)
+													})
+												},
+												{
+													target: "labels",
+													mutation: props => ({
+														style: Object.assign(
+															{},
+															props.style,
+															{
+																display:
+																	"block",
+																fill: this.state
+																	.activeColor
+															}
+														)
+													})
+												}
+											];
+										}
 									},
 									onClick: (evt, obj, idx) => {
-										return [
-											{
-												target: "data",
-												mutation: props => ({
-													style: Object.assign(
-														{},
-														props.style,
-														{
-															fill: this.state
-																.activeColor
-														}
-													)
-												})
-											},
-											{
-												target: "labels",
-												mutation: props => ({
-													style: Object.assign(
-														{},
-														props.style,
-														{
-															display: "block",
-															fill: this.state
-																.activeColor
-														}
-													)
-												})
+										if (this.state.clicked !== true) {
+											this.setState({
+												activeKey: Number(idx) + 1,
+												clicked: true
+											});
+											return [
+												{
+													target: "data",
+													mutation: props => ({
+														style: Object.assign(
+															{},
+															props.style,
+															{
+																fill: this.state
+																	.activeColor
+															}
+														)
+													})
+												},
+												{
+													target: "labels",
+													mutation: props => ({
+														style: Object.assign(
+															{},
+															props.style,
+															{
+																display:
+																	"block",
+																fill: this.state
+																	.activeColor
+															}
+														)
+													})
+												}
+											];
+										} else {
+											if (
+												this.state.activeKey ===
+												Number(idx) + 1
+											) {
+												this.setState({
+													activeKey: null,
+													clicked: false
+												});
+												return [
+													{
+														target: "data",
+														mutation: props => null
+													},
+													{
+														target: "labels",
+														mutation: props => null
+													}
+												];
+											} else {
+												this.setState({
+													activeKey: Number(idx) + 1,
+													clicked: true
+												});
+												return [
+													{
+														target: "data",
+														mutation: props => ({
+															style: Object.assign(
+																{},
+																props.style,
+																{
+																	fill: this
+																		.state
+																		.activeColor
+																}
+															)
+														})
+													},
+													{
+														target: "labels",
+														mutation: props => ({
+															style: Object.assign(
+																{},
+																props.style,
+																{
+																	display:
+																		"block",
+																	fill: this
+																		.state
+																		.activeColor
+																}
+															)
+														})
+													}
+												];
 											}
-										];
+										}
 									},
 									onMouseOut: () => {
-										return [
-											{
-												target: "data",
-												mutation: props => null
-											},
-											{
-												target: "labels",
-												mutation: props => null
-											}
-										];
+										if (this.state.clicked !== true) {
+											this.setState({ activeKey: null });
+											return [
+												{
+													target: "data",
+													mutation: props => null
+												},
+												{
+													target: "labels",
+													mutation: props => null
+												}
+											];
+										}
 									}
 								}
 							}
