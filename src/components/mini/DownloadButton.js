@@ -15,6 +15,10 @@ class DownloadButton extends Component {
 		//console.log(this.props.svgs);
 	}
 
+	debugPNG() {
+		console.log(this.props);
+	}
+
 	makePNG() {
 		let title = `<svg><text style="font-size:22; fill: #333;">${this.props.title.toUpperCase()}</text></svg>`;
 		let subtitle = `<svg><text style="font-size:18; fill: #333;">${
@@ -41,27 +45,28 @@ class DownloadButton extends Component {
 		//Pie
 		let piesvg = this.props.svgs[0].childNodes[0].innerHTML;
 		let legendsvg = this.props.svgs[1].childNodes[0].innerHTML;
-		let percent = this.props.svgs[2].props.text;
+		let percent = this.props.percent;
 
 		window.canvg(this.canvas, `<svg>${piesvg}</svg>`, {
 			ignoreClear: true,
-			offsetY: 40
+			offsetY: 80,
+			offsetX: 20
 		});
 		window.canvg(this.canvas, `<svg>${legendsvg}</svg>`, {
 			ignoreClear: true,
-			offsetX: 420,
+			offsetX: 300,
 			offsetY: 40
 		});
 
-		if (percent !== undefined) {
-			let percentsvg = `<svg><text style="font-size: 44; fill:${
+		if (percent !== 0) {
+			let percentsvg = `<svg><text style="font-size: 36;font-weight: bold; font-family:'Asap'; fill:${
 				cadem_theme.interactions.hover
-			}">${percent}</text></svg>`;
+			}">${percent}%</text></svg>`;
 
 			window.canvg(this.canvas, percentsvg, {
 				ignoreClear: true,
-				offsetY: 255,
-				offsetX: 180
+				offsetY: 225,
+				offsetX: 100
 			});
 		}
 
@@ -84,7 +89,7 @@ class DownloadButton extends Component {
 				<canvas
 					id="canvas"
 					className="canvas"
-					width={840}
+					width={440}
 					height={440}
 					ref={canvas => (this.canvas = canvas)}
 				/>

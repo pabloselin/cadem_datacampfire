@@ -72,7 +72,7 @@ class Pie extends Component {
 
 	componentDidMount() {
 		this.setState({
-			svgrefs: [this.pieref, this.legendref, this.percent]
+			svgrefs: [this.viewBox, this.legendref]
 		});
 	}
 
@@ -179,7 +179,10 @@ class Pie extends Component {
 							}}
 							width={290}
 						>
-							<svg viewBox="0 0 260 260">
+							<svg
+								ref={viewBox => (this.viewBox = viewBox)}
+								viewBox="0 0 260 260"
+							>
 								<VictoryPie
 									width={260}
 									height={260}
@@ -255,6 +258,7 @@ class Pie extends Component {
 					svgs={this.state.svgrefs}
 					title={this.state.title}
 					subtitle={this.state.subtitle}
+					percent={this.state.currentPercent}
 				/>
 			</div>
 		);
