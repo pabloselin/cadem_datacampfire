@@ -141,7 +141,7 @@ class LineBars extends Component {
 		};
 		const events = [
 			{
-				childName: "bar",
+				childName: ["bar", "bar-down"],
 				target: "data",
 				eventHandlers: {
 					onMouseOver: (evt, obj, idx) => {
@@ -283,7 +283,8 @@ class LineBars extends Component {
 								labels={d => `${d.y}`}
 							/>
 							<VictoryBar
-								key={"bar-down"}
+								key="bar-down"
+								name="bar-down"
 								theme={this.props.theme}
 								title={this.state.title}
 								data={this.state.data.data[1].data}
