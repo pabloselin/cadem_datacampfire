@@ -230,12 +230,12 @@ export default {
       pointerEvents: "none"
     }),
     flyoutStyle: {
-      stroke: charcoal,
-      strokeWidth: 0.5,
+      stroke: "black",
+      strokeWidth: 0.8,
       fill: "#f0f0f0",
       pointerEvents: "none"
     },
-    cornerRadius: 2,
+    cornerRadius: 1,
     pointerLength: 6
   },
   voronoi: assign(

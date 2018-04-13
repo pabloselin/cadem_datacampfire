@@ -1,6 +1,8 @@
 {
 	"chart_title": "Experiencia de compra",
 	"chart_subtitle": "Feb 18 - Locales",
+	"domainX": [0, 60],
+	"domainY": [0, 80],
 	"data": [
 		{
 			"title": "Local 1",

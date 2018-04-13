@@ -23,6 +23,8 @@ class Scatter extends Component {
 			colorscale: this.props.theme.line.colorScale,
 			activeKey: null,
 			activeCat: null,
+			domainX: this.props.data.domainX,
+			domainY: this.props.data.domainY,
 			svgrefs: []
 		};
 	}
@@ -43,8 +45,8 @@ class Scatter extends Component {
 		});
 	}
 
-	getCurFill(cat, index) {
-		if (this.state.activeCat === cat) {
+	getCurFill(cat, index, active) {
+		if (this.state.activeCat === cat || active === true) {
 			return this.state.activeColor;
 		} else {
 			return this.state.colorscale[index];
@@ -62,7 +64,8 @@ class Scatter extends Component {
 						key={"scatter-" + idx}
 						style={{
 							data: {
-								fill: this.getCurFill(local.title, idx)
+								fill: (d, active) =>
+									this.getCurFill(local.title, idx, active)
 							}
 						}}
 						data={local.data}
@@ -77,8 +80,7 @@ class Scatter extends Component {
 						labelComponent={
 							<VictoryTooltip
 								theme={this.props.theme}
-								orientation="right"
-								dy={-2}
+								horizontal={true}
 								activateData={true}
 							/>
 						}
@@ -150,7 +152,9 @@ class Scatter extends Component {
 														style: {
 															fill: this.state
 																.activeColor,
-															fontWeight: "bold"
+															fontWeight: "bold",
+															fontSize: 12,
+															fontFamily: "Asap"
 														}
 													}
 												);
@@ -188,8 +192,11 @@ class Scatter extends Component {
 							/>
 						}
 					>
-						<VictoryAxis domain={[0, 100]} />
-						<VictoryAxis domain={[0, 100]} dependentAxis />
+						<VictoryAxis domain={this.state.domainX} />
+						<VictoryAxis
+							domain={this.state.domainY}
+							dependentAxis
+						/>
 
 						<VictoryLegend
 							title={[
