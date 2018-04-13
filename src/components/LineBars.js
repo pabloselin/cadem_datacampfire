@@ -8,7 +8,8 @@ import {
 	VictoryLabel,
 	VictoryStack,
 	VictoryAxis,
-	VictoryContainer
+	VictoryContainer,
+	VictorySharedEvents
 	//VictoryTooltip
 } from "victory";
 
@@ -58,138 +59,254 @@ class LineBars extends Component {
 	}
 
 	render() {
+		const activeStyle = [
+			{
+				target: "data",
+				mutation: props => ({
+					style: Object.assign({}, props.style, {
+						fill: this.state.activeColor,
+						width: 12
+					})
+				})
+			},
+			{
+				target: "labels",
+				mutation: props => ({
+					style: Object.assign({}, props.style, {
+						display: "block",
+						fill: this.state.activeColor
+					})
+				})
+			}
+		];
+		const normalStyle = [
+			{
+				target: "data",
+				mutation: props => null
+			},
+			{
+				target: "labels",
+				mutation: props => null
+			}
+		];
+
+		const labelStyle = {
+			fontWeight: a => {
+				if (
+					this.state.clickedKeys.indexOf(a) !== -1 ||
+					this.state.activeKey === a
+				) {
+					return "bold";
+				} else {
+					return "normal";
+				}
+			},
+			fill: a => {
+				if (
+					this.state.clickedKeys.indexOf(a) !== -1 ||
+					this.state.activeKey === a
+				) {
+					return this.state.activeColor;
+				} else {
+					return "#555";
+				}
+			}
+		};
+		const events = [
+			{
+				childName: "bar",
+				target: "data",
+				eventHandlers: {
+					onMouseOver: (evt, obj, idx) => {
+						if (this.state.clicked !== true) {
+							this.setState({
+								activeKey: Number(idx) + 1
+							});
+
+							return activeStyle;
+						}
+					},
+					onClick: (evt, obj, idx) => {
+						let refKey = Number(idx) + 1;
+						if (this.state.clicked !== true) {
+							this.setState({
+								clicked: true,
+								clickedKeys: this.updateClickeds(
+									this.state.clickedKeys,
+									refKey
+								)
+							});
+							return activeStyle;
+						} else {
+							//Desactivo una barra ya activada
+							if (this.state.clickedKeys.indexOf(refKey) !== -1) {
+								this.setState({
+									clickedKeys: this.removeKey(
+										this.state.clickedKeys,
+										refKey
+									)
+								});
+								return normalStyle;
+							} else {
+								this.setState({
+									clickedKeys: this.updateClickeds(
+										this.state.clickedKeys,
+										refKey
+									)
+								});
+								return activeStyle;
+							}
+						}
+					},
+					onMouseOut: () => {
+						if (this.state.clicked !== true) {
+							this.setState({ activeKey: null });
+							return normalStyle;
+						}
+					}
+				}
+			}
+		];
 		return (
 			<div className="chart-widget">
-				<VictoryChart
-					theme={this.props.theme}
-					domainPadding={this.state.domainPadding}
-					containerComponent={
-						<VictoryContainer
-							containerRef={containerRef =>
-								(this.containerRef = containerRef)
-							}
-						/>
-					}
-				>
-					<VictoryAxis
-						key="horizontalAxis"
-						height={this.props.height}
-						width={this.props.width}
-						style={{
-							tickLabels: { fontSize: 6 }
-						}}
-						tickLabelComponent={
-							<VictoryLabel textAnchor="middle" dy={25} />
-						}
-						tickValues={this.state.data.data[0].data.map(
-							point => point.x
-						)}
-					/>
-					<VictoryAxis
-						key="verticalAxis"
-						dependentAxis
-						height={this.props.height}
-						width={this.props.width}
-						style={{
-							tickLabels: { fontSize: 6 },
-							grid: { stroke: "#ccc", strokeWidth: 0.4 }
-						}}
-						tickLabelComponent={
-							<VictoryLabel textAnchor="middle" />
-						}
-					/>
-					<VictoryStack
+				<VictorySharedEvents events={events}>
+					<VictoryChart
 						theme={this.props.theme}
-						height={this.props.height}
-						width={this.props.width}
-						domain={{ y: [-50, 250] }}
-						style={{
-							labels: { fontSize: 6, textAlign: "center" }
-						}}
-					>
-						<VictoryBar
-							key={"bar"}
-							theme={this.props.theme}
-							title={this.state.title}
-							data={this.state.data.data[0].data}
-							style={{
-								data: {
-									width: 10,
-									fill: "#8c8981"
-								},
-								labels: {
-									fill: this.state.activeColor
+						domainPadding={this.state.domainPadding}
+						containerComponent={
+							<VictoryContainer
+								containerRef={containerRef =>
+									(this.containerRef = containerRef)
 								}
-							}}
-							alignment="middle"
-							barRatio={0.2}
-							labels={d => `${d.y}`}
-						/>
-						<VictoryBar
-							key={"bar-down"}
-							theme={this.props.theme}
-							title={this.state.title}
-							data={this.state.data.data[1].data}
-							style={{
-								data: {
-									width: 10,
-									fill: "#cccccc"
-								}
-							}}
-							alignment="middle"
-							barRatio={0.2}
-						/>
-					</VictoryStack>
-					<VictoryLine
-						key="neto"
-						style={{
-							data: {
-								stroke: "#555",
-								strokeWidth: 1
-							}
-						}}
-						data={this.differential(
-							this.state.data.data[0].data,
-							this.state.data.data[1].data
-						)}
-						domain={{ y: [0, 250] }}
-						standalone={true}
-					/>
-					<VictoryLegend
-						title={[
-							this.state.title.toUpperCase(),
-							this.state.subtitle
-						]}
-						width={this.props.width}
-						x={this.props.width - 140}
-						titleOrientation="left"
-						gutter={0}
-						theme={this.props.theme}
-						name="legend"
-						data={this.makeLegend(this.state.data)}
-						orientation="vertical"
-						itemsPerRow={2}
-						height={60}
-						style={{
-							labels: { fontSize: 8 }
-						}}
-						titleComponent={
-							<VictoryLabel
-								dx={-160}
-								style={[
-									{
-										fontSize: 10,
-										fontWeight: "bold"
-									},
-									{
-										fontSize: 6,
-										fontWeight: "normal"
-									}
-								]}
 							/>
 						}
-					/>
-				</VictoryChart>
+					>
+						<VictoryAxis
+							key="horizontalAxis"
+							height={this.props.height}
+							width={this.props.width}
+							style={{
+								tickLabels: { fontSize: 6 }
+							}}
+							tickLabelComponent={
+								<VictoryLabel textAnchor="middle" dy={25} />
+							}
+							tickValues={this.state.data.data[0].data.map(
+								point => point.x
+							)}
+						/>
+						<VictoryAxis
+							key="verticalAxis"
+							dependentAxis
+							height={this.props.height}
+							width={this.props.width}
+							style={{
+								tickLabels: { fontSize: 6 },
+								grid: { stroke: "#ccc", strokeWidth: 0.4 }
+							}}
+							tickLabelComponent={
+								<VictoryLabel textAnchor="middle" />
+							}
+						/>
+						<VictoryLine
+							key="neto"
+							style={{
+								data: {
+									stroke: "#555",
+									strokeWidth: 1
+								}
+							}}
+							data={this.differential(
+								this.state.data.data[0].data,
+								this.state.data.data[1].data
+							)}
+							domain={{ y: [0, 250] }}
+							standalone={true}
+						/>
+						<VictoryStack
+							theme={this.props.theme}
+							height={this.props.height}
+							width={this.props.width}
+							domain={{ y: [-50, 250] }}
+							style={{
+								labels: { fontSize: 6, textAlign: "center" }
+							}}
+						>
+							<VictoryBar
+								key="bar"
+								name="bar"
+								theme={this.props.theme}
+								title={this.state.title}
+								data={this.state.data.data[0].data}
+								style={{
+									data: {
+										width: 12,
+										fill: "#8c8981",
+										opacity: 0.8
+									},
+									labels: {
+										fill: (d, active) =>
+											active === true
+												? this.state.activeColor
+												: "transparent"
+									}
+								}}
+								alignment="middle"
+								barRatio={0.2}
+								labels={d => `${d.y}`}
+							/>
+							<VictoryBar
+								key={"bar-down"}
+								theme={this.props.theme}
+								title={this.state.title}
+								data={this.state.data.data[1].data}
+								style={{
+									data: {
+										width: 10,
+										fill: "#cccccc"
+									}
+								}}
+								alignment="middle"
+								barRatio={0.2}
+							/>
+						</VictoryStack>
+
+						<VictoryLegend
+							title={[
+								this.state.title.toUpperCase(),
+								this.state.subtitle
+							]}
+							width={this.props.width}
+							x={this.props.width - 140}
+							titleOrientation="left"
+							gutter={0}
+							theme={this.props.theme}
+							name="legend"
+							data={this.makeLegend(this.state.data)}
+							orientation="vertical"
+							itemsPerRow={2}
+							height={60}
+							style={{
+								labels: { fontSize: 8 }
+							}}
+							titleComponent={
+								<VictoryLabel
+									dx={-160}
+									style={[
+										{
+											fontSize: 10,
+											fontWeight: "bold"
+										},
+										{
+											fontSize: 6,
+											fontWeight: "normal"
+										}
+									]}
+								/>
+							}
+						/>
+					</VictoryChart>
+				</VictorySharedEvents>
 				<DownloadButton
 					type="linebars"
 					svgs={this.state.svgrefs}
