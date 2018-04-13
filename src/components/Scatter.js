@@ -7,8 +7,9 @@ import {
 	VictoryAxis,
 	VictoryContainer,
 	Point,
-	VictoryLabel
-	//VictoryTooltip
+	VictoryLabel,
+	VictoryTooltip,
+	VictorySharedEvents
 } from "victory";
 
 class Scatter extends Component {
@@ -20,6 +21,8 @@ class Scatter extends Component {
 			data: this.props.data.data,
 			activeColor: this.props.theme.interactions.hover,
 			colorscale: this.props.theme.line.colorScale,
+			activeKey: null,
+			activeCat: null,
 			svgrefs: []
 		};
 	}
@@ -31,7 +34,6 @@ class Scatter extends Component {
 				symbol: { fill: this.state.colorscale[idx] }
 			};
 		});
-		console.log(legend);
 		return legend;
 	}
 
@@ -41,73 +43,190 @@ class Scatter extends Component {
 		});
 	}
 
+	getCurFill(cat, index) {
+		if (this.state.activeCat === cat) {
+			return this.state.activeColor;
+		} else {
+			return this.state.colorscale[index];
+		}
+	}
+
 	render() {
 		const scatters = () =>
 			this.state.data.map((local, idx) => {
 				return (
 					<VictoryScatter
-						key={local.title}
-						style={{ data: { fill: this.state.colorscale[idx] } }}
+						padding={{ top: 50 }}
+						width={this.props.width}
+						height={this.props.height}
+						key={"scatter-" + idx}
+						style={{
+							data: {
+								fill: this.getCurFill(local.title, idx)
+							}
+						}}
 						data={local.data}
 						bubbleProperty="cantidad"
 						maxBubbleSize={15}
 						minBubbleSize={5}
-					/>
-				);
-			});
-		return (
-			<div className="chart-widget">
-				<VictoryChart
-					theme={this.props.theme}
-					width={this.props.width}
-					height={this.props.height}
-					domainPadding={40}
-					containerComponent={
-						<VictoryContainer
-							containerRef={containerRef =>
-								(this.containerRef = containerRef)
-							}
-						/>
-					}
-				>
-					<VictoryAxis />
-					<VictoryAxis dependentAxis />
-					{scatters()}
-					<VictoryLegend
-						title={[
-							this.state.title.toUpperCase(),
-							this.state.subtitle
-						]}
-						width={this.props.width}
-						titleOrientation="top"
-						gutter={10}
-						theme={this.props.theme}
-						name="legend"
-						data={this.makeLegend(this.state.data)}
-						orientation="horizontal"
-						itemsPerRow={4}
-						height={120}
-						style={{
-							labels: { fontSize: 12 }
-						}}
-						dataComponent={<Point y={40} />}
-						labelComponent={<VictoryLabel y={40} />}
-						titleComponent={
-							<VictoryLabel
-								style={[
-									{
-										fontSize: 14,
-										fontWeight: "bold"
-									},
-									{
-										fontSize: 12,
-										fontWeight: "normal"
-									}
-								]}
+						labels={d =>
+							`${d.x}% Recomendación\n${d.y}% Satisfacción \n${
+								d.cantidad
+							} Cartera`
+						}
+						labelComponent={
+							<VictoryTooltip
+								theme={this.props.theme}
+								orientation="right"
+								dy={-2}
+								activateData={true}
 							/>
 						}
 					/>
-				</VictoryChart>
+				);
+			});
+
+		return (
+			<div className="chart-widget">
+				<VictorySharedEvents
+					events={[
+						{
+							childName: "all",
+							eventHandlers: {
+								onClick: (evt, obj, key) => {
+									return [
+										{
+											target: "data",
+											mutation: props => {
+												return Object.assign(
+													{},
+													props.style,
+													{
+														style: {
+															fill: this.state
+																.activeColor
+														}
+													}
+												);
+											}
+										}
+									];
+								}
+							}
+						},
+						{
+							childName: "legend",
+							eventHandlers: {
+								onMouseOver: (evt, obj, key) => {
+									if (obj.datum !== undefined) {
+										this.setState({
+											activeCat: obj.datum.name
+										});
+									}
+
+									return [
+										{
+											target: "data",
+											mutation: props => {
+												return Object.assign(
+													{},
+													props.style,
+													{
+														style: {
+															fill: this.state
+																.activeColor
+														}
+													}
+												);
+											}
+										},
+										{
+											target: "labels",
+											mutation: props => {
+												return Object.assign(
+													{},
+													props.style,
+													{
+														style: {
+															fill: this.state
+																.activeColor,
+															fontWeight: "bold"
+														}
+													}
+												);
+											}
+										}
+									];
+								},
+								onMouseOut: (evt, obj, key) => {
+									this.setState({ activeCat: null });
+									return [
+										{
+											target: "data",
+											mutation: props => null
+										},
+										{
+											target: "labels",
+											mutation: props => null
+										}
+									];
+								}
+							}
+						}
+					]}
+				>
+					<VictoryChart
+						theme={this.props.theme}
+						width={this.props.width}
+						height={this.props.height}
+						domainPadding={40}
+						containerComponent={
+							<VictoryContainer
+								containerRef={containerRef =>
+									(this.containerRef = containerRef)
+								}
+							/>
+						}
+					>
+						<VictoryAxis domain={[0, 100]} />
+						<VictoryAxis domain={[0, 100]} dependentAxis />
+
+						<VictoryLegend
+							title={[
+								this.state.title.toUpperCase(),
+								this.state.subtitle
+							]}
+							titleOrientation="top"
+							gutter={10}
+							padding={{ bottom: 100 }}
+							theme={this.props.theme}
+							name="legend"
+							data={this.makeLegend(this.state.data)}
+							orientation="horizontal"
+							itemsPerRow={4}
+							style={{
+								labels: { fontSize: 12, fontWeight: "normal" }
+							}}
+							dataComponent={<Point y={40} />}
+							labelComponent={<VictoryLabel y={40} />}
+							titleComponent={
+								<VictoryLabel
+									style={[
+										{
+											fontSize: 14,
+											fontWeight: "bold"
+										},
+										{
+											fontSize: 12,
+											fontWeight: "normal"
+										}
+									]}
+								/>
+							}
+						/>
+						{scatters()}
+					</VictoryChart>
+				</VictorySharedEvents>
 				<DownloadButton
 					type="scatter"
 					svgs={this.state.svgrefs}
