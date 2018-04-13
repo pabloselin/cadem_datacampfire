@@ -9,7 +9,8 @@ import {
 	VictoryStack,
 	VictoryAxis,
 	VictoryContainer,
-	VictorySharedEvents
+	VictorySharedEvents,
+	Point
 	//VictoryTooltip
 } from "victory";
 
@@ -20,12 +21,14 @@ class LineBars extends Component {
 			title: this.props.data.chart_title,
 			subtitle: this.props.data.chart_subtitle,
 			data: this.props.data,
+			activeCat: null,
 			activeKey: null,
 			activeColor: this.props.theme.interactions.hover,
 			clicked: false,
 			domainPadding: { y: 0, x: 20 },
 			svgrefs: [],
-			clickedKeys: []
+			clickedKeys: [],
+			barFill: ["#8c8981", "#cccccc"]
 		};
 	}
 
@@ -60,11 +63,11 @@ class LineBars extends Component {
 		return [
 			{
 				name: this.state.data.data[0].data_a,
-				symbol: { fill: this.state.activeColor }
+				symbol: { fill: this.state.barFill[0] }
 			},
 			{
 				name: this.state.data.data[1].data_b,
-				symbol: { fill: "#555" }
+				symbol: { fill: this.state.barFill[1] }
 			},
 			{
 				name: this.state.data.line_title,
@@ -139,6 +142,36 @@ class LineBars extends Component {
 				}
 			}
 		};
+
+		const legendLabelStyle = {
+			fontSize: 8,
+			fontFamily: "Asap",
+			fontWeight: a => {
+				if (this.state.activeCat === a.name) {
+					return "bold";
+				} else {
+					return "normal";
+				}
+			},
+			fill: a => {
+				if (this.state.activeCat === a.name) {
+					return this.state.activeColor;
+				} else {
+					return "#555";
+				}
+			}
+		};
+
+		const legendDataStyle = {
+			fill: a => {
+				if (this.state.activeCat === a.name) {
+					return this.state.activeColor;
+				} else {
+					return a.symbol.fill;
+				}
+			}
+		};
+
 		const events = [
 			{
 				childName: ["bar", "bar-down"],
@@ -192,6 +225,57 @@ class LineBars extends Component {
 						}
 					}
 				}
+			},
+			{
+				childName: "legend",
+				target: "data",
+				eventHandlers: {
+					onClick: (evt, obj, key) => {
+						if (obj.datum !== undefined) {
+							let refName = obj.datum.name;
+							if (this.state.clicked !== true) {
+								this.setState({
+									activeCat: refName,
+									clicked: true
+								});
+							} else {
+								//Está cliqueada una leyenda
+								if (this.state.activeCat === refName) {
+									this.setState({
+										activeCat: null,
+										clicked: false
+									});
+								} else {
+									this.setState({ activeCat: refName });
+								}
+							}
+						}
+					},
+					onMouseOver: (evt, obj, key) => {
+						if (this.state.clicked !== true) {
+							if (obj.datum !== undefined) {
+								this.setState({
+									activeCat: obj.datum.name
+								});
+							}
+						}
+					},
+					onMouseOut: (evt, obj, key) => {
+						if (this.state.clicked !== true) {
+							this.setState({ activeCat: null });
+							return [
+								{
+									target: "data",
+									mutation: props => null
+								},
+								{
+									target: "labels",
+									mutation: props => null
+								}
+							];
+						}
+					}
+				}
 			}
 		];
 		return (
@@ -216,7 +300,7 @@ class LineBars extends Component {
 								tickLabels: { fontSize: 6 }
 							}}
 							tickLabelComponent={
-								<VictoryLabel textAnchor="middle" dy={25} />
+								<VictoryLabel textAnchor="middle" dy={35} />
 							}
 							tickValues={this.state.data.data[0].data.map(
 								point => point.x
@@ -268,7 +352,7 @@ class LineBars extends Component {
 								style={{
 									data: {
 										width: 12,
-										fill: "#8c8981",
+										fill: this.state.barFill[0],
 										opacity: 0.8
 									},
 									labels: {
@@ -291,7 +375,7 @@ class LineBars extends Component {
 								style={{
 									data: {
 										width: 12,
-										fill: "#cccccc"
+										fill: this.state.barFill[1]
 									},
 									labels: {
 										fill: (d, active) =>
@@ -312,21 +396,23 @@ class LineBars extends Component {
 								this.state.subtitle
 							]}
 							width={this.props.width}
-							x={this.props.width - 140}
+							x={this.props.width - 180}
 							titleOrientation="left"
-							gutter={0}
+							gutter={-20}
+							rowGutter={-5}
 							theme={this.props.theme}
 							name="legend"
 							data={this.makeLegend(this.state.data)}
 							orientation="vertical"
 							itemsPerRow={2}
 							height={60}
-							style={{
-								labels: { fontSize: 8 }
-							}}
+							labelComponent={
+								<VictoryLabel style={legendLabelStyle} />
+							}
+							dataComponent={<Point style={legendDataStyle} />}
 							titleComponent={
 								<VictoryLabel
-									dx={-160}
+									dx={-100}
 									style={[
 										{
 											fontSize: 10,

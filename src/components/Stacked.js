@@ -21,6 +21,7 @@ class Stacked extends Component {
 			data: this.props.data,
 			activeKey: null,
 			activeColor: this.props.theme.interactions.hover,
+			clickedKeys: [],
 			clicked: false,
 			svgrefs: []
 		};
