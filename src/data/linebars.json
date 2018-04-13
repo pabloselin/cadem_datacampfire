@@ -4,7 +4,7 @@
 	"line_title": "Neto",
 	"data": [
 		{
-			"data_a": "Nivel de Satisfacción",
+			"title": "Nivel de Satisfacción",
 			"data": [
 				{ "x": "Mar 17", "y": 16 },
 				{ "x": "Abr 17", "y": 40 },
@@ -22,7 +22,7 @@
 			]
 		},
 		{
-			"data_b": "Nivel de Insatisfacción",
+			"title": "Nivel de Insatisfacción",
 			"data": [
 				{ "x": "Mar 17", "y": -10.4 },
 				{ "x": "Abr 17", "y": -20.2 },

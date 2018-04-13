@@ -11,7 +11,6 @@ import {
 	VictoryContainer,
 	VictorySharedEvents,
 	Point
-	//VictoryTooltip
 } from "victory";
 
 class LineBars extends Component {
@@ -59,14 +58,24 @@ class LineBars extends Component {
 		}
 	}
 
+	getCurFill(cat, curfill, active) {
+		console.log(this.state.activeCat);
+
+		if (this.state.activeCat === cat || active === true) {
+			return this.state.activeColor;
+		} else {
+			return curfill;
+		}
+	}
+
 	makeLegend() {
 		return [
 			{
-				name: this.state.data.data[0].data_a,
+				name: this.state.data.data[0].title,
 				symbol: { fill: this.state.barFill[0] }
 			},
 			{
-				name: this.state.data.data[1].data_b,
+				name: this.state.data.data[1].title,
 				symbol: { fill: this.state.barFill[1] }
 			},
 			{
@@ -352,7 +361,12 @@ class LineBars extends Component {
 								style={{
 									data: {
 										width: 12,
-										fill: this.state.barFill[0],
+										fill: (d, active) =>
+											this.getCurFill(
+												this.state.data.data[0].title,
+												this.state.barFill[0],
+												active
+											),
 										opacity: 0.8
 									},
 									labels: {
@@ -375,7 +389,12 @@ class LineBars extends Component {
 								style={{
 									data: {
 										width: 12,
-										fill: this.state.barFill[1]
+										fill: (d, active) =>
+											this.getCurFill(
+												this.state.data.data[1].title,
+												this.state.barFill[1],
+												active
+											)
 									},
 									labels: {
 										fill: (d, active) =>
