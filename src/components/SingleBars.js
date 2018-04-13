@@ -49,6 +49,14 @@ class SingleBars extends Component {
 		}
 	}
 
+	componentDidUpdate(prevProps, prevState) {
+		if (this.state.clickedKeys !== prevState.clickedKeys) {
+			this.setState({
+				clicked: this.checkLength(this.state.clickedKeys)
+			});
+		}
+	}
+
 	render() {
 		const activeStyle = [
 			{
@@ -79,6 +87,29 @@ class SingleBars extends Component {
 				mutation: props => null
 			}
 		];
+
+		const labelStyle = {
+			fontWeight: a => {
+				if (
+					this.state.clickedKeys.indexOf(a) !== -1 ||
+					this.state.activeKey === a
+				) {
+					return "bold";
+				} else {
+					return "normal";
+				}
+			},
+			fill: a => {
+				if (
+					this.state.clickedKeys.indexOf(a) !== -1 ||
+					this.state.activeKey === a
+				) {
+					return this.state.activeColor;
+				} else {
+					return "#555";
+				}
+			}
+		};
 		return (
 			<div className="chart-widget">
 				<VictoryLabel
@@ -112,20 +143,7 @@ class SingleBars extends Component {
 				>
 					<VictoryAxis
 						theme={this.props.theme}
-						tickLabelComponent={
-							<VictoryLabel
-								style={{
-									fontWeight: a =>
-										a === this.state.activeKey
-											? "bold"
-											: "normal",
-									fill: a =>
-										a === this.state.activeKey
-											? this.state.activeColor
-											: "#555"
-								}}
-							/>
-						}
+						tickLabelComponent={<VictoryLabel style={labelStyle} />}
 					/>
 					<VictoryAxis theme={this.props.theme} dependentAxis />
 					<VictoryBar
@@ -186,9 +204,6 @@ class SingleBars extends Component {
 												) !== -1
 											) {
 												this.setState({
-													clicked: this.checkLength(
-														this.state.clickedKeys
-													),
 													clickedKeys: this.removeKey(
 														this.state.clickedKeys,
 														refKey
@@ -200,9 +215,6 @@ class SingleBars extends Component {
 													clickedKeys: this.updateClickeds(
 														this.state.clickedKeys,
 														refKey
-													),
-													clicked: this.checkLength(
-														this.state.clickedKeys
 													)
 												});
 												return activeStyle;
