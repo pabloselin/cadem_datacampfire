@@ -24,7 +24,8 @@ class LineBars extends Component {
 			activeColor: this.props.theme.interactions.hover,
 			clicked: false,
 			domainPadding: { y: 0, x: 20 },
-			svgrefs: []
+			svgrefs: [],
+			clickedKeys: []
 		};
 	}
 
@@ -35,6 +36,24 @@ class LineBars extends Component {
 		});
 
 		return neto;
+	}
+
+	removeKey(array, element) {
+		return array.filter(e => e !== element);
+	}
+
+	updateClickeds(array, element) {
+		//Debe ser un listado de valores únicos
+		array.push(element);
+		return array.filter((v, i, a) => a.indexOf(v) === i);
+	}
+
+	checkLength(array) {
+		if (array.length == 0) {
+			return false;
+		} else {
+			return true;
+		}
 	}
 
 	makeLegend() {
@@ -56,6 +75,14 @@ class LineBars extends Component {
 
 	componentDidMount() {
 		this.setState({ svgrefs: [this.containerRef] });
+	}
+
+	componentDidUpdate(prevProps, prevState) {
+		if (this.state.clickedKeys !== prevState.clickedKeys) {
+			this.setState({
+				clicked: this.checkLength(this.state.clickedKeys)
+			});
+		}
 	}
 
 	render() {
@@ -120,14 +147,14 @@ class LineBars extends Component {
 					onMouseOver: (evt, obj, idx) => {
 						if (this.state.clicked !== true) {
 							this.setState({
-								activeKey: Number(idx) + 1
+								activeKey: Number(idx)
 							});
 
 							return activeStyle;
 						}
 					},
 					onClick: (evt, obj, idx) => {
-						let refKey = Number(idx) + 1;
+						let refKey = Number(idx);
 						if (this.state.clicked !== true) {
 							this.setState({
 								clicked: true,
@@ -262,12 +289,19 @@ class LineBars extends Component {
 								data={this.state.data.data[1].data}
 								style={{
 									data: {
-										width: 10,
+										width: 12,
 										fill: "#cccccc"
+									},
+									labels: {
+										fill: (d, active) =>
+											active === true
+												? this.state.activeColor
+												: "transparent"
 									}
 								}}
 								alignment="middle"
 								barRatio={0.2}
+								labels={d => `${d.y}`}
 							/>
 						</VictoryStack>
 
