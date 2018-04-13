@@ -26,8 +26,7 @@ class Scatter extends Component {
 			domainX: this.props.data.domainX,
 			domainY: this.props.data.domainY,
 			svgrefs: [],
-			clicked: false,
-			clickedKeys: []
+			clicked: false
 		};
 	}
 
@@ -41,11 +40,7 @@ class Scatter extends Component {
 		return legend;
 	}
 
-	componentDidMount() {
-		this.setState({
-			svgrefs: [this.containerRef]
-		});
-	}
+	componentDidMount() {}
 
 	getCurFill(cat, index, active) {
 		if (this.state.activeCat === cat || active === true) {
@@ -70,13 +65,6 @@ class Scatter extends Component {
 			return false;
 		} else {
 			return true;
-		}
-	}
-
-	legendLabelStyle() {}
-
-	componentDidUpdate(prevProps, prevState) {
-		if (this.state.activeCat !== prevState.activeCat) {
 		}
 	}
 
@@ -198,32 +186,6 @@ class Scatter extends Component {
 									activeCat: obj.datum.name
 								});
 							}
-
-							return [
-								{
-									target: "data",
-									mutation: props => {
-										return Object.assign({}, props.style, {
-											style: {
-												fill: this.state.activeColor
-											}
-										});
-									}
-								},
-								{
-									target: "labels",
-									mutation: props => {
-										return Object.assign({}, props.style, {
-											style: {
-												fill: this.state.activeColor,
-												fontWeight: "bold",
-												fontSize: 12,
-												fontFamily: "Asap"
-											}
-										});
-									}
-								}
-							];
 						}
 					},
 					onMouseOut: (evt, obj, key) => {
