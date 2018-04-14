@@ -19,11 +19,17 @@ const TopMenu = props => (
 		<Menu.Item className="item">Líder SSFF</Menu.Item>
 		<Menu.Item className="item">Express SSFF</Menu.Item>
 		<Menu.Item className="item">SBA SSFF</Menu.Item>
-		<Dropdown simple item text="Ver más">
+		<Dropdown item simple text="Ver más">
 			<Dropdown.Menu>
-				<Dropdown.Item className="item">Lider.cl</Dropdown.Item>
-				<Dropdown.Item className="item">SSFF</Dropdown.Item>
-				<Dropdown.Item className="item">Lider.cl Hist.</Dropdown.Item>
+				<Dropdown.Item className="item">
+					<a href="#">Lider.cl</a>
+				</Dropdown.Item>
+				<Dropdown.Item className="item">
+					<a href="#">SSFF</a>
+				</Dropdown.Item>
+				<Dropdown.Item className="item">
+					<a href="#">Lider.cl Hist.</a>
+				</Dropdown.Item>
 			</Dropdown.Menu>
 		</Dropdown>
 	</Menu>

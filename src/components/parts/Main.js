@@ -16,6 +16,7 @@ import Stacked from "../../components/Stacked.js";
 import KPI_semicirculo from "../../components/kpi/KPI_semicirculo.js";
 import KPI_barra from "../../components/kpi/KPI_barra.js";
 import KPI_progreso from "../../components/kpi/KPI_progreso.js";
+import KPI_linea from "../../components/kpi/KPI_linea.js";
 
 import Dashboard from "../../layouts/Dashboard.js";
 import { Grid } from "semantic-ui-react";
@@ -28,6 +29,7 @@ import singlebar_data from "../../data/barras_single.json";
 import scatter_data from "../../data/scatter.json";
 import scattermini_data from "../../data/scattermini.json";
 import stacked_data from "../../data/stacked.json";
+import kpi_lineas_data from "../../data/kpi_lineas.json";
 //import stackedmini_data from "../../data/stackedmini.json";
 
 const Main = () => (
@@ -177,6 +179,21 @@ const Main = () => (
 								goal="Meta 76%"
 								theme={cadem_theme}
 								semaforo="verde"
+							/>
+						</Grid.Column>
+						<Grid.Column width={12}>
+							<KPI_linea
+								title="Local A"
+								subtitle="Mensual Mar 2018"
+								caption="Acumulado 2018"
+								goal="76%"
+								theme={cadem_theme}
+								semaforo="verde"
+								data={kpi_lineas_data}
+								resumen={
+									([73.12, 111.32, 71.11],
+									[73.43, 100.1, 20.12])
+								}
 							/>
 						</Grid.Column>
 					</Dashboard>
