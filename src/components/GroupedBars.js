@@ -305,6 +305,7 @@ class GroupedBars extends Component {
 							data={this.makeLegend(this.state.data)}
 							orientation="vertical"
 							itemsPerRow={1}
+							gutter={0}
 							height={60}
 							labelComponent={
 								<VictoryLabel style={legendLabelStyle} y={12} />
@@ -315,8 +316,8 @@ class GroupedBars extends Component {
 							titleComponent={
 								<VictoryLabel
 									style={[
-										{ fontSize: 10 },
-										{ fontSize: 6, fontWeight: "normal" }
+										{ fontSize: 10, fontWeight: "bold" },
+										{ fontSize: 8, fontWeight: "normal" }
 									]}
 								/>
 							}

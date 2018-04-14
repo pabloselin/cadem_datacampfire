@@ -168,7 +168,12 @@ class Stacked extends Component {
 							key="x"
 							tickValues={labels()}
 							tickLabelComponent={
-								<VictoryLabel dy={-4} dx={-14} angle={-45} />
+								<VictoryLabel
+									style={{ fontSize: 10 }}
+									dy={0}
+									dx={-14}
+									angle={-45}
+								/>
 							}
 						/>
 						<VictoryAxis key="y" dependentAxis />

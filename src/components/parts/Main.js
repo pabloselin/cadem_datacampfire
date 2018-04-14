@@ -27,11 +27,7 @@ import stacked_data from "../../data/stacked.json";
 const Main = () => (
 	<Router>
 		<Switch>
-			<Route
-				exact
-				path="/"
-				render={props => <Inicio {...props} theme={cadem_theme} />}
-			/>
+			<Route exact path="/" render={props => <Dashboard />} />
 			<Route path="/dashboard" component={Dashboard} />
 			<Route
 				render={props => (

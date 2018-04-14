@@ -83,9 +83,9 @@ const Dashboard = () => (
 				<Grid.Column width={12}>
 					<Grid className="pusher" id="charts-section">
 						<Grid.Column width={8}>
-							<LineBars
-								data={linebars_data}
-								height={312}
+							<GroupedBars
+								data={groupbar_data}
+								height={326}
 								width={600}
 								theme={cadem_theme}
 							/>
@@ -93,6 +93,12 @@ const Dashboard = () => (
 						<Grid.Column width={4}>
 							<SingleBars
 								data={singlebar_data}
+								height={200}
+								width={300}
+								theme={cadem_theme}
+							/>
+							<Pie
+								data={pie_data}
 								height={300}
 								width={300}
 								theme={cadem_theme}
@@ -107,19 +113,19 @@ const Dashboard = () => (
 								colorscale={["#595753", "#cccccc"]}
 							/>
 						</Grid.Column>
-						<Grid.Column width={3}>
+						<Grid.Column width={6}>
 							<Scatter
 								data={scatter_data}
 								height={300}
-								width={300}
+								width={600}
 								theme={cadem_theme}
 							/>
 						</Grid.Column>
-						<Grid.Column width={3}>
-							<Pie
-								data={pie_data}
-								height={300}
-								width={300}
+						<Grid.Column width={12}>
+							<LineBars
+								data={linebars_data}
+								height={260}
+								width={600}
 								theme={cadem_theme}
 							/>
 						</Grid.Column>
