@@ -28,20 +28,18 @@ body {
   background-color: #1b1c1d;
   position: absolute;
   left: 0.8rem;
-  width: 14.28%;
+  width: 14%;
   max-width: 200px;
   padding: 0;
   display: table-cell;
   margin-top: -2px;
-  height: 85vh;
+  height: 400px;
 }
 
 #quieto {
-  /*position: fixed;
-    right: 0;*/
   z-index: 10;
   max-width: 1200px;
-  margin-left: 14.28%;
+  margin-left: 14.2%;
   margin-right: 5px;
 }
 
@@ -58,14 +56,26 @@ body {
 
 .grafico-dos-col {
   background-color: rgba(100, 100, 255, 0.5);
-  height: 30vh;
+  height: 400px;
+  text-align: right;
+  color: white;
+  font-size: 1.2em;
+}
+.graf-chico {
+  height: 320px;
+  margin-top: 80px;
+}
+.ui.inverted.menu {
+  text-align: left;
+  font-size: 15px;
 }
 
-.ui.inverted.menu.item {
-  font-size: 13px;
-  padding: 0.5em !important;
-  background: #bdb2b2;
-  margin: 0 2px;
+.fa-download {
+  margin: 1em;
+}
+.fa-circle {
+  font-size: 10px;
+  margin-right: 0.5em;
 }
 
 .ui.grid.pusher {
@@ -73,6 +83,7 @@ body {
   margin-left: 13.28%;
   background: white;
   margin-top: -2px;
+  height: auto;
   margin-right: 4px;
 }
 
@@ -90,7 +101,7 @@ body {
   background-color: #4d4d4d !important;
   color: white !important;
   display: block !important;
-  width: 8.15%;
+  width: 9.82%;
   padding: 0.5em !important;
   margin: 0 0.1%;
   box-sizing: border-box;
@@ -102,19 +113,10 @@ body {
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
 }
-
-.ui.tabular.menu .item a {
-  color: white;
-  text-decoration: none;
-}
-
-.ui.tabular.menu .item.active a {
-  color: #555;
-}
-
 .ui.menu {
   font-size: 11px !important;
   min-height: 27px !important;
+  z-index: 10;
 }
 
 .item {

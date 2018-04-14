@@ -1,5 +1,5 @@
 import React from "react";
-import { Menu } from "semantic-ui-react";
+import { Menu, Dropdown } from "semantic-ui-react";
 import { NavLink } from "react-router-dom";
 
 const TopMenu = props => (
@@ -19,9 +19,13 @@ const TopMenu = props => (
 		<Menu.Item className="item">Líder SSFF</Menu.Item>
 		<Menu.Item className="item">Express SSFF</Menu.Item>
 		<Menu.Item className="item">SBA SSFF</Menu.Item>
-		<Menu.Item className="item">Lider.cl</Menu.Item>
-		<Menu.Item className="item">SSFF</Menu.Item>
-		<Menu.Item className="item">Lider.cl Hist.</Menu.Item>
+		<Dropdown simple item text="Ver más">
+			<Dropdown.Menu>
+				<Dropdown.Item className="item">Lider.cl</Dropdown.Item>
+				<Dropdown.Item className="item">SSFF</Dropdown.Item>
+				<Dropdown.Item className="item">Lider.cl Hist.</Dropdown.Item>
+			</Dropdown.Menu>
+		</Dropdown>
 	</Menu>
 );
 
