@@ -8,28 +8,16 @@ body {
 }
 
 .chart-widget {
-	padding: 12px;
+	padding: 6px;
 	background-color: #f0f0f0;
-	margin-bottom: 16px;
 	position: relative;
 }
 
-.div-logo {
-	max-width: 190px;
-	width: 14.28%;
-	box-sizing: border-box;
-}
-#logo {
-	max-width: 150px;
-	margin-top: 1.2em;
-	/*padding: 1.5em 0.5em;*/
-	z-index: 10;
+#charts-section {
+	padding-top: 12px;
+	margin-top: -18px;
 }
 
-.dashboard-content {
-	background-color: white;
-}
-
-.grid {
-	background-color: white;
+.menu-izquierda {
+	text-align: center;
 }

@@ -39,7 +39,7 @@ class Pie extends Component {
 					return {
 						fill: this.state.activeColor,
 						fontWeight: "bold",
-						fontSize: 18.6,
+						fontSize: 24,
 						fontColor: this.state.activeColor
 					};
 				} else {
@@ -167,13 +167,13 @@ class Pie extends Component {
 						style={[
 							{
 								fontFamily: "Asap",
-								fontSize: 16,
+								fontSize: 13,
 								fontWeight: "bold",
 								display: "block"
 							},
 							{
 								fontFamily: "Asap",
-								fontSize: 12,
+								fontSize: 11,
 								fontWeight: "normal"
 							}
 						]}
@@ -243,13 +243,13 @@ class Pie extends Component {
 							centerTitle
 							orientation="vertical"
 							borderPadding={{ top: 40 }}
-							rowGutter={{ top: 0, bottom: 0 }}
+							rowGutter={-15}
 							width={200}
 							height={400}
 							style={{
 								labels: {
 									fontFamily: "Asap",
-									fontSize: 20
+									fontSize: 24
 								},
 								parent: { maxWidth: "35%" }
 							}}

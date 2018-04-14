@@ -54,7 +54,13 @@ const Dashboard = () => (
 				</Menu>
 
 				<Grid.Column width={2} id="darks">
-					<Menu visible inverted left vertical>
+					<Menu
+						visible
+						inverted
+						left
+						vertical
+						className="menu-izquierda"
+					>
 						<Menu.Item className="item">
 							Vista global resumen
 						</Menu.Item>
@@ -75,21 +81,47 @@ const Dashboard = () => (
 					</Menu>
 				</Grid.Column>
 				<Grid.Column width={12}>
-					<Grid className="pusher" columns={12}>
-						<Grid.Column width={1}>
-							<div className="grafico-dos-col" />
+					<Grid className="pusher" id="charts-section">
+						<Grid.Column width={8}>
+							<LineBars
+								data={linebars_data}
+								height={312}
+								width={600}
+								theme={cadem_theme}
+							/>
 						</Grid.Column>
-						<Grid.Column width={2}>
-							<div className="grafico-dos-col" />
-						</Grid.Column>
-						<Grid.Column width={3}>
-							<div className="grafico-dos-col" />
+						<Grid.Column width={4}>
+							<SingleBars
+								data={singlebar_data}
+								height={300}
+								width={300}
+								theme={cadem_theme}
+							/>
 						</Grid.Column>
 						<Grid.Column width={6}>
-							<div className="grafico-dos-col" />
+							<Stacked
+								width={600}
+								height={300}
+								data={stacked_data}
+								theme={cadem_theme}
+								colorscale={["#595753", "#cccccc"]}
+							/>
 						</Grid.Column>
-						<Grid.Column width={12}>
-							<div className="grafico-dos-col" />
+						<Grid.Column width={3}>
+							<Scatter
+								data={scatter_data}
+								height={300}
+								width={300}
+								theme={cadem_theme}
+							/>
+						</Grid.Column>
+						<Grid.Column width={3}>
+							<Pie
+								data={pie_data}
+								height={300}
+								width={300}
+								theme={cadem_theme}
+							/>
 						</Grid.Column>
 					</Grid>
 				</Grid.Column>

@@ -317,6 +317,8 @@ class LineBars extends Component {
 			<div className="chart-widget">
 				<VictorySharedEvents events={events}>
 					<VictoryChart
+						width={this.props.width}
+						height={this.props.height}
 						theme={this.props.theme}
 						domainPadding={this.state.domainPadding}
 						containerComponent={
@@ -431,7 +433,7 @@ class LineBars extends Component {
 								this.state.subtitle
 							]}
 							width={this.props.width}
-							x={this.props.width - 180}
+							x={120}
 							titleOrientation="left"
 							gutter={-20}
 							rowGutter={-5}
@@ -450,11 +452,11 @@ class LineBars extends Component {
 									dx={-100}
 									style={[
 										{
-											fontSize: 10,
+											fontSize: 14,
 											fontWeight: "bold"
 										},
 										{
-											fontSize: 6,
+											fontSize: 10,
 											fontWeight: "normal"
 										}
 									]}

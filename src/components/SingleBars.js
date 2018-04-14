@@ -89,6 +89,7 @@ class SingleBars extends Component {
 		];
 
 		const labelStyle = {
+			fontSize: 8,
 			fontWeight: a => {
 				if (
 					this.state.clickedKeys.indexOf(a) !== -1 ||
@@ -112,22 +113,6 @@ class SingleBars extends Component {
 		};
 		return (
 			<div className="chart-widget">
-				<VictoryLabel
-					text={[this.state.title.toUpperCase(), this.state.subtitle]}
-					style={[
-						{
-							fontFamily: "Asap",
-							fontSize: 16,
-							fontWeight: "bold",
-							display: "block"
-						},
-						{
-							fontFamily: "Asap",
-							fontSize: 12,
-							fontWeight: "normal"
-						}
-					]}
-				/>
 				<VictoryChart
 					theme={this.props.theme}
 					height={this.props.height}
@@ -141,6 +126,27 @@ class SingleBars extends Component {
 						/>
 					}
 				>
+					<VictoryLabel
+						x={10}
+						dy={20}
+						text={[
+							this.state.title.toUpperCase(),
+							this.state.subtitle
+						]}
+						style={[
+							{
+								fontFamily: "Asap",
+								fontSize: 14,
+								fontWeight: "bold",
+								display: "block"
+							},
+							{
+								fontFamily: "Asap",
+								fontSize: 12,
+								fontWeight: "normal"
+							}
+						]}
+					/>
 					<VictoryAxis
 						theme={this.props.theme}
 						tickLabelComponent={<VictoryLabel style={labelStyle} />}
