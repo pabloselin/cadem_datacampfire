@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import cadem_theme from "../../themes/cadem_theme.js";
 import Inicio from "../../routes/Inicio.js";
 import ChartPage from "../../components/ChartPage.js";
+
 import Lines from "../../components/Lines.js";
 import Pie from "../../components/Pie.js";
 import GroupedBars from "../../components/GroupedBars.js";
@@ -12,7 +13,10 @@ import Scatter from "../../components/Scatter.js";
 import ScatterMini from "../../components/ScatterMini.js";
 import Stacked from "../../components/Stacked.js";
 
+import KPI_semicirculo from "../../components/kpi/KPI_semicirculo.js";
+
 import Dashboard from "../../layouts/Dashboard.js";
+import { Grid } from "semantic-ui-react";
 //Data
 import linebars_data from "../../data/linebars.json";
 import pie_data from "../../data/pie.json";
@@ -30,7 +34,111 @@ const Main = () => (
 			<Route
 				exact
 				path="/"
-				render={props => <Inicio {...props} theme={cadem_theme} />}
+				render={props => (
+					<Dashboard>
+						<Grid.Column width={8}>
+							<GroupedBars
+								data={groupbar_data}
+								height={326}
+								width={600}
+								theme={cadem_theme}
+							/>
+						</Grid.Column>
+						<Grid.Column width={4}>
+							<SingleBars
+								data={singlebar_data}
+								height={200}
+								width={300}
+								theme={cadem_theme}
+							/>
+							<Pie
+								data={pie_data}
+								height={300}
+								width={300}
+								theme={cadem_theme}
+							/>
+						</Grid.Column>
+						<Grid.Column width={6}>
+							<Stacked
+								width={600}
+								height={300}
+								data={stacked_data}
+								theme={cadem_theme}
+								colorscale={["#595753", "#cccccc"]}
+							/>
+						</Grid.Column>
+						<Grid.Column width={6}>
+							<Scatter
+								data={scatter_data}
+								height={300}
+								width={600}
+								theme={cadem_theme}
+							/>
+						</Grid.Column>
+						<Grid.Column width={12}>
+							<LineBars
+								data={linebars_data}
+								height={260}
+								width={600}
+								theme={cadem_theme}
+							/>
+						</Grid.Column>
+					</Dashboard>
+				)}
+			/>
+			<Route
+				path="/kpis"
+				render={props => (
+					<Dashboard>
+						<Grid.Column width={3}>
+							<KPI_semicirculo
+								percent={40}
+								title="Efectividad"
+								subtitle="Abr 2018"
+								theme={cadem_theme}
+							/>
+						</Grid.Column>
+						<Grid.Column width={3}>
+							<SingleBars
+								data={singlebar_data}
+								height={200}
+								width={300}
+								theme={cadem_theme}
+							/>
+							<Pie
+								data={pie_data}
+								height={300}
+								width={300}
+								theme={cadem_theme}
+							/>
+						</Grid.Column>
+						<Grid.Column width={6}>
+							<Stacked
+								width={600}
+								height={300}
+								data={stacked_data}
+								theme={cadem_theme}
+								colorscale={["#595753", "#cccccc"]}
+							/>
+						</Grid.Column>
+						<Grid.Column width={6}>
+							<Scatter
+								data={scatter_data}
+								height={300}
+								width={600}
+								theme={cadem_theme}
+							/>
+						</Grid.Column>
+						<Grid.Column width={12}>
+							<LineBars
+								data={linebars_data}
+								height={260}
+								width={600}
+								theme={cadem_theme}
+							/>
+						</Grid.Column>
+					</Dashboard>
+				)}
 			/>
 
 			{/*Rutas adicionales para debugging*/}

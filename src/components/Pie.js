@@ -100,7 +100,7 @@ class Pie extends Component {
 			}
 		};
 		return (
-			<div className="Pie chart-widget">
+			<div className="Pie chart-widget" style={{ padding: 20 }}>
 				<VictorySharedEvents
 					className="pieWrapper"
 					events={[
@@ -167,13 +167,13 @@ class Pie extends Component {
 						style={[
 							{
 								fontFamily: "Asap",
-								fontSize: 13,
+								fontSize: 15,
 								fontWeight: "bold",
 								display: "block"
 							},
 							{
 								fontFamily: "Asap",
-								fontSize: 11,
+								fontSize: 13,
 								fontWeight: "normal"
 							}
 						]}

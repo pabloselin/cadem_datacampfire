@@ -169,7 +169,7 @@ class LineBars extends Component {
 		};
 
 		const legendLabelStyle = {
-			fontSize: 8,
+			fontSize: 10,
 			fontFamily: "Asap",
 			fontWeight: a => {
 				if (this.state.activeCat === a.name) {
@@ -334,7 +334,7 @@ class LineBars extends Component {
 							height={this.props.height}
 							width={this.props.width}
 							style={{
-								tickLabels: { fontSize: 6 }
+								tickLabels: { fontSize: 8 }
 							}}
 							tickLabelComponent={
 								<VictoryLabel textAnchor="middle" dy={35} />
@@ -349,7 +349,7 @@ class LineBars extends Component {
 							height={this.props.height}
 							width={this.props.width}
 							style={{
-								tickLabels: { fontSize: 6 },
+								tickLabels: { fontSize: 8 },
 								grid: { stroke: "#ccc", strokeWidth: 0.4 }
 							}}
 							tickLabelComponent={
@@ -452,11 +452,11 @@ class LineBars extends Component {
 									dx={-100}
 									style={[
 										{
-											fontSize: 14,
+											fontSize: 9,
 											fontWeight: "bold"
 										},
 										{
-											fontSize: 10,
+											fontSize: 6,
 											fontWeight: "normal"
 										}
 									]}
