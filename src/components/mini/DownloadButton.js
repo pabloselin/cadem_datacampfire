@@ -21,7 +21,7 @@ class DownloadButton extends Component {
 	}
 
 	makeCSV() {
-		let data = this.props.data.data[0];
+		let data = this.props.data.data;
 		console.log(data);
 		const fields = [
 			{ label: "Compañía", value: "data.x" },
