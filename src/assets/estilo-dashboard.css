@@ -103,6 +103,15 @@ body {
   border-top-right-radius: 8px;
 }
 
+.ui.tabular.menu .item a {
+  color: white;
+  text-decoration: none;
+}
+
+.ui.tabular.menu .item.active a {
+  color: #555;
+}
+
 .ui.menu {
   font-size: 11px !important;
   min-height: 27px !important;

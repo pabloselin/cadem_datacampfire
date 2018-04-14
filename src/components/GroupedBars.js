@@ -293,6 +293,8 @@ class GroupedBars extends Component {
 							/>
 						}
 					>
+						<VictoryAxis tickValues={[1, 2, 3, 4]} />
+						<VictoryAxis dependentAxis />
 						<VictoryLegend
 							title={[
 								this.state.title.toUpperCase(),
