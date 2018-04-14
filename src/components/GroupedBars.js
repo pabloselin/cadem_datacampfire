@@ -332,6 +332,7 @@ class GroupedBars extends Component {
 					</VictoryChart>
 				</VictorySharedEvents>
 				<DownloadButton
+					data={this.props.data}
 					type="groupedbars"
 					svgs={this.state.svgrefs}
 					title={this.state.title}

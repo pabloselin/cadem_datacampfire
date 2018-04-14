@@ -32,7 +32,9 @@ const Main = () => (
 				path="/"
 				render={props => <Inicio {...props} theme={cadem_theme} />}
 			/>
-			<Route path="/dashboard" component={Dashboard} />
+
+			{/*Rutas adicionales para debugging*/}
+
 			<Route
 				render={props => (
 					<ChartPage

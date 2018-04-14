@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Parser } from "json2csv";
 import "./DownloadButton.css";
 import downloadIcon from "../../assets/download.svg";
 import cadem_theme from "../../themes/cadem_theme.js";
@@ -17,6 +18,33 @@ class DownloadButton extends Component {
 
 	debugPNG() {
 		console.log(this.props);
+	}
+
+	makeCSV() {
+		let data = this.props.data.data[0];
+		console.log(data);
+		const fields = [
+			{ label: "Compañía", value: "data.x" },
+			{ label: "Tipo", value: "title" },
+			{ label: "Porcentaje", value: "data.y" }
+		];
+		const jsonparse = new Parser({
+			fields,
+			unwind: ["data"]
+		});
+		const csv = jsonparse.parse(data);
+
+		// var newTab = window.open();
+		// newTab.document.body.innerHTML = csv;
+		console.log(csv);
+	}
+
+	makeDownload() {
+		if (this.props.data !== undefined) {
+			this.makeCSV();
+		} else {
+			this.makePNG();
+		}
 	}
 
 	makePNG() {
@@ -90,7 +118,7 @@ class DownloadButton extends Component {
 		return (
 			<div>
 				<button
-					onClick={this.makePNG.bind(this)}
+					onClick={this.makeDownload.bind(this)}
 					className="DownloadButton"
 				>
 					<img src={downloadIcon} alt="Descargar imagen" />
