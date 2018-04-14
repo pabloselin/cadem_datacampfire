@@ -22,12 +22,14 @@ class LineBars extends Component {
 			data: this.props.data,
 			activeCat: null,
 			activeKey: null,
+			activeIndex: null,
 			activeColor: this.props.theme.interactions.hover,
 			clicked: false,
 			domainPadding: { y: 0, x: 20 },
 			svgrefs: [],
 			clickedKeys: [],
-			barFill: ["#8c8981", "#cccccc"]
+			barFill: ["#8c8981", "#cccccc", "#555"],
+			resetBarFill: ["#8c8981", "#cccccc", "#555"]
 		};
 	}
 
@@ -59,8 +61,6 @@ class LineBars extends Component {
 	}
 
 	getCurFill(cat, curfill, active) {
-		console.log(this.state.activeCat);
-
 		if (this.state.activeCat === cat || active === true) {
 			return this.state.activeColor;
 		} else {
@@ -94,6 +94,22 @@ class LineBars extends Component {
 			this.setState({
 				clicked: this.checkLength(this.state.clickedKeys)
 			});
+		}
+		if (this.state.activeIndex !== prevState.activeIndex) {
+			if (this.state.activeIndex !== null) {
+				let newbarFill = this.state.barFill;
+
+				newbarFill.splice(
+					this.state.activeIndex,
+					1,
+					this.state.activeColor
+				);
+
+				this.setState({ barFill: newbarFill });
+			} else {
+				console.log(this.state.resetBarFill);
+				this.setState({ barFill: this.state.resetBarFill });
+			}
 		}
 	}
 
@@ -242,9 +258,11 @@ class LineBars extends Component {
 					onClick: (evt, obj, key) => {
 						if (obj.datum !== undefined) {
 							let refName = obj.datum.name;
+
 							if (this.state.clicked !== true) {
 								this.setState({
 									activeCat: refName,
+									activeIndex: obj.index,
 									clicked: true
 								});
 							} else {
@@ -252,10 +270,14 @@ class LineBars extends Component {
 								if (this.state.activeCat === refName) {
 									this.setState({
 										activeCat: null,
+										activeIndex: null,
 										clicked: false
 									});
 								} else {
-									this.setState({ activeCat: refName });
+									this.setState({
+										activeCat: refName,
+										activeIndex: obj.index
+									});
 								}
 							}
 						}
@@ -264,14 +286,18 @@ class LineBars extends Component {
 						if (this.state.clicked !== true) {
 							if (obj.datum !== undefined) {
 								this.setState({
-									activeCat: obj.datum.name
+									activeCat: obj.datum.name,
+									activeIndex: obj.index
 								});
 							}
 						}
 					},
 					onMouseOut: (evt, obj, key) => {
 						if (this.state.clicked !== true) {
-							this.setState({ activeCat: null });
+							this.setState({
+								activeCat: null,
+								activeIndex: null
+							});
 							return [
 								{
 									target: "data",
@@ -332,7 +358,7 @@ class LineBars extends Component {
 							key="neto"
 							style={{
 								data: {
-									stroke: "#555",
+									stroke: this.state.barFill[2],
 									strokeWidth: 1
 								}
 							}}
@@ -361,12 +387,7 @@ class LineBars extends Component {
 								style={{
 									data: {
 										width: 12,
-										fill: (d, active) =>
-											this.getCurFill(
-												this.state.data.data[0].title,
-												this.state.barFill[0],
-												active
-											),
+										fill: this.state.barFill[0],
 										opacity: 0.8
 									},
 									labels: {
@@ -389,12 +410,7 @@ class LineBars extends Component {
 								style={{
 									data: {
 										width: 12,
-										fill: (d, active) =>
-											this.getCurFill(
-												this.state.data.data[1].title,
-												this.state.barFill[1],
-												active
-											)
+										fill: this.state.barFill[1]
 									},
 									labels: {
 										fill: (d, active) =>

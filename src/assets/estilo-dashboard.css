@@ -1,0 +1,124 @@
+body {
+  margin: 0;
+  background-color: #232323;
+  font-family: "Asap", sans-serif;
+}
+
+.container {
+  max-width: 1400px;
+  min-width: 1200px;
+  margin: 0 auto;
+}
+
+.ui .grid {
+  /*margin: 0 !important;*/
+}
+.div-logo {
+  max-width: 190px;
+  width: 14.28%;
+  box-sizing: border-box;
+}
+#logo {
+  max-width: 150px;
+  margin-top: 1.2em;
+  /*padding: 1.5em 0.5em;*/
+  z-index: 10;
+}
+#darks {
+  background-color: #1b1c1d;
+  position: absolute;
+  left: 0.8rem;
+  width: 14.28%;
+  max-width: 200px;
+  padding: 0;
+  display: table-cell;
+  margin-top: -2px;
+  height: 85vh;
+}
+
+#quieto {
+  /*position: fixed;
+    right: 0;*/
+  z-index: 10;
+  max-width: 1200px;
+  margin-left: 14.28%;
+  margin-right: 5px;
+}
+
+.column {
+  /*border: 1px solid red;*/
+  box-sizing: border-box;
+}
+
+#detras {
+  /*position:fixed;*/
+  height: 85px;
+  background-color: #232323;
+}
+
+.grafico-dos-col {
+  background-color: rgba(100, 100, 255, 0.5);
+  height: 30vh;
+}
+
+.ui.inverted.menu.item {
+  font-size: 13px;
+  padding: 0.5em !important;
+  background: #bdb2b2;
+  margin: 0 2px;
+}
+
+.ui.grid.pusher {
+  /*z-index: 5;*/
+  margin-left: 14.28%;
+  background: white;
+  margin-top: -2px;
+  height: 85vh;
+  margin-right: 4px;
+}
+
+.ui.vertical.menu {
+  width: 100% !important;
+}
+
+.ui.tabular.menu {
+  margin-top: -12px !important;
+  margin-bottom: 0;
+}
+
+.ui.tabular.menu .item {
+  background-color: #4d4d4d !important;
+  color: white !important;
+  display: block !important;
+  width: 8.15%;
+  padding: 0.5em !important;
+  margin: 0 0.1%;
+  box-sizing: border-box;
+  height: 25px;
+  -webkit-border-top-left-radius: 8px;
+  -webkit-border-top-right-radius: 8px;
+  -moz-border-radius-topleft: 8px;
+  -moz-border-radius-topright: 8px;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.ui.menu {
+  font-size: 11px !important;
+  min-height: 27px !important;
+}
+
+.item {
+  /*padding: 0em 1rem !important;*/
+  margin: 0.1%;
+}
+
+.ui.tabular.menu .item:hover {
+  opacity: 0.7;
+  transition: all ease-in 0.3s;
+}
+
+.ui.tabular.menu .active {
+  background-color: #fff !important;
+  color: #333 !important;
+}

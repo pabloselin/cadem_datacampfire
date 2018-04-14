@@ -1,3 +1,8 @@
+body {
+	margin: 0;
+	font-family: "Asap", sans-serif;
+}
+
 .dashboard {
 	text-align: left;
 }
@@ -7,4 +12,24 @@
 	background-color: #f0f0f0;
 	margin-bottom: 16px;
 	position: relative;
+}
+
+.div-logo {
+	max-width: 190px;
+	width: 14.28%;
+	box-sizing: border-box;
+}
+#logo {
+	max-width: 150px;
+	margin-top: 1.2em;
+	/*padding: 1.5em 0.5em;*/
+	z-index: 10;
+}
+
+.dashboard-content {
+	background-color: white;
+}
+
+.grid {
+	background-color: white;
 }

@@ -108,7 +108,7 @@ const Main = () => (
 								{...props}
 								data={linebars_data}
 								height={300}
-								width={600}
+								width={300}
 								theme={cadem_theme}
 							/>
 						}

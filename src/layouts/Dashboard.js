@@ -28,58 +28,72 @@ import scatter_data from "../data/scatter.json";
 import scattermini_data from "../data/scattermini.json";
 
 const Dashboard = () => (
-	<Container fluid>
-		<Grid className="dashboard" columns={14}>
-			<Grid.Row>
-				<Grid.Column width={6}>
-					<Stacked
-						width={600}
-						height={300}
-						data={stacked_data}
-						theme={cadem_theme}
-						colorscale={["#595753", "#cccccc"]}
+	<Container textAlign="left" className="container">
+		<Grid verticalAlign="middle" centered>
+			<Grid columns={14} id="detras">
+				<div className="div-logo">
+					<img
+						id="logo"
+						src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Walmart_logo.svg/2000px-Walmart_logo.svg.png"
 					/>
-				</Grid.Column>
-				<Grid.Column width={8}>
-					<LineBars
-						width={300}
-						height={300}
-						data={linebars_data}
-						theme={cadem_theme}
-					/>
-				</Grid.Column>
-				<Grid.Column width={4}>
-					<Pie
-						data={pie_data}
-						width={400}
-						height={320}
-						theme={cadem_theme}
-					/>
-					<Lines
-						height={300}
-						width={300}
-						data={lines_data}
-						theme={cadem_theme}
-					/>
-				</Grid.Column>
-				<Grid.Column width={4}>
-					<SingleBars data={singlebar_data} theme={cadem_theme} />
-					<Scatter
-						width={300}
-						height={300}
-						data={scatter_data}
-						theme={cadem_theme}
-					/>
+				</div>
+
+				<Menu tabular column id="quieto">
+					<Menu.Item className="active item">Vista Global</Menu.Item>
+					<Menu.Item className="item">Lider</Menu.Item>
+					<Menu.Item className="item">Express</Menu.Item>
+					<Menu.Item className="item">Ekono</Menu.Item>
+					<Menu.Item className="item">Central Ma..</Menu.Item>
+					<Menu.Item className="item">SBA</Menu.Item>
+					<Menu.Item className="item">Líder SSFF</Menu.Item>
+					<Menu.Item className="item">Express SSFF</Menu.Item>
+					<Menu.Item className="item">SBA SSFF</Menu.Item>
+					<Menu.Item className="item">Lider.cl</Menu.Item>
+					<Menu.Item className="item">SSFF</Menu.Item>
+					<Menu.Item className="item">Lider.cl Hist.</Menu.Item>
+				</Menu>
+
+				<Grid.Column width={2} id="darks">
+					<Menu visible inverted left vertical>
+						<Menu.Item className="item">
+							Vista global resumen
+						</Menu.Item>
+						<Menu.Item className="item">
+							Vista general formato
+						</Menu.Item>
+						<Menu.Item className="item">
+							Vista general mercado
+						</Menu.Item>
+						<Menu.Item className="item">
+							Vista general local
+						</Menu.Item>
+						<Menu.Item className="item">Ranking locales</Menu.Item>
+						<Menu.Item className="item">
+							Respuestas locales
+						</Menu.Item>
+						<Menu.Item className="item">Verbatims</Menu.Item>
+					</Menu>
 				</Grid.Column>
 				<Grid.Column width={12}>
-					<GroupedBars
-						data={groupbar_data}
-						theme={cadem_theme}
-						width={600}
-						height={200}
-					/>
+					<Grid className="pusher" columns={12}>
+						<Grid.Column width={1}>
+							<div className="grafico-dos-col" />
+						</Grid.Column>
+						<Grid.Column width={2}>
+							<div className="grafico-dos-col" />
+						</Grid.Column>
+						<Grid.Column width={3}>
+							<div className="grafico-dos-col" />
+						</Grid.Column>
+						<Grid.Column width={6}>
+							<div className="grafico-dos-col" />
+						</Grid.Column>
+						<Grid.Column width={12}>
+							<div className="grafico-dos-col" />
+						</Grid.Column>
+					</Grid>
 				</Grid.Column>
-			</Grid.Row>
+			</Grid>
 		</Grid>
 	</Container>
 );
