@@ -240,10 +240,13 @@ class SingleBars extends Component {
 				</VictoryChart>
 				<DownloadButton
 					type="singlebars"
-					svgs={this.state.svgrefs}
-					title={this.state.title}
-					subtitle={this.state.subtitle}
-					percent={this.state.currentPercent}
+					data={this.props.data}
+					type="singlebars"
+					fields={[
+						{ label: "Mes", value: "x" },
+						{ label: "Porcentaje", value: "y" }
+					]}
+					unwind={["data"]}
 				/>
 			</div>
 		);

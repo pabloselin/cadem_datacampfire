@@ -266,10 +266,12 @@ class Pie extends Component {
 				</VictorySharedEvents>
 				<DownloadButton
 					type="pie"
-					svgs={this.state.svgrefs}
-					title={this.state.title}
-					subtitle={this.state.subtitle}
-					percent={this.state.currentPercent}
+					data={this.props.data}
+					fields={[
+						{ label: "Tipo", value: "x" },
+						{ label: "Porcentaje", value: "y" }
+					]}
+					unwind={["data"]}
 				/>
 			</div>
 		);

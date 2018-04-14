@@ -313,10 +313,13 @@ class Lines extends Component {
 				</VictorySharedEvents>
 				<DownloadButton
 					type="groupedbars"
-					svgs={this.state.svgrefs}
-					title={this.state.title}
-					subtitle={this.state.subtitle}
-					percent={this.state.currentPercent}
+					data={this.props.data}
+					fields={[
+						{ label: "Mes", value: "values.x" },
+						{ label: "Respuesta", value: "title" },
+						{ label: "Porcentaje", value: "values.y" }
+					]}
+					unwind={["values"]}
 				/>
 			</div>
 		);

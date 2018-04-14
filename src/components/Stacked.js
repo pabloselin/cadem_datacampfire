@@ -232,10 +232,13 @@ class Stacked extends Component {
 
 				<DownloadButton
 					type="stacked"
-					svgs={this.state.svgrefs}
-					title={this.state.title}
-					subtitle={this.state.subtitle}
-					percent={this.state.currentPercent}
+					data={this.props.data}
+					fields={[
+						{ label: "Mes", value: "data.x" },
+						{ label: "Respuesta", value: "title" },
+						{ label: "Porcentaje", value: "data.y" }
+					]}
+					unwind={["data"]}
 				/>
 			</div>
 		);

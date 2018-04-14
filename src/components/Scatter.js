@@ -268,10 +268,14 @@ class Scatter extends Component {
 				</VictorySharedEvents>
 				<DownloadButton
 					type="scatter"
-					svgs={this.state.svgrefs}
-					title={this.state.title}
-					subtitle={this.state.subtitle}
-					percent={this.state.currentPercent}
+					data={this.props.data}
+					fields={[
+						{ label: "Recomendación", value: "data.x" },
+						{ label: "Local", value: "title" },
+						{ label: "Satisfacción", value: "data.y" },
+						{ label: "Cartera", value: "data.cantidad" }
+					]}
+					unwind={["data"]}
 				/>
 			</div>
 		);

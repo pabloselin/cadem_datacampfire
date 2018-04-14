@@ -467,10 +467,13 @@ class LineBars extends Component {
 				</VictorySharedEvents>
 				<DownloadButton
 					type="linebars"
-					svgs={this.state.svgrefs}
-					title={this.state.title}
-					subtitle={this.state.subtitle}
-					percent={this.state.currentPercent}
+					data={this.props.data}
+					fields={[
+						{ label: "Mes", value: "data.x" },
+						{ label: "Tipo", value: "title" },
+						{ label: "Cantidad", value: "data.y" }
+					]}
+					unwind={["data"]}
 				/>
 			</div>
 		);
