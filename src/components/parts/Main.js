@@ -15,6 +15,7 @@ import Stacked from "../../components/Stacked.js";
 
 import KPI_semicirculo from "../../components/kpi/KPI_semicirculo.js";
 import KPI_barra from "../../components/kpi/KPI_barra.js";
+import KPI_progreso from "../../components/kpi/KPI_progreso.js";
 
 import Dashboard from "../../layouts/Dashboard.js";
 import { Grid } from "semantic-ui-react";
@@ -123,6 +124,57 @@ const Main = () => (
 								percent={66.2}
 								title="Rendimiento"
 								subtitle="Abr 2018"
+								theme={cadem_theme}
+								semaforo="verde"
+							/>
+						</Grid.Column>
+						<Grid.Column width={4}>
+							<KPI_barra
+								percent={26.2}
+								title="Rendimiento"
+								subtitle="Abr 2018"
+								theme={cadem_theme}
+								semaforo="rojo"
+							/>
+						</Grid.Column>
+						<Grid.Column width={4}>
+							<KPI_barra
+								percent={38.2}
+								title="Rendimiento"
+								subtitle="Abr 2018"
+								theme={cadem_theme}
+								semaforo="amarillo"
+							/>
+						</Grid.Column>
+						<Grid.Column width={4}>
+							<KPI_progreso
+								percent={6.2}
+								title="Local A"
+								subtitle="Ene - Mar 2018"
+								caption="+2.4pts vs. año anterior"
+								goal="Meta 16%"
+								theme={cadem_theme}
+								semaforo="rojo"
+							/>
+						</Grid.Column>
+						<Grid.Column width={4}>
+							<KPI_progreso
+								percent={40.2}
+								title="Local A"
+								subtitle="Ene - Mar 2018"
+								caption="+8.4pts vs. año anterior"
+								goal="Meta 76%"
+								theme={cadem_theme}
+								semaforo="amarillo"
+							/>
+						</Grid.Column>
+						<Grid.Column width={4}>
+							<KPI_progreso
+								percent={66.2}
+								title="Local A"
+								subtitle="Ene - Mar 2018"
+								caption="+8.4pts vs. año anterior"
+								goal="Meta 76%"
 								theme={cadem_theme}
 								semaforo="verde"
 							/>

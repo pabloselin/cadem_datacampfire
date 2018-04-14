@@ -1,0 +1,8 @@
+.status {
+	position: absolute;
+	right: 40px;
+	top: 10px;
+	font-size: 12px;
+	font-weight: bold;
+	text-align: center;
+}
