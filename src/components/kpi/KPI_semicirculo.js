@@ -1,9 +1,6 @@
 import React, { Component } from "react";
-import DownloadButton from "../mini/DownloadButton.js";
 import {
 	VictoryPie,
-	VictoryLegend,
-	VictorySharedEvents,
 	VictoryLabel,
 	VictoryContainer,
 	VictoryGroup
@@ -70,30 +67,31 @@ class KPI_Semicirculo extends Component {
 			}
 		};
 		return (
-			<div className="Pie chart-widget">
+			<div className="chart-widget">
 				<VictoryLabel
 					dy={10}
 					dx={10}
-					text={[this.state.title.toUpperCase(), this.state.subtitle]}
+					text={[
+						this.state.title.toUpperCase(),
+						` ${this.state.subtitle}`
+					]}
 					style={[
 						{
 							fontFamily: "Asap",
 							fontSize: 15,
-							fontWeight: "bold",
-							display: "block"
+							fontWeight: "bold"
 						},
 						{
 							fontFamily: "Asap",
 							fontSize: 13,
-							fontWeight: "normal",
-							display: "block"
+							fontWeight: "normal"
 						}
 					]}
 				/>
 				<VictoryGroup padding={0} height={100} width={300}>
-					<svg viewBox="-100 0 600 240">
+					<svg viewBox="-100 -20 600 240">
 						<VictoryPie
-							padding={0}
+							padding={12}
 							theme={this.props.theme}
 							name="pie"
 							style={{

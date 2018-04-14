@@ -14,6 +14,7 @@ import ScatterMini from "../../components/ScatterMini.js";
 import Stacked from "../../components/Stacked.js";
 
 import KPI_semicirculo from "../../components/kpi/KPI_semicirculo.js";
+import KPI_barra from "../../components/kpi/KPI_barra.js";
 
 import Dashboard from "../../layouts/Dashboard.js";
 import { Grid } from "semantic-ui-react";
@@ -115,6 +116,15 @@ const Main = () => (
 								subtitle="Abr 2018"
 								theme={cadem_theme}
 								semaforo="rojo"
+							/>
+						</Grid.Column>
+						<Grid.Column width={4}>
+							<KPI_barra
+								percent={66.2}
+								title="Rendimiento"
+								subtitle="Abr 2018"
+								theme={cadem_theme}
+								semaforo="verde"
 							/>
 						</Grid.Column>
 					</Dashboard>
