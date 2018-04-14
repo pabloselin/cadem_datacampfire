@@ -20,15 +20,15 @@ class KPI_Semicirculo extends Component {
 			activeColor: this.props.theme.interactions.active,
 			clicked: false,
 			activeKey: undefined,
-			colorscale: this.props.theme.pie.colorScale,
+			colorscale: this.props.theme.interactions.paleta.escala_semaforo,
 			svgrefs: []
 		};
 	}
 
 	getData() {
 		return [
-			{ x: this.props.title, y: this.props.percent },
-			{ x: "", y: 100 - this.props.percent }
+			{ x: "", y: 100 - this.props.percent },
+			{ x: this.props.title, y: this.props.percent }
 		];
 	}
 
@@ -46,11 +46,17 @@ class KPI_Semicirculo extends Component {
 		};
 
 		const piecolor = key => {
-			if (Number(this.state.activeKey) === key) {
-				return this.state.activeColor;
+			if (key === 1) {
+				return this.state.colorscale[this.props.semaforo][key];
 			} else {
-				return this.state.colorscale[key];
+				return "#ccc";
 			}
+
+			// if (Number(this.state.activeKey) === key || key === 0) {
+			// 	this.state.colorscale[this.props.semaforo][0];
+			// } else {
+			// 	return this.state.colorscale[key];
+			// }
 		};
 
 		const clicked = key => {
@@ -65,54 +71,73 @@ class KPI_Semicirculo extends Component {
 		};
 		return (
 			<div className="Pie chart-widget">
-				<VictoryGroup>
-					<VictoryPie
-						width={600}
-						height={200}
-						theme={this.props.theme}
-						name="pie"
-						style={{
-							data: {
-								fill: d => piecolor(d.eventKey)
-							}
-						}}
-						startAngle={90}
-						endAngle={-90}
-						padAngle={0}
-						innerRadius={45}
-						data={this.getData(this.state.data)}
-						labels={d => ""}
-						containerComponent={
-							<VictoryContainer
-								containerRef={pieref => (this.pieref = pieref)}
-							/>
-						}
-					/>
-
-					<VictoryLabel
-						className="percent"
-						theme={this.props.theme}
-						animate={{ duration: 500 }}
-						text={percentPortal()}
-						textAnchor="middle"
-						verticalAnchor="middle"
-						x={300}
-						y={10}
-						style={{
-							fontSize: 42,
-							fill: this.state.activeColor,
+				<VictoryLabel
+					dy={10}
+					dx={10}
+					text={[this.state.title.toUpperCase(), this.state.subtitle]}
+					style={[
+						{
 							fontFamily: "Asap",
-							fontWeight: "bold"
-						}}
-					/>
-				</VictoryGroup>
-
-				<DownloadButton
-					type="pie"
-					svgs={this.state.svgrefs}
-					title={this.state.title}
-					subtitle={this.state.subtitle}
+							fontSize: 15,
+							fontWeight: "bold",
+							display: "block"
+						},
+						{
+							fontFamily: "Asap",
+							fontSize: 13,
+							fontWeight: "normal",
+							display: "block"
+						}
+					]}
 				/>
+				<VictoryGroup padding={0} height={100} width={300}>
+					<svg viewBox="-100 0 600 240">
+						<VictoryPie
+							padding={0}
+							theme={this.props.theme}
+							name="pie"
+							style={{
+								data: {
+									fill: d => piecolor(d.eventKey)
+								}
+							}}
+							startAngle={90}
+							endAngle={-90}
+							padAngle={0}
+							innerRadius={105}
+							data={this.getData(this.state.data)}
+							labels={d => ""}
+							standalone={false}
+							containerComponent={
+								<VictoryContainer
+									containerRef={pieref =>
+										(this.pieref = pieref)
+									}
+								/>
+							}
+						/>
+
+						<VictoryLabel
+							padding={0}
+							className="percent"
+							theme={this.props.theme}
+							animate={{ duration: 500 }}
+							text={percentPortal()}
+							textAnchor="middle"
+							verticalAnchor="middle"
+							x={200}
+							y={170}
+							style={{
+								fontSize: 56,
+								fill: this.state.colorscale[
+									this.props.semaforo
+								][1],
+								fontFamily: "Asap",
+								fontWeight: "bold"
+							}}
+						/>
+					</svg>
+				</VictoryGroup>
 			</div>
 		);
 	}

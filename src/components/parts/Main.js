@@ -90,51 +90,31 @@ const Main = () => (
 				path="/kpis"
 				render={props => (
 					<Dashboard>
-						<Grid.Column width={3}>
+						<Grid.Column width={4}>
 							<KPI_semicirculo
-								percent={40}
+								percent={45}
 								title="Efectividad"
 								subtitle="Abr 2018"
 								theme={cadem_theme}
+								semaforo="verde"
 							/>
 						</Grid.Column>
-						<Grid.Column width={3}>
-							<SingleBars
-								data={singlebar_data}
-								height={200}
-								width={300}
+						<Grid.Column width={4}>
+							<KPI_semicirculo
+								percent={89}
+								title="Desempeño"
+								subtitle="Abr 2018"
 								theme={cadem_theme}
-							/>
-							<Pie
-								data={pie_data}
-								height={300}
-								width={300}
-								theme={cadem_theme}
+								semaforo="amarillo"
 							/>
 						</Grid.Column>
-						<Grid.Column width={6}>
-							<Stacked
-								width={600}
-								height={300}
-								data={stacked_data}
+						<Grid.Column width={4}>
+							<KPI_semicirculo
+								percent={12}
+								title="Rendimiento"
+								subtitle="Abr 2018"
 								theme={cadem_theme}
-								colorscale={["#595753", "#cccccc"]}
-							/>
-						</Grid.Column>
-						<Grid.Column width={6}>
-							<Scatter
-								data={scatter_data}
-								height={300}
-								width={600}
-								theme={cadem_theme}
-							/>
-						</Grid.Column>
-						<Grid.Column width={12}>
-							<LineBars
-								data={linebars_data}
-								height={260}
-								width={600}
-								theme={cadem_theme}
+								semaforo="rojo"
 							/>
 						</Grid.Column>
 					</Dashboard>

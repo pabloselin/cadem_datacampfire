@@ -22,17 +22,12 @@ class DownloadButton extends Component {
 
 	makeCSV() {
 		let data = this.props.data.data;
-		console.log(data);
-		const fields = [
-			{ label: "Compañía", value: "data.x" },
-			{ label: "Tipo", value: "title" },
-			{ label: "Porcentaje", value: "data.y" }
-		];
-		const jsonparse = new Parser({
+		let fields = this.props.fields;
+		let jsonparse = new Parser({
 			fields,
-			unwind: ["data"]
+			unwind: this.props.unwind
 		});
-		const csv = jsonparse.parse(data);
+		let csv = jsonparse.parse(data);
 
 		// var newTab = window.open();
 		// newTab.document.body.innerHTML = csv;

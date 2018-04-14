@@ -337,10 +337,12 @@ class GroupedBars extends Component {
 				<DownloadButton
 					data={this.props.data}
 					type="groupedbars"
-					svgs={this.state.svgrefs}
-					title={this.state.title}
-					subtitle={this.state.subtitle}
-					percent={this.state.currentPercent}
+					fields={[
+						{ label: "Compañía", value: "data.x" },
+						{ label: "Tipo", value: "title" },
+						{ label: "Porcentaje", value: "data.y" }
+					]}
+					unwind={["data"]}
 				/>
 			</div>
 		);
