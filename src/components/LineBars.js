@@ -24,7 +24,6 @@ class LineBars extends Component {
 			activeKey: null,
 			activeBar: null,
 			activeIndex: null,
-			activeColor: this.props.activeColor,
 			clicked: false,
 			clickedBar: null,
 			isLegendClicked: false,
@@ -68,7 +67,7 @@ class LineBars extends Component {
 
 	getCurFill(cat, curfill, active) {
 		if (this.state.activeCat === cat || active === true) {
-			return this.state.activeColor;
+			return this.props.activeColor;
 		} else {
 			return curfill;
 		}
@@ -103,7 +102,7 @@ class LineBars extends Component {
 				target: "data",
 				mutation: props => ({
 					style: Object.assign({}, props.style, {
-						fill: this.state.activeColor,
+						fill: this.props.activeColor,
 						width: 12
 					})
 				})
@@ -113,7 +112,7 @@ class LineBars extends Component {
 				mutation: props => ({
 					style: Object.assign({}, props.style, {
 						display: "block",
-						fill: this.state.activeColor
+						fill: this.props.activeColor
 					})
 				})
 			}
@@ -145,7 +144,7 @@ class LineBars extends Component {
 					this.state.clickedKeys.indexOf(a) !== -1 ||
 					this.state.activeKey === a
 				) {
-					return this.state.activeColor;
+					return this.props.activeColor;
 				} else {
 					return "#555";
 				}
@@ -164,7 +163,7 @@ class LineBars extends Component {
 			},
 			fill: a => {
 				if (this.state.activeCat === a.name) {
-					return this.state.activeColor;
+					return this.props.activeColor;
 				} else {
 					return "#555";
 				}
@@ -174,7 +173,7 @@ class LineBars extends Component {
 		const legendDataStyle = {
 			fill: a => {
 				if (this.state.activeCat === a.name) {
-					return this.state.activeColor;
+					return this.props.activeColor;
 				} else {
 					return a.symbol.fill;
 				}
@@ -184,9 +183,9 @@ class LineBars extends Component {
 		const activeLegend = refName => {
 			let mutation = refName =>
 				refName === "Neto"
-					? { stroke: this.state.activeColor }
+					? { stroke: this.props.activeColor }
 					: {
-							fill: this.state.activeColor,
+							fill: this.props.activeColor,
 							width: 12
 					  };
 			return [
@@ -204,7 +203,7 @@ class LineBars extends Component {
 					eventKey: "all",
 					mutation: props => ({
 						style: Object.assign({}, props.style, {
-							fill: this.state.activeColor
+							fill: this.props.activeColor
 						})
 					})
 				}
@@ -496,7 +495,7 @@ class LineBars extends Component {
 									labels: {
 										fill: (d, active) =>
 											active === true
-												? this.state.activeColor
+												? this.props.activeColor
 												: "transparent"
 									}
 								}}
@@ -518,7 +517,7 @@ class LineBars extends Component {
 									labels: {
 										fill: (d, active) =>
 											active === true
-												? this.state.activeColor
+												? this.props.activeColor
 												: "transparent"
 									}
 								}}

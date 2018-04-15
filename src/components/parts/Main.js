@@ -90,7 +90,7 @@ const Main = () => (
 								width={600}
 								theme={cadem_theme}
 								colorscale={cadem_theme.linebar.colorScale}
-								activeColor={cadem_theme.interactions.hover_alt}
+								activeColor={cadem_theme.interactions.hover}
 							/>
 						</Grid.Column>
 						<Grid.Column width={4}>
