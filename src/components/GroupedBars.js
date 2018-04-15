@@ -217,10 +217,15 @@ class GroupedBars extends Component {
 						}
 					},
 					onMouseOut: (evt, obj, idx) => {
-						let clickedthing = `${obj.datum.cat}-${idx}`;
-						if (this.state.activeClickedBar !== clickedthing) {
-							this.setState({ activeKey: null, activeBar: null });
-							return normalStyle;
+						if (obj.datum.cat !== undefined) {
+							let clickedthing = `${obj.datum.cat}-${idx}`;
+							if (this.state.activeClickedBar !== clickedthing) {
+								this.setState({
+									activeKey: null,
+									activeBar: null
+								});
+								return normalStyle;
+							}
 						}
 					}
 				}

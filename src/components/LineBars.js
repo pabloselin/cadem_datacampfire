@@ -22,14 +22,21 @@ class LineBars extends Component {
 			data: this.props.data,
 			activeCat: null,
 			activeKey: null,
+			activeBar: null,
 			activeIndex: null,
 			activeColor: this.props.theme.interactions.hover,
 			clicked: false,
+			clickedBar: null,
+			isLegendClicked: false,
 			domainPadding: { y: 0, x: 20 },
 			svgrefs: [],
 			clickedKeys: [],
 			barFill: ["#8c8981", "#cccccc", "#555"],
-			resetBarFill: ["#8c8981", "#cccccc", "#555"]
+			barNames: [
+				this.props.data.data[0].title,
+				this.props.data.data[1].title,
+				"Neto"
+			]
 		};
 	}
 
@@ -89,29 +96,7 @@ class LineBars extends Component {
 		this.setState({ svgrefs: [this.containerRef] });
 	}
 
-	componentDidUpdate(prevProps, prevState) {
-		if (this.state.clickedKeys !== prevState.clickedKeys) {
-			this.setState({
-				clicked: this.checkLength(this.state.clickedKeys)
-			});
-		}
-		if (this.state.activeIndex !== prevState.activeIndex) {
-			if (this.state.activeIndex !== null) {
-				let newbarFill = this.state.barFill;
-
-				newbarFill.splice(
-					this.state.activeIndex,
-					1,
-					this.state.activeColor
-				);
-
-				this.setState({ barFill: newbarFill });
-			} else {
-				console.log(this.state.resetBarFill);
-				this.setState({ barFill: this.state.resetBarFill });
-			}
-		}
-	}
+	componentDidUpdate(prevProps, prevState) {}
 
 	render() {
 		const activeStyle = [
@@ -197,9 +182,39 @@ class LineBars extends Component {
 			}
 		};
 
+		const activeLegend = refName => {
+			let mutation = refName =>
+				refName === "Neto"
+					? { stroke: this.state.activeColor }
+					: {
+							fill: this.state.activeColor,
+							width: 12
+					  };
+			return [
+				{
+					target: "data",
+					childName: refName,
+					eventKey: "all",
+					mutation: props => ({
+						style: Object.assign({}, props.style, mutation(refName))
+					})
+				},
+				{
+					target: "labels",
+					childName: refName,
+					eventKey: "all",
+					mutation: props => ({
+						style: Object.assign({}, props.style, {
+							fill: this.state.activeColor
+						})
+					})
+				}
+			];
+		};
+
 		const events = [
 			{
-				childName: ["bar", "bar-down"],
+				childName: [this.state.barNames[0], this.state.barNames[1]],
 				target: "data",
 				eventHandlers: {
 					onMouseOver: (evt, obj, idx) => {
@@ -212,41 +227,83 @@ class LineBars extends Component {
 						}
 					},
 					onClick: (evt, obj, idx) => {
-						let refKey = Number(idx);
-						if (this.state.clicked !== true) {
+						let activeCat = obj.data[0].cat;
+						let clicked = `${obj.datum.x}-${idx}`;
+						if (this.state.clickedBar !== true) {
 							this.setState({
-								clicked: true,
-								clickedKeys: this.updateClickeds(
-									this.state.clickedKeys,
-									refKey
-								)
+								clickedBar: true,
+								activeClickedBar: clicked
 							});
 							return activeStyle;
 						} else {
-							//Desactivo una barra ya activada
-							if (this.state.clickedKeys.indexOf(refKey) !== -1) {
+							if (this.state.activeClickedBar === clicked) {
 								this.setState({
-									clickedKeys: this.removeKey(
-										this.state.clickedKeys,
-										refKey
-									)
+									clickedBar: false,
+									activeClickedBar: null
 								});
 								return normalStyle;
 							} else {
 								this.setState({
-									clickedKeys: this.updateClickeds(
-										this.state.clickedKeys,
-										refKey
-									)
+									clickedBar: true,
+									activeClickedBar: clicked
 								});
-								return activeStyle;
+								return [
+									{
+										target: "data",
+										eventKey: "all",
+										childName: "all",
+										mutation: props => null
+									},
+									{
+										target: "labels",
+										eventKey: "all",
+										childName: "all",
+										mutation: props => null
+									},
+									{
+										target: "data",
+										mutation: props => ({
+											style: Object.assign(
+												{},
+												props.style,
+												{
+													fill: this.state
+														.activeColor,
+													width: 12
+												}
+											)
+										})
+									},
+									{
+										target: "labels",
+										mutation: props => ({
+											style: Object.assign(
+												{},
+												props.style,
+												{
+													display: "block",
+													fill: this.state
+														.activeColor,
+													fontSize: 8,
+													fontWeight: "bold"
+												}
+											)
+										})
+									}
+								];
 							}
 						}
 					},
-					onMouseOut: () => {
-						if (this.state.clicked !== true) {
-							this.setState({ activeKey: null });
-							return normalStyle;
+					onMouseOut: (evt, obj, idx) => {
+						if (obj.datum.x !== undefined) {
+							let clickedthing = `${obj.datum.x}-${idx}`;
+							if (this.state.activeClickedBar !== clickedthing) {
+								this.setState({
+									activeKey: null,
+									activeBar: null
+								});
+								return normalStyle;
+							}
 						}
 					}
 				}
@@ -258,46 +315,68 @@ class LineBars extends Component {
 					onClick: (evt, obj, key) => {
 						if (obj.datum !== undefined) {
 							let refName = obj.datum.name;
-
-							if (this.state.clicked !== true) {
+							if (this.state.isLegendClicked !== true) {
 								this.setState({
 									activeCat: refName,
-									activeIndex: obj.index,
-									clicked: true
+									isLegendClicked: true
 								});
+								return activeLegend(refName);
 							} else {
 								//Está cliqueada una leyenda
 								if (this.state.activeCat === refName) {
 									this.setState({
 										activeCat: null,
-										activeIndex: null,
-										clicked: false
+										isLegendClicked: false
 									});
+									return [
+										{
+											target: "data",
+											childName: refName,
+											eventKey: "all",
+											mutation: props => null
+										},
+										{
+											target: "labels",
+											childName: refName,
+											eventKey: "all",
+											mutation: props => null
+										}
+									];
 								} else {
-									this.setState({
-										activeCat: refName,
-										activeIndex: obj.index
-									});
+									this.setState({ activeCat: refName });
+									return [
+										{
+											target: "data",
+											childName: this.state.barNames,
+											eventKey: "all",
+											mutation: props => null
+										},
+										{
+											target: "labels",
+											childName: this.state.barNames,
+											eventKey: "all",
+											mutation: props => null
+										},
+										...activeLegend(refName)
+									];
 								}
 							}
 						}
 					},
 					onMouseOver: (evt, obj, key) => {
-						if (this.state.clicked !== true) {
+						if (this.state.isLegendClicked !== true) {
 							if (obj.datum !== undefined) {
+								let refName = obj.datum.name;
 								this.setState({
-									activeCat: obj.datum.name,
-									activeIndex: obj.index
+									activeCat: obj.datum.name
 								});
 							}
+							return activeLegend(obj.datum.name);
 						}
 					},
 					onMouseOut: (evt, obj, key) => {
-						if (this.state.clicked !== true) {
-							this.setState({
-								activeCat: null,
-								activeIndex: null
-							});
+						if (this.state.isLegendClicked !== true) {
+							this.setState({ activeCat: null });
 							return [
 								{
 									target: "data",
@@ -305,6 +384,18 @@ class LineBars extends Component {
 								},
 								{
 									target: "labels",
+									mutation: props => null
+								},
+								{
+									target: "data",
+									childName: this.state.barNames,
+									eventKey: "all",
+									mutation: props => null
+								},
+								{
+									target: "labels",
+									childName: this.state.barNames,
+									eventKey: "all",
 									mutation: props => null
 								}
 							];
@@ -357,6 +448,7 @@ class LineBars extends Component {
 							}
 						/>
 						<VictoryLine
+							name="Neto"
 							key="neto"
 							style={{
 								data: {
@@ -377,19 +469,28 @@ class LineBars extends Component {
 							width={this.props.width}
 							domain={{ y: [-50, 250] }}
 							style={{
-								labels: { fontSize: 6, textAlign: "center" }
+								labels: {
+									fontSize: 8,
+									textAlign: "center",
+									fontWeight: "bold"
+								}
 							}}
 						>
 							<VictoryBar
 								key="bar"
-								name="bar"
+								name={this.state.barNames[0]}
 								theme={this.props.theme}
 								title={this.state.title}
 								data={this.state.data.data[0].data}
 								style={{
 									data: {
 										width: 12,
-										fill: this.state.barFill[0],
+										fill: (d, active) =>
+											this.getCurFill(
+												this.state.barNames[0],
+												this.state.barFill[0],
+												active
+											),
 										opacity: 0.8
 									},
 									labels: {
@@ -405,7 +506,7 @@ class LineBars extends Component {
 							/>
 							<VictoryBar
 								key="bar-down"
-								name="bar-down"
+								name={this.state.data.data[1].title}
 								theme={this.props.theme}
 								title={this.state.title}
 								data={this.state.data.data[1].data}
