@@ -535,7 +535,7 @@ class LineBars extends Component {
 							width={this.props.width}
 							x={120}
 							titleOrientation="left"
-							gutter={-20}
+							gutter={0}
 							rowGutter={-5}
 							theme={this.props.theme}
 							name="legend"

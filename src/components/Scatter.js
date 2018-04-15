@@ -20,7 +20,6 @@ class Scatter extends Component {
 			subtitle: this.props.data.chart_subtitle,
 			data: this.props.data.data,
 			activeColor: this.props.theme.interactions.hover,
-			colorscale: this.props.theme.line.colorScale,
 			activeKey: null,
 			activeCat: null,
 			domainX: this.props.data.domainX,
@@ -34,7 +33,7 @@ class Scatter extends Component {
 		let legend = data.map((item, idx) => {
 			return {
 				name: item.title,
-				symbol: { fill: this.state.colorscale[idx] }
+				symbol: { fill: this.props.colorscale[idx] }
 			};
 		});
 		return legend;
@@ -46,7 +45,7 @@ class Scatter extends Component {
 		if (this.state.activeCat === cat || active === true) {
 			return this.state.activeColor;
 		} else {
-			return this.state.colorscale[index];
+			return this.props.colorscale[index];
 		}
 	}
 

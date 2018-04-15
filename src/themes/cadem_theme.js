@@ -203,6 +203,7 @@ export default {
       labels: centeredLabelStyles
     },
     colorScale: colors_b,
+    altColorScale: azules,
     width: 450,
     height: 300,
     padding: 20
@@ -223,6 +224,8 @@ export default {
   },
   scatter: assign(
     {
+      colorScale: colors_b,
+      altColorScale: azules,
       style: {
         data: {
           fill: charcoal,

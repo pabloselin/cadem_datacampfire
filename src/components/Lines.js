@@ -22,10 +22,8 @@ class Lines extends Component {
 			title: this.props.data.chart_title,
 			subtitle: this.props.data.chart_subtitle,
 			data: this.props.data.data,
-			colorscale: this.props.theme.line.colorScale,
 			activeLine: null,
 			activeMonth: null,
-			activeColor: this.props.theme.interactions.hover,
 			clicked: false,
 			domainLength: this.props.data.data[0].values.length,
 			xLabels: this.props.data.data[0].values.map(item => {
@@ -41,12 +39,12 @@ class Lines extends Component {
 			let eventStyles = () => {
 				if (linename === this.state.activeLine) {
 					return {
-						fill: this.state.activeColor,
+						fill: this.props.activeColor,
 						fontWeight: "bold"
 					};
 				} else {
 					return {
-						fill: this.state.colorscale[idx],
+						fill: this.props.colorscale[idx],
 						fontWeight: "normal"
 					};
 				}
@@ -91,11 +89,10 @@ class Lines extends Component {
 			this.state.data.map((line, idx) => {
 				let linename = "line-" + idx;
 				linenames.push(linename);
-
 				const linecolor = () =>
 					this.state.activeLine === linename
-						? this.state.activeColor
-						: this.state.colorscale[idx];
+						? this.props.activeColor
+						: this.props.colorscale[idx];
 				const linewidth = () =>
 					this.state.activeLine === linename ? 1.8 : 0.7;
 				const labels = d => {
@@ -224,7 +221,7 @@ class Lines extends Component {
 										labelComponent={
 											<VictoryLabel
 												style={{
-													fill: this.state
+													fill: this.props
 														.activeColor,
 													fontWeight: "bold",
 													fontSize: 10
@@ -234,7 +231,7 @@ class Lines extends Component {
 										flyoutComponent={
 											<LineFlyOut
 												graphHeight={this.props.height}
-												color={this.state.activeColor}
+												color={this.props.activeColor}
 											/>
 										}
 										orientation="top"
@@ -270,7 +267,7 @@ class Lines extends Component {
 											: "normal",
 									fill: a =>
 										a === this.state.activeMonth
-											? this.state.activeColor
+											? this.props.activeColor
 											: "#555"
 								}
 							}}

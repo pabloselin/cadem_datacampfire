@@ -80,7 +80,7 @@ const Main = () => (
 								height={300}
 								width={600}
 								theme={cadem_theme}
-								colorscale={cadem_theme.bar.colorScale}
+								colorscale={cadem_theme.scatter.colorScale}
 							/>
 						</Grid.Column>
 						<Grid.Column width={8}>
@@ -99,7 +99,8 @@ const Main = () => (
 								height={300}
 								width={300}
 								theme={cadem_theme}
-								colorscale={cadem_theme.bar.colorScale}
+								colorscale={cadem_theme.line.colorScale}
+								activeColor={cadem_theme.interactions.hover}
 							/>
 						</Grid.Column>
 					</Dashboard>
@@ -260,7 +261,7 @@ const Main = () => (
 								width={600}
 								height={300}
 								theme={cadem_theme}
-								colorscale={cadem_theme.bar.altColorScale}
+								colorscale={cadem_theme.scatter.altColorScale}
 							/>
 						</Grid.Column>
 						<Grid.Column width={8}>
@@ -280,6 +281,7 @@ const Main = () => (
 								width={300}
 								theme={cadem_theme}
 								colorscale={cadem_theme.line.altColorScale}
+								activeColor={cadem_theme.interactions.hover_alt}
 							/>
 						</Grid.Column>
 					</Dashboard>
@@ -314,6 +316,8 @@ const Main = () => (
 								width={300}
 								height={300}
 								theme={cadem_theme}
+								colorscale={cadem_theme.line.altColorScale}
+								activeColor={cadem_theme.interactions.hover_alt}
 							/>
 						}
 					/>
