@@ -315,6 +315,7 @@ class LineBars extends Component {
 					onClick: (evt, obj, key) => {
 						if (obj.datum !== undefined) {
 							let refName = obj.datum.name;
+
 							if (this.state.isLegendClicked !== true) {
 								this.setState({
 									activeCat: refName,

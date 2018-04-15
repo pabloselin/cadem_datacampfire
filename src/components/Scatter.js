@@ -123,6 +123,7 @@ class Scatter extends Component {
 		};
 
 		const legendDataStyle = {
+			size: 16,
 			fill: a => {
 				if (this.state.activeCat === a.name) {
 					return this.state.activeColor;
@@ -210,59 +211,55 @@ class Scatter extends Component {
 		return (
 			<div className="chart-widget">
 				<VictorySharedEvents events={events}>
+					<VictoryLegend
+						title={[
+							this.state.title.toUpperCase(),
+							this.state.subtitle
+						]}
+						titleOrientation="top"
+						gutter={30}
+						height={60}
+						theme={this.props.theme}
+						name="legend"
+						data={this.makeLegend(this.state.data)}
+						orientation="horizontal"
+						itemsPerRow={4}
+						dataComponent={
+							<Point size={6} style={legendDataStyle} y={50} />
+						}
+						labelComponent={
+							<VictoryLabel style={legendLabelStyle} y={50} />
+						}
+						titleComponent={
+							<VictoryLabel
+								style={[
+									{
+										fontSize: 16,
+										fontWeight: "bold",
+										display: "block"
+									},
+									{
+										fontSize: 14,
+										fontWeight: "normal",
+										display: "block"
+									}
+								]}
+							/>
+						}
+					/>
+
 					<VictoryChart
 						theme={this.props.theme}
 						width={this.props.width}
 						height={this.props.height}
 						domainPadding={40}
-						containerComponent={
-							<VictoryContainer
-								containerRef={containerRef =>
-									(this.containerRef = containerRef)
-								}
-							/>
-						}
+						padding={{ top: 0, left: 40, right: 40, bottom: 40 }}
 					>
-						<VictoryAxis domain={this.state.domainX} />
 						<VictoryAxis
 							domain={this.state.domainY}
 							dependentAxis
 						/>
-
-						<VictoryLegend
-							title={[
-								this.state.title.toUpperCase(),
-								this.state.subtitle
-							]}
-							titleOrientation="top"
-							gutter={10}
-							padding={{ bottom: 100 }}
-							theme={this.props.theme}
-							name="legend"
-							data={this.makeLegend(this.state.data)}
-							orientation="horizontal"
-							itemsPerRow={4}
-							dataComponent={
-								<Point style={legendDataStyle} y={40} />
-							}
-							labelComponent={
-								<VictoryLabel style={legendLabelStyle} y={40} />
-							}
-							titleComponent={
-								<VictoryLabel
-									style={[
-										{
-											fontSize: 14,
-											fontWeight: "bold"
-										},
-										{
-											fontSize: 12,
-											fontWeight: "normal"
-										}
-									]}
-								/>
-							}
-						/>
+						<VictoryAxis domain={this.state.domainX} />
 						{scatters()}
 					</VictoryChart>
 				</VictorySharedEvents>
