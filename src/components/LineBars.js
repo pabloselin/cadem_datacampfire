@@ -443,7 +443,7 @@ class LineBars extends Component {
 								grid: { stroke: "#ccc", strokeWidth: 0.4 }
 							}}
 							tickLabelComponent={
-								<VictoryLabel textAnchor="middle" />
+								<VictoryLabel dx={-6} textAnchor="middle" />
 							}
 						/>
 						<VictoryLine
