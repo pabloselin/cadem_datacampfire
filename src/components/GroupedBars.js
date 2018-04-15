@@ -22,7 +22,6 @@ class GroupedBars extends Component {
 			activeKey: null,
 			activeCat: null,
 			activeColor: this.props.theme.interactions.hover,
-			colorscale: this.props.theme.line.colorScale,
 			isLegendClicked: false,
 			clickedBar: false,
 			activeClickedBar: null,
@@ -33,12 +32,13 @@ class GroupedBars extends Component {
 	}
 
 	makeLegend(data) {
+		console.log(this.props.colorscale);
 		let legData = data.data.map((item, idx) => {
 			let fill = () => {
 				if (item.title === this.state.activeKey) {
 					return this.state.activeColor;
 				} else {
-					return this.props.theme.bar.colorScale[idx];
+					return this.props.colorscale[idx];
 				}
 			};
 			return {
@@ -56,7 +56,7 @@ class GroupedBars extends Component {
 		if (this.state.activeCat === cat) {
 			return this.state.activeColor;
 		} else {
-			return this.state.colorscale[index];
+			return this.props.colorscale[index];
 		}
 	}
 
@@ -290,7 +290,7 @@ class GroupedBars extends Component {
 						name={group.title}
 						theme={this.props.theme}
 						key={"bar-" + idx}
-						colorscale={this.props.theme.colorscale}
+						colorscale={this.props.colorscale}
 						title={group.title}
 						data={group.data}
 						style={{

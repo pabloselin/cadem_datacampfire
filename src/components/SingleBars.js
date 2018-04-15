@@ -25,7 +25,6 @@ class SingleBars extends Component {
 	}
 
 	componentDidMount() {
-		console.log(this.containerRef);
 		this.setState({
 			svgrefs: [this.containerRef]
 		});
@@ -163,8 +162,7 @@ class SingleBars extends Component {
 							labels: { fontSize: 10, textAlign: "left" },
 							data: {
 								width: 18,
-								fill: d =>
-									this.props.theme.bar.colorScale[d.eventKey]
+								fill: d => this.props.colorscale[d.eventKey]
 							}
 						}}
 						alignment="middle"

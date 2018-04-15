@@ -12,7 +12,10 @@ const TopMenu = props => (
 			Lider
 		</NavLink>
 
-		<Menu.Item className="item">Express</Menu.Item>
+		<NavLink className="item" to="/alt-paleta">
+			Express
+		</NavLink>
+
 		<Menu.Item className="item">Ekono</Menu.Item>
 		<Menu.Item className="item">Central Ma..</Menu.Item>
 		<Menu.Item className="item">SBA</Menu.Item>

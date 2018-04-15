@@ -24,14 +24,13 @@ class LineBars extends Component {
 			activeKey: null,
 			activeBar: null,
 			activeIndex: null,
-			activeColor: this.props.theme.interactions.hover,
+			activeColor: this.props.activeColor,
 			clicked: false,
 			clickedBar: null,
 			isLegendClicked: false,
 			domainPadding: { y: 0, x: 20 },
 			svgrefs: [],
 			clickedKeys: [],
-			barFill: ["#8c8981", "#cccccc", "#555"],
 			barNames: [
 				this.props.data.data[0].title,
 				this.props.data.data[1].title,
@@ -79,11 +78,11 @@ class LineBars extends Component {
 		return [
 			{
 				name: this.state.data.data[0].title,
-				symbol: { fill: this.state.barFill[0] }
+				symbol: { fill: this.props.colorscale[0] }
 			},
 			{
 				name: this.state.data.data[1].title,
-				symbol: { fill: this.state.barFill[1] }
+				symbol: { fill: this.props.colorscale[1] }
 			},
 			{
 				name: this.state.data.line_title,
@@ -453,7 +452,7 @@ class LineBars extends Component {
 							key="neto"
 							style={{
 								data: {
-									stroke: this.state.barFill[2],
+									stroke: this.props.colorscale[2],
 									strokeWidth: 1
 								}
 							}}
@@ -489,7 +488,7 @@ class LineBars extends Component {
 										fill: (d, active) =>
 											this.getCurFill(
 												this.state.barNames[0],
-												this.state.barFill[0],
+												this.props.colorscale[0],
 												active
 											),
 										opacity: 0.8
@@ -514,7 +513,7 @@ class LineBars extends Component {
 								style={{
 									data: {
 										width: 12,
-										fill: this.state.barFill[1]
+										fill: this.props.colorscale[1]
 									},
 									labels: {
 										fill: (d, active) =>
@@ -542,23 +541,25 @@ class LineBars extends Component {
 							theme={this.props.theme}
 							name="legend"
 							data={this.makeLegend(this.state.data)}
-							orientation="vertical"
-							itemsPerRow={2}
+							orientation="horizontal"
+							itemsPerRow={3}
 							height={60}
 							labelComponent={
 								<VictoryLabel style={legendLabelStyle} />
 							}
-							dataComponent={<Point style={legendDataStyle} />}
+							dataComponent={
+								<Point size={6} style={legendDataStyle} />
+							}
 							titleComponent={
 								<VictoryLabel
 									dx={-100}
 									style={[
 										{
-											fontSize: 9,
+											fontSize: 14,
 											fontWeight: "bold"
 										},
 										{
-											fontSize: 6,
+											fontSize: 12,
 											fontWeight: "normal"
 										}
 									]}

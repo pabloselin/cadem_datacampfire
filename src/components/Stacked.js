@@ -25,7 +25,6 @@ class Stacked extends Component {
 			isLegendClicked: false,
 			clickedBar: false,
 			activeClickedBar: null,
-			barFill: ["#8c8981", "#cccccc", "#555"],
 			clicked: false,
 			svgrefs: [],
 			barNames: [
@@ -42,10 +41,11 @@ class Stacked extends Component {
 	}
 
 	getCurFill(cat, index, active) {
+		console.log(this.props.colorscale);
 		if (this.state.activeCat === cat) {
 			return this.state.activeColor;
 		} else {
-			return this.state.barFill[index];
+			return this.props.colorscale[index];
 		}
 	}
 
@@ -328,11 +328,49 @@ class Stacked extends Component {
 		return (
 			<div className="chart-widget">
 				<VictorySharedEvents events={events}>
+					<VictoryLegend
+						title={[
+							this.state.title.toUpperCase(),
+							this.state.subtitle
+						]}
+						x={this.props.width - 260}
+						width={this.props.width}
+						titleOrientation="left"
+						gutter={20}
+						height={60}
+						theme={this.props.theme}
+						name="legend"
+						data={this.makeLegend(this.state.data)}
+						orientation="horizontal"
+						itemsPerRow={2}
+						colorscale={this.props.colorscale}
+						labelComponent={
+							<VictoryLabel style={legendLabelStyle} y={16} />
+						}
+						dataComponent={
+							<Point size={8} style={legendDataStyle} y={16} />
+						}
+						titleComponent={
+							<VictoryLabel
+								dx={-330}
+								style={[
+									{
+										fontSize: 20,
+										fontWeight: "bold"
+									},
+									{
+										fontSize: 18,
+										fontWeight: "normal"
+									}
+								]}
+							/>
+						}
+					/>
 					<VictoryChart
 						theme={this.props.theme}
 						height={this.props.height}
 						width={this.props.width}
-						padding={{ top: 60, right: 40, bottom: 40, left: 40 }}
+						padding={{ top: 25, right: 40, bottom: 40, left: 40 }}
 						domainPadding={{ y: 0, x: 40 }}
 						containerComponent={
 							<VictoryContainer
@@ -369,47 +407,6 @@ class Stacked extends Component {
 						>
 							{bars()}
 						</VictoryStack>
-						<VictoryLegend
-							title={[
-								this.state.title.toUpperCase(),
-								this.state.subtitle
-							]}
-							x={this.props.width - 260}
-							width={this.props.width}
-							titleOrientation="left"
-							gutter={20}
-							theme={this.props.theme}
-							name="legend"
-							data={this.makeLegend(this.state.data)}
-							orientation="horizontal"
-							itemsPerRow={2}
-							colorscale={this.props.colorscale}
-							labelComponent={
-								<VictoryLabel style={legendLabelStyle} y={16} />
-							}
-							dataComponent={
-								<Point
-									size={8}
-									style={legendDataStyle}
-									y={16}
-								/>
-							}
-							titleComponent={
-								<VictoryLabel
-									dx={-330}
-									style={[
-										{
-											fontSize: 20,
-											fontWeight: "bold"
-										},
-										{
-											fontSize: 17,
-											fontWeight: "normal"
-										}
-									]}
-								/>
-							}
-						/>
 					</VictoryChart>
 				</VictorySharedEvents>
 
