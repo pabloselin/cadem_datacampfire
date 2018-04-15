@@ -23,7 +23,9 @@ class GroupedBars extends Component {
 			activeCat: null,
 			activeColor: this.props.theme.interactions.hover,
 			colorscale: this.props.theme.line.colorScale,
-			clicked: false,
+			isLegendClicked: false,
+			clickedBar: false,
+			activeClickedBar: null,
 			svgrefs: [],
 			domainY: [0, 100],
 			domainX: [0, 100]
@@ -51,7 +53,7 @@ class GroupedBars extends Component {
 	}
 
 	getCurFill(cat, index, active) {
-		if (this.state.activeCat === cat || active === true) {
+		if (this.state.activeCat === cat) {
 			return this.state.activeColor;
 		} else {
 			return this.state.colorscale[index];
@@ -59,7 +61,7 @@ class GroupedBars extends Component {
 	}
 
 	getLabelState(cat, index, active) {
-		if (this.state.activeCat === cat || active === true) {
+		if (this.state.activeCat === cat) {
 			return this.state.activeColor;
 		} else {
 			return "transparent";
@@ -105,29 +107,6 @@ class GroupedBars extends Component {
 			}
 		];
 
-		const labelStyle = {
-			fontWeight: a => {
-				if (
-					this.state.clickedKeys.indexOf(a) !== -1 ||
-					this.state.activeKey === a
-				) {
-					return "bold";
-				} else {
-					return "normal";
-				}
-			},
-			fill: a => {
-				if (
-					this.state.clickedKeys.indexOf(a) !== -1 ||
-					this.state.activeKey === a
-				) {
-					return this.state.activeColor;
-				} else {
-					return "#555";
-				}
-			}
-		};
-
 		const legendLabelStyle = {
 			fontSize: 8,
 			fontFamily: "Asap",
@@ -163,26 +142,37 @@ class GroupedBars extends Component {
 				target: "data",
 				eventHandlers: {
 					onMouseOver: (evt, obj, idx) => {
-						if (this.state.clicked !== true) {
-							let activeCat = obj.data[0].cat;
-							this.setState({
-								activeKey: activeCat
-							});
-							return activeStyle;
-						}
-					},
-					onClick: (evt, obj, idx) => {
 						let activeCat = obj.data[0].cat;
+						let activeBar = `${obj.datum.cat}-${idx}`;
 						this.setState({
 							activeKey: activeCat,
-							clicked: true
+							activeBar: activeBar
 						});
 						return activeStyle;
 					},
-					onMouseOut: () => {
-						if (this.state.clicked !== true) {
-							this.setState({ activeKey: null });
-
+					onClick: (evt, obj, idx) => {
+						let activeCat = obj.data[0].cat;
+						let clicked = `${obj.datum.cat}-${idx}`;
+						if (this.state.clickedBar !== true) {
+							this.setState({
+								clickedBar: true,
+								activeClickedBar: clicked
+							});
+							return activeStyle;
+						} else {
+							if (this.state.activeClickedBar === clicked) {
+								this.setState({
+									clickedBar: false,
+									activeClickedBar: null
+								});
+								return normalStyle;
+							}
+						}
+					},
+					onMouseOut: (evt, obj, idx) => {
+						let clickedthing = `${obj.datum.cat}-${idx}`;
+						if (this.state.activeClickedBar !== clickedthing) {
+							this.setState({ activeKey: null, activeBar: null });
 							return normalStyle;
 						}
 					}
@@ -195,17 +185,17 @@ class GroupedBars extends Component {
 					onClick: (evt, obj, key) => {
 						if (obj.datum !== undefined) {
 							let refName = obj.datum.name;
-							if (this.state.clicked !== true) {
+							if (this.state.isLegendClicked !== true) {
 								this.setState({
 									activeCat: refName,
-									clicked: true
+									isLegendClicked: true
 								});
 							} else {
 								//Está cliqueada una leyenda
 								if (this.state.activeCat === refName) {
 									this.setState({
 										activeCat: null,
-										clicked: false
+										isLegendClicked: false
 									});
 								} else {
 									this.setState({ activeCat: refName });
@@ -214,7 +204,7 @@ class GroupedBars extends Component {
 						}
 					},
 					onMouseOver: (evt, obj, key) => {
-						if (this.state.clicked !== true) {
+						if (this.state.isLegendClicked !== true) {
 							if (obj.datum !== undefined) {
 								this.setState({
 									activeCat: obj.datum.name
@@ -223,7 +213,7 @@ class GroupedBars extends Component {
 						}
 					},
 					onMouseOut: (evt, obj, key) => {
-						if (this.state.clicked !== true) {
+						if (this.state.isLegendClicked !== true) {
 							this.setState({ activeCat: null });
 							return [
 								{
