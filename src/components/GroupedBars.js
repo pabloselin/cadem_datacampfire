@@ -166,6 +166,53 @@ class GroupedBars extends Component {
 									activeClickedBar: null
 								});
 								return normalStyle;
+							} else {
+								this.setState({
+									clickedBar: true,
+									activeClickedBar: clicked
+								});
+								return [
+									{
+										target: "data",
+										eventKey: "all",
+										childName: "all",
+										mutation: props => null
+									},
+									{
+										target: "labels",
+										eventKey: "all",
+										childName: "all",
+										mutation: props => null
+									},
+									{
+										target: "data",
+										mutation: props => ({
+											style: Object.assign(
+												{},
+												props.style,
+												{
+													fill: this.state.activeColor
+												}
+											)
+										})
+									},
+									{
+										target: "labels",
+										mutation: props => ({
+											style: Object.assign(
+												{},
+												props.style,
+												{
+													display: "block",
+													fill: this.state
+														.activeColor,
+													fontSize: 8,
+													fontWeight: "bold"
+												}
+											)
+										})
+									}
+								];
 							}
 						}
 					},
