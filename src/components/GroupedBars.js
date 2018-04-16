@@ -8,6 +8,7 @@ import {
 	VictoryLabel,
 	VictoryAxis,
 	VictorySharedEvents,
+	VictoryContainer,
 	Point
 } from "victory";
 
@@ -342,7 +343,12 @@ class GroupedBars extends Component {
 						}
 					/>
 					<VictoryChart
-						padding={{ top: 10, left: 50, right: 50, bottom: 50 }}
+						padding={{
+							top: 10,
+							left: 50,
+							right: 50,
+							bottom: 50
+						}}
 						responsive={false}
 						theme={this.props.theme}
 						height={this.props.height}
@@ -365,6 +371,7 @@ class GroupedBars extends Component {
 						</VictoryGroup>
 					</VictoryChart>
 				</VictorySharedEvents>
+
 				<DownloadButton
 					data={this.props.data}
 					type="groupedbars"

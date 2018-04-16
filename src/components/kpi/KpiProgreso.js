@@ -1,5 +1,5 @@
 import React from "react";
-import { VictoryLabel } from "victory";
+import { VictoryLabel, VictoryContainer, VictoryGroup } from "victory";
 import flecha_verde from "../../assets/flecha_verde.svg";
 import flecha_rojo from "../../assets/flecha_rojo.svg";
 import flecha_amarillo from "../../assets/flecha_amarillo.svg";
@@ -24,11 +24,11 @@ class KpiProgreso extends React.Component {
 	}
 
 	render() {
-		console.log(flecha_verde);
 		return (
 			<div className="chart-widget">
 				<VictoryLabel
-					dy={10}
+					key={3}
+					dy={20}
 					dx={10}
 					text={[this.props.title.toUpperCase(), this.props.subtitle]}
 					style={[
@@ -48,6 +48,10 @@ class KpiProgreso extends React.Component {
 				/>
 
 				<VictoryLabel
+					dy={100}
+					className="percent"
+					name="percent"
+					key={1}
 					text={`${this.props.percent}%`}
 					style={{
 						fontSize: 48,
@@ -56,7 +60,10 @@ class KpiProgreso extends React.Component {
 						color: this.state.colorscale[this.props.semaforo][1]
 					}}
 				/>
+
 				<VictoryLabel
+					className="caption"
+					key={2}
 					text={this.props.caption}
 					style={{
 						fontSize: 12,

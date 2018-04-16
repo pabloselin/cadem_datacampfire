@@ -463,11 +463,11 @@ const Main = () => (
 					<ChartPage
 						chart={
 							<Pie
-								{...props}
 								data={pie_data}
-								height={400}
-								width={600}
+								height={300}
+								width={300}
 								theme={cadem_theme}
+								colorscale={cadem_theme.bar.altColorScale}
 							/>
 						}
 					/>

@@ -129,16 +129,14 @@ class SingleBars extends Component {
 							{
 								fontFamily: "Asap",
 								fontSize: 13,
-								fontWeight: "normal"
+								fontWeight: "normal",
+								display: "block"
 							}
 						]}
 					/>
 				</div>
 				<VictoryChart
-					responsive={false}
 					theme={this.props.theme}
-					height={this.props.height}
-					width={this.props.width}
 					domainPadding={{ y: 0, x: 40 }}
 					containerComponent={
 						<VictoryContainer

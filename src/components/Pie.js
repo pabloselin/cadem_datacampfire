@@ -242,7 +242,6 @@ class Pie extends Component {
 							borderPadding={{ top: 40 }}
 							width={300}
 							height={450}
-							rowGutter={-15}
 							style={{
 								labels: {
 									fontFamily: "Asap",

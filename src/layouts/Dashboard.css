@@ -24,6 +24,11 @@ body {
 	border: 6px solid white;
 }
 
+#charts-section .chart-widget .column {
+	border: 0;
+	background-color: transparent;
+}
+
 .menu-izquierda {
 	text-align: center;
 }

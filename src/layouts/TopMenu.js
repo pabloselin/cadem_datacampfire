@@ -27,7 +27,6 @@ const TopMenu = props => (
 		<Menu.Item className="item">SBA</Menu.Item>
 		<Menu.Item className="item">Líder SSFF</Menu.Item>
 		<Menu.Item className="item">Express SSFF</Menu.Item>
-		<Menu.Item className="item">SBA SSFF</Menu.Item>
 		<Dropdown item simple text="Ver más">
 			<Dropdown.Menu>
 				<Dropdown.Item className="item">
