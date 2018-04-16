@@ -20,7 +20,6 @@ class Pie extends Component {
 			activeColor: this.props.theme.interactions.active,
 			clicked: false,
 			activeKey: undefined,
-			colorscale: this.props.theme.pie.colorScale,
 			svgrefs: []
 		};
 	}
@@ -44,7 +43,7 @@ class Pie extends Component {
 					};
 				} else {
 					return {
-						fill: this.state.colorscale[idx],
+						fill: this.props.colorscale[idx],
 						fontWeight: "normal",
 						fontColor: "#555"
 					};
@@ -85,7 +84,7 @@ class Pie extends Component {
 			if (Number(this.state.activeKey) === key) {
 				return this.state.activeColor;
 			} else {
-				return this.state.colorscale[key];
+				return this.props.colorscale[key];
 			}
 		};
 
@@ -259,10 +258,12 @@ class Pie extends Component {
 				</VictorySharedEvents>
 				<DownloadButton
 					type="pie"
-					svgs={this.state.svgrefs}
-					title={this.state.title}
-					subtitle={this.state.subtitle}
-					percent={this.state.currentPercent}
+					data={this.props.data}
+					fields={[
+						{ label: "Tipo", value: "x" },
+						{ label: "Porcentaje", value: "y" }
+					]}
+					unwind={["data"]}
 				/>
 			</div>
 		);

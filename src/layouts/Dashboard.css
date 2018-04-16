@@ -8,14 +8,20 @@ body {
 }
 
 .chart-widget {
-	padding: 6px;
-	background-color: #f0f0f0;
+	padding: 0;
 	position: relative;
 }
 
 #charts-section {
 	padding-top: 12px;
+	padding-left: 6px;
+	padding-right: 6px;
 	margin-top: -18px;
+}
+
+#charts-section .column {
+	background-color: #f0f0f0;
+	border: 6px solid white;
 }
 
 .menu-izquierda {

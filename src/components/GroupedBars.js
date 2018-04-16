@@ -22,8 +22,9 @@ class GroupedBars extends Component {
 			activeKey: null,
 			activeCat: null,
 			activeColor: this.props.theme.interactions.hover,
-			colorscale: this.props.theme.line.colorScale,
-			clicked: false,
+			isLegendClicked: false,
+			clickedBar: false,
+			activeClickedBar: null,
 			svgrefs: [],
 			domainY: [0, 100],
 			domainX: [0, 100]
@@ -31,12 +32,13 @@ class GroupedBars extends Component {
 	}
 
 	makeLegend(data) {
+		console.log(this.props.colorscale);
 		let legData = data.data.map((item, idx) => {
 			let fill = () => {
 				if (item.title === this.state.activeKey) {
 					return this.state.activeColor;
 				} else {
-					return this.props.theme.bar.colorScale[idx];
+					return this.props.colorscale[idx];
 				}
 			};
 			return {
@@ -51,15 +53,15 @@ class GroupedBars extends Component {
 	}
 
 	getCurFill(cat, index, active) {
-		if (this.state.activeCat === cat || active === true) {
+		if (this.state.activeCat === cat) {
 			return this.state.activeColor;
 		} else {
-			return this.state.colorscale[index];
+			return this.props.colorscale[index];
 		}
 	}
 
 	getLabelState(cat, index, active) {
-		if (this.state.activeCat === cat || active === true) {
+		if (this.state.activeCat === cat) {
 			return this.state.activeColor;
 		} else {
 			return "transparent";
@@ -105,31 +107,8 @@ class GroupedBars extends Component {
 			}
 		];
 
-		const labelStyle = {
-			fontWeight: a => {
-				if (
-					this.state.clickedKeys.indexOf(a) !== -1 ||
-					this.state.activeKey === a
-				) {
-					return "bold";
-				} else {
-					return "normal";
-				}
-			},
-			fill: a => {
-				if (
-					this.state.clickedKeys.indexOf(a) !== -1 ||
-					this.state.activeKey === a
-				) {
-					return this.state.activeColor;
-				} else {
-					return "#555";
-				}
-			}
-		};
-
 		const legendLabelStyle = {
-			fontSize: 8,
+			fontSize: 10,
 			fontFamily: "Asap",
 			fontWeight: a => {
 				if (this.state.activeCat === a.name) {
@@ -163,27 +142,90 @@ class GroupedBars extends Component {
 				target: "data",
 				eventHandlers: {
 					onMouseOver: (evt, obj, idx) => {
-						if (this.state.clicked !== true) {
-							let activeCat = obj.data[0].cat;
-							this.setState({
-								activeKey: activeCat
-							});
-							return activeStyle;
-						}
-					},
-					onClick: (evt, obj, idx) => {
 						let activeCat = obj.data[0].cat;
+						let activeBar = `${obj.datum.cat}-${idx}`;
 						this.setState({
 							activeKey: activeCat,
-							clicked: true
+							activeBar: activeBar
 						});
 						return activeStyle;
 					},
-					onMouseOut: () => {
-						if (this.state.clicked !== true) {
-							this.setState({ activeKey: null });
-
-							return normalStyle;
+					onClick: (evt, obj, idx) => {
+						let activeCat = obj.data[0].cat;
+						let clicked = `${obj.datum.cat}-${idx}`;
+						if (this.state.clickedBar !== true) {
+							this.setState({
+								clickedBar: true,
+								activeClickedBar: clicked
+							});
+							return activeStyle;
+						} else {
+							if (this.state.activeClickedBar === clicked) {
+								this.setState({
+									clickedBar: false,
+									activeClickedBar: null
+								});
+								return normalStyle;
+							} else {
+								this.setState({
+									clickedBar: true,
+									activeClickedBar: clicked
+								});
+								return [
+									{
+										target: "data",
+										eventKey: "all",
+										childName: "all",
+										mutation: props => null
+									},
+									{
+										target: "labels",
+										eventKey: "all",
+										childName: "all",
+										mutation: props => null
+									},
+									{
+										target: "data",
+										mutation: props => ({
+											style: Object.assign(
+												{},
+												props.style,
+												{
+													fill: this.state.activeColor
+												}
+											)
+										})
+									},
+									{
+										target: "labels",
+										mutation: props => ({
+											style: Object.assign(
+												{},
+												props.style,
+												{
+													display: "block",
+													fill: this.state
+														.activeColor,
+													fontSize: 8,
+													fontWeight: "bold"
+												}
+											)
+										})
+									}
+								];
+							}
+						}
+					},
+					onMouseOut: (evt, obj, idx) => {
+						if (obj.datum.cat !== undefined) {
+							let clickedthing = `${obj.datum.cat}-${idx}`;
+							if (this.state.activeClickedBar !== clickedthing) {
+								this.setState({
+									activeKey: null,
+									activeBar: null
+								});
+								return normalStyle;
+							}
 						}
 					}
 				}
@@ -195,17 +237,17 @@ class GroupedBars extends Component {
 					onClick: (evt, obj, key) => {
 						if (obj.datum !== undefined) {
 							let refName = obj.datum.name;
-							if (this.state.clicked !== true) {
+							if (this.state.isLegendClicked !== true) {
 								this.setState({
 									activeCat: refName,
-									clicked: true
+									isLegendClicked: true
 								});
 							} else {
 								//Está cliqueada una leyenda
 								if (this.state.activeCat === refName) {
 									this.setState({
 										activeCat: null,
-										clicked: false
+										isLegendClicked: false
 									});
 								} else {
 									this.setState({ activeCat: refName });
@@ -214,7 +256,7 @@ class GroupedBars extends Component {
 						}
 					},
 					onMouseOver: (evt, obj, key) => {
-						if (this.state.clicked !== true) {
+						if (this.state.isLegendClicked !== true) {
 							if (obj.datum !== undefined) {
 								this.setState({
 									activeCat: obj.datum.name
@@ -223,7 +265,7 @@ class GroupedBars extends Component {
 						}
 					},
 					onMouseOut: (evt, obj, key) => {
-						if (this.state.clicked !== true) {
+						if (this.state.isLegendClicked !== true) {
 							this.setState({ activeCat: null });
 							return [
 								{
@@ -248,7 +290,7 @@ class GroupedBars extends Component {
 						name={group.title}
 						theme={this.props.theme}
 						key={"bar-" + idx}
-						colorscale={this.props.theme.colorscale}
+						colorscale={this.props.colorscale}
 						title={group.title}
 						data={group.data}
 						style={{
@@ -261,7 +303,7 @@ class GroupedBars extends Component {
 						labelComponent={
 							<VictoryLabel
 								style={{
-									fontSize: 8,
+									fontSize: 10,
 									fontWeight: "bold",
 									fill: (d, active) =>
 										this.getLabelState(
@@ -280,7 +322,34 @@ class GroupedBars extends Component {
 		return (
 			<div className="chart-widget">
 				<VictorySharedEvents events={events}>
+					<VictoryLegend
+						title={[
+							this.state.title.toUpperCase(),
+							this.state.subtitle
+						]}
+						titleOrientation="left"
+						theme={this.props.theme}
+						name="legend"
+						data={this.makeLegend(this.state.data)}
+						orientation="vertical"
+						itemsPerRow={1}
+						gutter={20}
+						height={60}
+						labelComponent={
+							<VictoryLabel style={legendLabelStyle} />
+						}
+						dataComponent={<Point style={legendDataStyle} />}
+						titleComponent={
+							<VictoryLabel
+								style={[
+									{ fontSize: 13, fontWeight: "bold" },
+									{ fontSize: 11, fontWeight: "normal" }
+								]}
+							/>
+						}
+					/>
 					<VictoryChart
+						padding={{ top: 10, left: 50, right: 50, bottom: 50 }}
 						responsive={false}
 						theme={this.props.theme}
 						height={this.props.height}
@@ -289,35 +358,9 @@ class GroupedBars extends Component {
 						domainPadding={{ x: 40, y: 0 }}
 					>
 						<VictoryAxis tickValues={[1, 2, 3, 4]} />
-						<VictoryAxis dependentAxis />
-						<VictoryLegend
-							title={[
-								this.state.title.toUpperCase(),
-								this.state.subtitle
-							]}
-							width={this.props.width}
-							titleOrientation="left"
-							theme={this.props.theme}
-							name="legend"
-							data={this.makeLegend(this.state.data)}
-							orientation="vertical"
-							itemsPerRow={1}
-							gutter={0}
-							height={60}
-							labelComponent={
-								<VictoryLabel style={legendLabelStyle} y={12} />
-							}
-							dataComponent={
-								<Point style={legendDataStyle} y={12} />
-							}
-							titleComponent={
-								<VictoryLabel
-									style={[
-										{ fontSize: 17, fontWeight: "bold" },
-										{ fontSize: 15, fontWeight: "normal" }
-									]}
-								/>
-							}
+						<VictoryAxis
+							style={{ tickLabels: { fontSize: 12 } }}
+							dependentAxis
 						/>
 
 						<VictoryGroup

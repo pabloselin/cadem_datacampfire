@@ -20,7 +20,6 @@ class Scatter extends Component {
 			subtitle: this.props.data.chart_subtitle,
 			data: this.props.data.data,
 			activeColor: this.props.theme.interactions.hover,
-			colorscale: this.props.theme.line.colorScale,
 			activeKey: null,
 			activeCat: null,
 			domainX: this.props.data.domainX,
@@ -34,7 +33,7 @@ class Scatter extends Component {
 		let legend = data.map((item, idx) => {
 			return {
 				name: item.title,
-				symbol: { fill: this.state.colorscale[idx] }
+				symbol: { fill: this.props.colorscale[idx] }
 			};
 		});
 		return legend;
@@ -46,7 +45,7 @@ class Scatter extends Component {
 		if (this.state.activeCat === cat || active === true) {
 			return this.state.activeColor;
 		} else {
-			return this.state.colorscale[index];
+			return this.props.colorscale[index];
 		}
 	}
 
@@ -104,7 +103,7 @@ class Scatter extends Component {
 			});
 
 		const legendLabelStyle = {
-			fontSize: 12,
+			fontSize: 11,
 			fontFamily: "Asap",
 			fontWeight: a => {
 				if (this.state.activeCat === a.name) {
@@ -210,68 +209,68 @@ class Scatter extends Component {
 		return (
 			<div className="chart-widget">
 				<VictorySharedEvents events={events}>
+					<VictoryLegend
+						title={[
+							this.state.title.toUpperCase(),
+							this.state.subtitle
+						]}
+						titleOrientation="top"
+						gutter={30}
+						height={60}
+						theme={this.props.theme}
+						name="legend"
+						data={this.makeLegend(this.state.data)}
+						orientation="horizontal"
+						itemsPerRow={4}
+						dataComponent={
+							<Point size={4} style={legendDataStyle} y={50} />
+						}
+						labelComponent={
+							<VictoryLabel style={legendLabelStyle} y={50} />
+						}
+						titleComponent={
+							<VictoryLabel
+								style={[
+									{
+										fontSize: 13,
+										fontWeight: "bold",
+										display: "block"
+									},
+									{
+										fontSize: 11,
+										fontWeight: "normal",
+										display: "block"
+									}
+								]}
+							/>
+						}
+					/>
+
 					<VictoryChart
 						theme={this.props.theme}
 						width={this.props.width}
 						height={this.props.height}
 						domainPadding={40}
-						containerComponent={
-							<VictoryContainer
-								containerRef={containerRef =>
-									(this.containerRef = containerRef)
-								}
-							/>
-						}
+						padding={{ top: 0, left: 40, right: 40, bottom: 40 }}
 					>
-						<VictoryAxis domain={this.state.domainX} />
 						<VictoryAxis
 							domain={this.state.domainY}
 							dependentAxis
 						/>
-
-						<VictoryLegend
-							title={[
-								this.state.title.toUpperCase(),
-								this.state.subtitle
-							]}
-							titleOrientation="top"
-							gutter={10}
-							padding={{ bottom: 100 }}
-							theme={this.props.theme}
-							name="legend"
-							data={this.makeLegend(this.state.data)}
-							orientation="horizontal"
-							itemsPerRow={4}
-							dataComponent={
-								<Point style={legendDataStyle} y={40} />
-							}
-							labelComponent={
-								<VictoryLabel style={legendLabelStyle} y={40} />
-							}
-							titleComponent={
-								<VictoryLabel
-									style={[
-										{
-											fontSize: 14,
-											fontWeight: "bold"
-										},
-										{
-											fontSize: 12,
-											fontWeight: "normal"
-										}
-									]}
-								/>
-							}
-						/>
+						<VictoryAxis domain={this.state.domainX} />
 						{scatters()}
 					</VictoryChart>
 				</VictorySharedEvents>
 				<DownloadButton
 					type="scatter"
-					svgs={this.state.svgrefs}
-					title={this.state.title}
-					subtitle={this.state.subtitle}
-					percent={this.state.currentPercent}
+					data={this.props.data}
+					fields={[
+						{ label: "Recomendación", value: "data.x" },
+						{ label: "Local", value: "title" },
+						{ label: "Satisfacción", value: "data.y" },
+						{ label: "Cartera", value: "data.cantidad" }
+					]}
+					unwind={["data"]}
 				/>
 			</div>
 		);

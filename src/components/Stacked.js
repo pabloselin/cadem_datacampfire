@@ -20,10 +20,17 @@ class Stacked extends Component {
 			subtitle: this.props.data.chart_subtitle,
 			data: this.props.data,
 			activeKey: null,
+			activeCat: null,
 			activeColor: this.props.theme.interactions.hover,
-			clickedKeys: [],
+			isLegendClicked: false,
+			clickedBar: false,
+			activeClickedBar: null,
 			clicked: false,
-			svgrefs: []
+			svgrefs: [],
+			barNames: [
+				this.props.data.data[0].title,
+				this.props.data.data[1].title
+			]
 		};
 	}
 
@@ -31,6 +38,23 @@ class Stacked extends Component {
 		this.setState({
 			svgrefs: [this.containerRef]
 		});
+	}
+
+	getCurFill(cat, index, active) {
+		console.log(this.props.colorscale);
+		if (this.state.activeCat === cat) {
+			return this.state.activeColor;
+		} else {
+			return this.props.colorscale[index];
+		}
+	}
+
+	getCurFillAlt(cat, index, active) {
+		if (this.state.activeCat === cat) {
+			return this.state.activeColor;
+		} else {
+			return "transparent";
+		}
 	}
 
 	makeLegend() {
@@ -45,72 +69,206 @@ class Stacked extends Component {
 	}
 
 	render() {
+		const activeStyle = [
+			{
+				target: "data",
+				mutation: props => ({
+					style: Object.assign({}, props.style, {
+						fill: this.state.activeColor
+					})
+				})
+			},
+			{
+				target: "labels",
+				mutation: props => ({
+					style: Object.assign({}, props.style, {
+						display: "block",
+						fill: this.state.activeColor,
+						fontSize: 14,
+						fontWeight: "bold"
+					})
+				})
+			}
+		];
+		const normalStyle = [
+			{
+				target: "data",
+				mutation: props => null
+			},
+			{
+				target: "labels",
+				mutation: props => null
+			}
+		];
+
+		const legendLabelStyle = {
+			fontSize: 13,
+			fontFamily: "Asap",
+			fontWeight: a => {
+				if (this.state.activeCat === a.name) {
+					return "bold";
+				} else {
+					return "normal";
+				}
+			},
+			fill: a => {
+				if (this.state.activeCat === a.name) {
+					return this.state.activeColor;
+				} else {
+					return "#555";
+				}
+			}
+		};
+
+		const legendDataStyle = {
+			fill: a => {
+				if (this.state.activeCat === a.name) {
+					return this.state.activeColor;
+				} else {
+					return a.symbol.fill;
+				}
+			}
+		};
 		const events = [
 			{
 				childName: "all",
 				target: "data",
 				eventHandlers: {
 					onMouseOver: (evt, obj, idx) => {
-						return [
-							{
-								target: "data",
-								mutation: props => ({
-									style: Object.assign({}, props.style, {
-										fill: this.state.activeColor
-									})
-								})
-							},
-							{
-								target: "labels",
-								mutation: props => ({
-									style: Object.assign({}, props.style, {
-										fill: this.state.activeColor
-									})
-								})
-							}
-						];
+						let activeCat = obj.data[0].x;
+						let activeBar = `${obj.datum.x}-${idx}`;
+						this.setState({
+							activeKey: activeCat,
+							activeBar: activeBar
+						});
+						return activeStyle;
 					},
 					onClick: (evt, obj, idx) => {
-						console.log(obj);
-						return [
-							{
-								target: "data",
-								mutation: props => ({
-									style: Object.assign({}, props.style, {
-										fill: this.state.activeColor
-									})
-								})
-							},
-							{
-								target: "labels",
-								mutation: props => ({
-									style: Object.assign({}, props.style, {
-										fill: this.state.activeColor
-									})
-								})
+						let activeCat = obj.data[0].x;
+						let clicked = `${obj.datum.x}-${idx}`;
+						if (this.state.clickedBar !== true) {
+							this.setState({
+								clickedBar: true,
+								activeClickedBar: clicked
+							});
+							return activeStyle;
+						} else {
+							if (this.state.activeClickedBar === clicked) {
+								this.setState({
+									clickedBar: false,
+									activeClickedBar: null
+								});
+								return normalStyle;
+							} else {
+								this.setState({
+									clickedBar: true,
+									activeClickedBar: clicked
+								});
+								return [
+									{
+										target: "data",
+										eventKey: "all",
+										childName: "all",
+										mutation: props => null
+									},
+									{
+										target: "labels",
+										eventKey: "all",
+										childName: "all",
+										mutation: props => null
+									},
+									{
+										target: "data",
+										mutation: props => ({
+											style: Object.assign(
+												{},
+												props.style,
+												{
+													fill: this.state.activeColor
+												}
+											)
+										})
+									},
+									{
+										target: "labels",
+										mutation: props => ({
+											style: Object.assign(
+												{},
+												props.style,
+												{
+													display: "block",
+													fill: this.state
+														.activeColor,
+													fontSize: 14,
+													fontWeight: "bold"
+												}
+											)
+										})
+									}
+								];
 							}
-						];
+						}
 					},
-					onMouseOut: () => {
-						return [
-							{
-								target: "data",
-								mutation: props => null
-							},
-							{
-								target: "labels",
-								mutation: props => null
-							}
-						];
+					onMouseOut: (evt, obj, idx) => {
+						let clickedthing = `${obj.datum.x}-${idx}`;
+						if (this.state.activeClickedBar !== clickedthing) {
+							this.setState({
+								activeKey: null,
+								activeBar: null
+							});
+							return normalStyle;
+						}
 					}
 				}
 			},
 			{
 				childName: "legend",
-				target: "all",
+				target: "data",
 				eventHandlers: {
-					onMouseOver: () => {
-						console.log("overmouse");
+					onClick: (evt, obj, key) => {
+						if (obj.datum !== undefined) {
+							let refName = obj.datum.name;
+							if (this.state.isLegendClicked !== true) {
+								this.setState({
+									activeCat: refName,
+									isLegendClicked: true
+								});
+							} else {
+								//Está cliqueada una leyenda
+								if (this.state.activeCat === refName) {
+									this.setState({
+										activeCat: null,
+										isLegendClicked: false
+									});
+								} else {
+									this.setState({ activeCat: refName });
+								}
+							}
+						}
+					},
+					onMouseOver: (evt, obj, key) => {
+						if (this.state.isLegendClicked !== true) {
+							if (obj.datum !== undefined) {
+								this.setState({
+									activeCat: obj.datum.name
+								});
+							}
+						}
+					},
+					onMouseOut: (evt, obj, key) => {
+						if (this.state.isLegendClicked !== true) {
+							this.setState({ activeCat: null });
+							return [
+								{
+									target: "data",
+									mutation: props => null
+								},
+								{
+									target: "labels",
+									mutation: props => null
+								}
+							];
+						}
 					}
 				}
 			}
@@ -129,16 +287,34 @@ class Stacked extends Component {
 				return (
 					<VictoryBar
 						key={"bar-" + idx}
+						name={this.state.barNames[idx]}
 						theme={this.props.theme}
 						title={bar.title}
 						data={bar.data}
 						eventKey={"bar-" + idx}
 						alignment="middle"
 						barRatio={0.2}
-						style={{ data: { fill: this.props.colorscale[idx] } }}
+						style={{
+							data: {
+								fill: (d, active) =>
+									this.getCurFill(
+										this.state.barNames[idx],
+										idx,
+										active
+									)
+							}
+						}}
 						labelComponent={
 							<VictoryLabel
-								style={{ fill: "transparent" }}
+								style={{
+									fill: (d, active) =>
+										this.getCurFillAlt(
+											this.state.barNames[idx],
+											idx,
+											active
+										),
+									fontWeight: "bold"
+								}}
 								dy={d => offset(d)}
 								text={d => `${d.y}%`}
 							/>
@@ -151,10 +327,50 @@ class Stacked extends Component {
 		return (
 			<div className="chart-widget">
 				<VictorySharedEvents events={events}>
+					<VictoryLegend
+						title={[
+							this.state.title.toUpperCase(),
+							this.state.subtitle
+						]}
+						x={this.props.width - 260}
+						width={this.props.width}
+						titleOrientation="left"
+						gutter={20}
+						height={60}
+						theme={this.props.theme}
+						name="legend"
+						data={this.makeLegend(this.state.data)}
+						orientation="vertical"
+						itemsPerRow={1}
+						colorscale={this.props.colorscale}
+						labelComponent={
+							<VictoryLabel style={legendLabelStyle} y={16} />
+						}
+						dataComponent={
+							<Point size={6} style={legendDataStyle} y={16} />
+						}
+						titleComponent={
+							<VictoryLabel
+								dx={-330}
+								style={[
+									{
+										fontSize: 18,
+										fontWeight: "bold"
+									},
+									{
+										fontSize: 14,
+										fontWeight: "normal"
+									}
+								]}
+							/>
+						}
+					/>
 					<VictoryChart
+						responsive={false}
 						theme={this.props.theme}
 						height={this.props.height}
 						width={this.props.width}
+						padding={{ top: 25, right: 40, bottom: 40, left: 40 }}
 						domainPadding={{ y: 0, x: 40 }}
 						containerComponent={
 							<VictoryContainer
@@ -181,7 +397,6 @@ class Stacked extends Component {
 							domain={{ y: [0, 100] }}
 							style={{
 								labels: {
-									fontSize: 10,
 									textAlign: "center",
 									fontWeight: "bold"
 								},
@@ -192,50 +407,18 @@ class Stacked extends Component {
 						>
 							{bars()}
 						</VictoryStack>
-						<VictoryLegend
-							title={[
-								this.state.title.toUpperCase(),
-								this.state.subtitle
-							]}
-							x={this.props.width - 220}
-							width={this.props.width}
-							titleOrientation="left"
-							gutter={20}
-							theme={this.props.theme}
-							name="legend"
-							data={this.makeLegend(this.state.data)}
-							orientation="horizontal"
-							itemsPerRow={3}
-							colorscale={this.props.colorscale}
-							height={60}
-							style={{
-								labels: { fontSize: 12 }
-							}}
-							titleComponent={
-								<VictoryLabel
-									dx={-360}
-									style={[
-										{
-											fontSize: 16,
-											fontWeight: "bold"
-										},
-										{
-											fontSize: 12,
-											fontWeight: "normal"
-										}
-									]}
-								/>
-							}
-						/>
 					</VictoryChart>
 				</VictorySharedEvents>
 
 				<DownloadButton
 					type="stacked"
-					svgs={this.state.svgrefs}
-					title={this.state.title}
-					subtitle={this.state.subtitle}
-					percent={this.state.currentPercent}
+					data={this.props.data}
+					fields={[
+						{ label: "Mes", value: "data.x" },
+						{ label: "Respuesta", value: "title" },
+						{ label: "Porcentaje", value: "data.y" }
+					]}
+					unwind={["data"]}
 				/>
 			</div>
 		);

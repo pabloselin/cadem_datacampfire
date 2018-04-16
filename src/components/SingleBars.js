@@ -25,7 +25,6 @@ class SingleBars extends Component {
 	}
 
 	componentDidMount() {
-		console.log(this.containerRef);
 		this.setState({
 			svgrefs: [this.containerRef]
 		});
@@ -113,6 +112,28 @@ class SingleBars extends Component {
 		};
 		return (
 			<div className="chart-widget">
+				<div style={{ padding: "5px" }}>
+					<VictoryLabel
+						theme={this.props.theme}
+						text={[
+							this.state.title.toUpperCase(),
+							this.state.subtitle
+						]}
+						style={[
+							{
+								fontFamily: "Asap",
+								fontSize: 15,
+								fontWeight: "bold",
+								display: "block"
+							},
+							{
+								fontFamily: "Asap",
+								fontSize: 12,
+								fontWeight: "normal"
+							}
+						]}
+					/>
+				</div>
 				<VictoryChart
 					responsive={false}
 					theme={this.props.theme}
@@ -127,27 +148,6 @@ class SingleBars extends Component {
 						/>
 					}
 				>
-					<VictoryLabel
-						x={10}
-						dy={20}
-						text={[
-							this.state.title.toUpperCase(),
-							this.state.subtitle
-						]}
-						style={[
-							{
-								fontFamily: "Asap",
-								fontSize: 14,
-								fontWeight: "bold",
-								display: "block"
-							},
-							{
-								fontFamily: "Asap",
-								fontSize: 12,
-								fontWeight: "normal"
-							}
-						]}
-					/>
 					<VictoryAxis
 						theme={this.props.theme}
 						tickLabelComponent={<VictoryLabel style={labelStyle} />}
@@ -164,8 +164,7 @@ class SingleBars extends Component {
 							labels: { fontSize: 10, textAlign: "left" },
 							data: {
 								width: 18,
-								fill: d =>
-									this.props.theme.bar.colorScale[d.eventKey]
+								fill: d => this.props.colorscale[d.eventKey]
 							}
 						}}
 						alignment="middle"
@@ -241,10 +240,13 @@ class SingleBars extends Component {
 				</VictoryChart>
 				<DownloadButton
 					type="singlebars"
-					svgs={this.state.svgrefs}
-					title={this.state.title}
-					subtitle={this.state.subtitle}
-					percent={this.state.currentPercent}
+					data={this.props.data}
+					type="singlebars"
+					fields={[
+						{ label: "Mes", value: "x" },
+						{ label: "Porcentaje", value: "y" }
+					]}
+					unwind={["data"]}
 				/>
 			</div>
 		);

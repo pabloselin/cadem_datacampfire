@@ -14,8 +14,17 @@ const colors = [
   "#f0efeb"
 ];
 
-const azules = ["#08009e", "#71b0e5", "#95c7ce", "#aec5c1"];
+const azules = [
+  "#71b0e5",
+  "#95c7ce",
+  "#aec5c1",
+  "#b3aea4",
+  "#d4cfc4",
+  "#f0efeb"
+];
 const activeColor = "#0038f0";
+const activeColor_alt = "#08009e";
+const activeColor_alt_2 = "#1abc9c";
 
 const semaforo = {
   rojo: ["#eb9d93", "#e74c3c"],
@@ -54,8 +63,7 @@ const letterSpacing = "normal";
 const baseProps = {
   width: 450,
   height: 300,
-  padding: 50,
-  colorScale: colors
+  padding: 50
 };
 // *
 // * Labels
@@ -130,6 +138,7 @@ export default {
   bar: assign(
     {
       colorScale: colors,
+      altColorScale: azules,
       style: {
         data: {
           padding: 8,
@@ -137,6 +146,13 @@ export default {
         },
         labels: baseLabelStyles
       }
+    },
+    baseProps
+  ),
+  linebar: assign(
+    {
+      colorScale: ["#8c8981", "#cccccc", "#555"],
+      altColorScale: ["#95c7ce", "#ccc"]
     },
     baseProps
   ),
@@ -187,6 +203,7 @@ export default {
       labels: centeredLabelStyles
     },
     colorScale: colors_b,
+    altColorScale: azules,
     width: 450,
     height: 300,
     padding: 20
@@ -207,6 +224,8 @@ export default {
   },
   scatter: assign(
     {
+      colorScale: colors_b,
+      altColorScale: azules,
       style: {
         data: {
           fill: charcoal,
@@ -220,7 +239,8 @@ export default {
   ),
   stack: assign(
     {
-      colorScale: colors
+      colorScale: ["#595753", "#d4cfc4", "#f0efeb", "#ccc"],
+      altColorScale: ["#71b0e5", "#95c7ce", "#aec5c1", "#555"]
     },
     baseProps
   ),
@@ -275,6 +295,7 @@ export default {
   },
   interactions: {
     hover: activeColor,
+    hover_alt: activeColor_alt_2,
     active: activeColor,
     paleta: paleta
   }

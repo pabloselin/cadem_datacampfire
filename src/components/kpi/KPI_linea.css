@@ -1,0 +1,41 @@
+.kpi_table {
+	width: 100%;
+}
+
+.kpi_table thead {
+	color: white;
+	font-weight: normal;
+	font-size: 12px;
+	background-color: #ccc;
+}
+
+.kpi_table thead th {
+	padding: 3px;
+}
+
+.kpi_table tbody td {
+	padding: 3px;
+	font-size: 24px;
+}
+
+.kpi_table .kpi_caption_table {
+	margin: 0;
+	background-color: transparent;
+	color: #555;
+}
+
+.kpi_table.with_caption {
+	margin-top: -20px;
+}
+
+.kpi_table td.center {
+	text-align: center;
+}
+
+.kpi_table td.destacada {
+	font-weight: bold;
+}
+
+.kpi_table th.nobg {
+	background-color: transparent !important;
+}

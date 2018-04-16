@@ -3,7 +3,8 @@ import {
 	VictoryPie,
 	VictoryLabel,
 	VictoryContainer,
-	VictoryGroup
+	VictoryGroup,
+	VictorySharedEvents
 } from "victory";
 
 class KPI_Semicirculo extends Component {
@@ -90,50 +91,117 @@ class KPI_Semicirculo extends Component {
 				/>
 				<VictoryGroup padding={0} height={100} width={300}>
 					<svg viewBox="-100 -20 600 240">
-						<VictoryPie
-							padding={12}
-							theme={this.props.theme}
-							name="pie"
-							style={{
-								data: {
-									fill: d => piecolor(d.eventKey)
-								}
-							}}
-							startAngle={90}
-							endAngle={-90}
-							padAngle={0}
-							innerRadius={105}
-							data={this.getData(this.state.data)}
-							labels={d => ""}
-							standalone={false}
-							containerComponent={
-								<VictoryContainer
-									containerRef={pieref =>
-										(this.pieref = pieref)
+						<VictorySharedEvents
+							events={[
+								{
+									childName: "all",
+									target: "data",
+									eventHandlers: {
+										onMouseOver: (evt, obj, key) => {
+											console.log(key);
+											if (Number(key) === 1) {
+												return [
+													{
+														target: "data",
+														mutation: props => ({
+															style: Object.assign(
+																{},
+																props.style,
+																{
+																	fill: this
+																		.state
+																		.colorscale[
+																		this
+																			.props
+																			.semaforo
+																	][0]
+																}
+															)
+														})
+													},
+													{
+														childName: "all",
+														target: "labels",
+														mutation: props => ({
+															style: Object.assign(
+																{},
+																props.style,
+																{
+																	stroke: this
+																		.state
+																		.colorscale[
+																		this
+																			.props
+																			.semaforo
+																	][0]
+																}
+															)
+														})
+													}
+												];
+											}
+										},
+										onMouseOut: () => {
+											return [
+												{
+													target: "data",
+													mutation: props => null
+												},
+												{
+													target: "labels",
+													mutation: props => null
+												}
+											];
+										}
 									}
-								/>
-							}
-						/>
+								}
+							]}
+						>
+							<VictoryPie
+								padding={12}
+								theme={this.props.theme}
+								name="pie"
+								style={{
+									data: {
+										fill: d => piecolor(d.eventKey)
+									}
+								}}
+								startAngle={90}
+								endAngle={-90}
+								padAngle={0}
+								innerRadius={105}
+								data={this.getData(this.state.data)}
+								labels={d => ""}
+								standalone={false}
+								containerComponent={
+									<VictoryContainer
+										containerRef={pieref =>
+											(this.pieref = pieref)
+										}
+									/>
+								}
+							/>
 
-						<VictoryLabel
-							padding={0}
-							className="percent"
-							theme={this.props.theme}
-							animate={{ duration: 500 }}
-							text={percentPortal()}
-							textAnchor="middle"
-							verticalAnchor="middle"
-							x={200}
-							y={170}
-							style={{
-								fontSize: 56,
-								fill: this.state.colorscale[
-									this.props.semaforo
-								][1],
-								fontFamily: "Asap",
-								fontWeight: "bold"
-							}}
-						/>
+							<VictoryLabel
+								padding={0}
+								className="percent"
+								theme={this.props.theme}
+								animate={{ duration: 500 }}
+								text={percentPortal()}
+								textAnchor="middle"
+								verticalAnchor="middle"
+								x={200}
+								y={170}
+								style={{
+									fontSize: 56,
+									fill: this.state.colorscale[
+										this.props.semaforo
+									][1],
+									fontFamily: "Asap",
+									fontWeight: "bold"
+								}}
+							/>
+						</VictorySharedEvents>
 					</svg>
 				</VictoryGroup>
 			</div>

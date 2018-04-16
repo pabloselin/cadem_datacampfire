@@ -16,6 +16,7 @@ import Stacked from "../../components/Stacked.js";
 import KPI_semicirculo from "../../components/kpi/KPI_semicirculo.js";
 import KPI_barra from "../../components/kpi/KPI_barra.js";
 import KPI_progreso from "../../components/kpi/KPI_progreso.js";
+import KPI_linea from "../../components/kpi/KPI_linea.js";
 
 import Dashboard from "../../layouts/Dashboard.js";
 import { Grid } from "semantic-ui-react";
@@ -28,6 +29,7 @@ import singlebar_data from "../../data/barras_single.json";
 import scatter_data from "../../data/scatter.json";
 import scattermini_data from "../../data/scattermini.json";
 import stacked_data from "../../data/stacked.json";
+import kpi_lineas_data from "../../data/kpi_lineas.json";
 //import stackedmini_data from "../../data/stackedmini.json";
 
 const Main = () => (
@@ -40,59 +42,74 @@ const Main = () => (
 					<Dashboard>
 						<Grid.Column width={6}>
 							<GroupedBars
+								columns={6}
 								data={groupbar_data}
 								height={300}
 								width={600}
 								theme={cadem_theme}
+								colorscale={cadem_theme.bar.colorScale}
 							/>
 						</Grid.Column>
 						<Grid.Column width={6}>
 							<SingleBars
+								columns={6}
 								data={singlebar_data}
 								height={300}
 								width={600}
 								theme={cadem_theme}
+								colorscale={cadem_theme.bar.colorScale}
 							/>
 						</Grid.Column>
 						<Grid.Column width={6}>
 							<Pie
+								columns={6}
 								data={pie_data}
 								height={300}
 								width={600}
 								theme={cadem_theme}
+								colorscale={cadem_theme.pie.colorScale}
 							/>
 						</Grid.Column>
 						<Grid.Column width={6}>
 							<Stacked
+								columns={6}
 								width={600}
 								height={300}
 								data={stacked_data}
 								theme={cadem_theme}
-								colorscale={["#595753", "#cccccc"]}
+								colorscale={cadem_theme.stack.colorScale}
 							/>
 						</Grid.Column>
 						<Grid.Column width={6}>
 							<Scatter
+								columns={6}
 								data={scatter_data}
 								height={300}
 								width={600}
 								theme={cadem_theme}
+								colorscale={cadem_theme.scatter.colorScale}
 							/>
 						</Grid.Column>
+
 						<Grid.Column width={6}>
 							<LineBars
+								columns={6}
 								data={linebars_data}
 								height={300}
 								width={600}
 								theme={cadem_theme}
+								colorscale={cadem_theme.line.colorScale}
 							/>
 						</Grid.Column>
 						<Grid.Column width={6}>
 							<Lines
+								columns={6}
 								height={300}
 								width={600}
 								data={lines_data}
 								theme={cadem_theme}
+								colorscale={cadem_theme.linebar.colorScale}
+								activeColor={cadem_theme.interactions.hover}
 							/>
 						</Grid.Column>
 					</Dashboard>
@@ -189,6 +206,93 @@ const Main = () => (
 								semaforo="verde"
 							/>
 						</Grid.Column>
+						<Grid.Column width={12}>
+							<KPI_linea
+								title="Local A"
+								subtitle="Mensual Mar 2018"
+								caption="Acumulado 2018"
+								goal="76%"
+								theme={cadem_theme}
+								semaforo="verde"
+								data={kpi_lineas_data}
+								resumen={
+									([73.12, 111.32, 71.11],
+									[73.43, 100.1, 20.12])
+								}
+							/>
+						</Grid.Column>
+					</Dashboard>
+				)}
+			/>
+
+			<Route
+				exact
+				path="/alt-paleta"
+				render={props => (
+					<Dashboard>
+						<Grid.Column width={8}>
+							<GroupedBars
+								data={groupbar_data}
+								height={326}
+								width={600}
+								theme={cadem_theme}
+								colorscale={cadem_theme.bar.altColorScale}
+							/>
+						</Grid.Column>
+						<Grid.Column width={4}>
+							<SingleBars
+								data={singlebar_data}
+								height={200}
+								width={300}
+								theme={cadem_theme}
+								colorscale={cadem_theme.bar.altColorScale}
+							/>
+							<Pie
+								data={pie_data}
+								height={300}
+								width={300}
+								theme={cadem_theme}
+								colorscale={cadem_theme.bar.altColorScale}
+							/>
+						</Grid.Column>
+						<Grid.Column width={6}>
+							<Stacked
+								width={600}
+								height={300}
+								data={stacked_data}
+								theme={cadem_theme}
+								colorscale={cadem_theme.stack.altColorScale}
+							/>
+						</Grid.Column>
+						<Grid.Column width={6}>
+							<Scatter
+								data={scatter_data}
+								width={600}
+								height={300}
+								theme={cadem_theme}
+								colorscale={cadem_theme.scatter.altColorScale}
+							/>
+						</Grid.Column>
+						<Grid.Column width={8}>
+							<LineBars
+								data={linebars_data}
+								height={300}
+								width={600}
+								theme={cadem_theme}
+								colorscale={cadem_theme.linebar.altColorScale}
+								activeColor={cadem_theme.interactions.hover_alt}
+							/>
+						</Grid.Column>
+						<Grid.Column width={4}>
+							<Lines
+								data={lines_data}
+								height={300}
+								width={300}
+								theme={cadem_theme}
+								colorscale={cadem_theme.line.altColorScale}
+								activeColor={cadem_theme.interactions.hover_alt}
+							/>
+						</Grid.Column>
 					</Dashboard>
 				)}
 			/>
@@ -221,6 +325,8 @@ const Main = () => (
 								width={300}
 								height={300}
 								theme={cadem_theme}
+								colorscale={cadem_theme.line.altColorScale}
+								activeColor={cadem_theme.interactions.hover_alt}
 							/>
 						}
 					/>

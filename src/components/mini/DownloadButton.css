@@ -5,8 +5,8 @@
 
 .DownloadButton {
 	position: absolute;
-	top: 6px;
-	right: 6px;
+	top: -6px;
+	right: -6px;
 	border: 0;
 	background-color: transparent;
 	width: 18px;

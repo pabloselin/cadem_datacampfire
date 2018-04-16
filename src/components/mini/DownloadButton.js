@@ -20,6 +20,21 @@ class DownloadButton extends Component {
 		console.log(this.props);
 	}
 
+	downloadDialog(csvString) {
+		var blob = new Blob([csvString]);
+		if (window.navigator.msSaveOrOpenBlob)
+			// IE hack; see http://msdn.microsoft.com/en-us/library/ie/hh779016.aspx
+			window.navigator.msSaveBlob(blob, `${this.props.type}.csv`);
+		else {
+			var a = window.document.createElement("a");
+			a.href = window.URL.createObjectURL(blob, { type: "text/plain" });
+			a.download = `${this.props.type}.csv`;
+			document.body.appendChild(a);
+			a.click(); // IE: "Access is denied"; see: https://connect.microsoft.com/IE/feedback/details/797361/ie-10-treats-blob-url-as-cross-origin-and-denies-access
+			document.body.removeChild(a);
+		}
+	}
+
 	makeCSV() {
 		let data = this.props.data.data;
 		let fields = this.props.fields;
@@ -31,7 +46,7 @@ class DownloadButton extends Component {
 
 		// var newTab = window.open();
 		// newTab.document.body.innerHTML = csv;
-		console.log(csv);
+		this.downloadDialog(csv);
 	}
 
 	makeDownload() {

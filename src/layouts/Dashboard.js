@@ -1,7 +1,6 @@
 import React from "react";
-import { Grid, Sidebar, Menu, Container } from "semantic-ui-react";
+import { Grid, Container } from "semantic-ui-react";
 import "./Dashboard.css";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 import TopMenu from "./TopMenu.js";
 import SideMenu from "./SideMenu.js";
