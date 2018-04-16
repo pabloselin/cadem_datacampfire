@@ -101,6 +101,29 @@ class Pie extends Component {
 		};
 		return (
 			<div className="Pie chart-widget">
+				<div style={{ padding: "5px" }}>
+					<p
+						style={{
+							fontFamily: "Asap",
+							fontSize: 14,
+							display: "block",
+							margin: 0
+						}}
+					>
+						{this.state.title.toUpperCase()}
+					</p>
+					<p
+						style={{
+							margin: 0,
+							fontFamily: "Asap",
+							fontSize: 12,
+							fontWeight: "normal",
+							display: "block"
+						}}
+					>
+						{this.state.subtitle}
+					</p>
+				</div>
 				<VictorySharedEvents
 					className="pieWrapper"
 					events={[
@@ -159,27 +182,6 @@ class Pie extends Component {
 						}
 					]}
 				>
-					<VictoryLabel
-						theme={this.props.theme}
-						text={[
-							this.state.title.toUpperCase(),
-							this.state.subtitle
-						]}
-						style={[
-							{
-								fontFamily: "Asap",
-								fontSize: 15,
-								fontWeight: "bold",
-								display: "block"
-							},
-							{
-								fontFamily: "Asap",
-								fontSize: 13.5,
-								fontWeight: "normal",
-								display: "block"
-							}
-						]}
-					/>
 					<div
 						style={{
 							display: "flex",

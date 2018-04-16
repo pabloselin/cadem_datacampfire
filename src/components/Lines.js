@@ -283,12 +283,17 @@ class Lines extends Component {
 							theme={this.props.theme}
 							tickValues={this.state.xLabels}
 							tickLabelComponent={
-								<VictoryLabel dy={4} dx={-14} angle={-45} />
+								<VictoryLabel
+									style={{ fontSize: 12 }}
+									dy={4}
+									dx={-14}
+									angle={-45}
+								/>
 							}
 							style={{
 								axisLabel: {
 									textAlign: "right",
-									fontSize: 10,
+
 									padding: 40
 								},
 								tickLabels: {

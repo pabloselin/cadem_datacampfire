@@ -78,7 +78,7 @@ const baseLabelStyles = {
 };
 
 const tickLabelStyles = {
-  fontSize: 10,
+  fontSize: 12,
   fill: "#555",
   padding: 6,
   fontFamily: sansSerif

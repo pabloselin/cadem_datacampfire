@@ -24,6 +24,7 @@ import linebars_data from "../../data/linebars.json";
 import pie_data from "../../data/pie.json";
 import lines_data from "../../data/lineas_corto.json";
 import groupbar_data from "../../data/barras.json";
+import groupbar_4 from "../../data/barras_mini.json";
 import singlebar_data from "../../data/barras_single.json";
 import scatter_data from "../../data/scatter.json";
 import scattermini_data from "../../data/scattermini.json";
@@ -122,9 +123,9 @@ const Main = () => (
 						<Grid.Column width={4}>
 							<GroupedBars
 								columns={4}
-								data={groupbar_data}
+								data={groupbar_4}
 								height={300}
-								width={600}
+								width={300}
 								theme={cadem_theme}
 								colorscale={cadem_theme.bar.colorScale}
 							/>

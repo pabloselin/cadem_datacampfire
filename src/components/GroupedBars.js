@@ -14,6 +14,7 @@ import {
 class GroupedBars extends Component {
 	constructor(props) {
 		super(props);
+
 		this.state = {
 			title: this.props.data.chart_title,
 			subtitle: this.props.data.chart_subtitle,
@@ -26,8 +27,40 @@ class GroupedBars extends Component {
 			activeClickedBar: null,
 			svgrefs: [],
 			domainY: [0, 100],
-			domainX: [0, 100]
+			domainX: [0, 100],
+			fontSizes: this.fontSizes(this.props.columns)
 		};
+	}
+
+	fontSizes(columns) {
+		if (columns === 4) {
+			return {
+				active: 8,
+				label: 10,
+				barLabel: 10,
+				legend: [16, 13],
+				legendLabel: 20,
+				ticks: 12
+			};
+		} else if (columns === 6) {
+			return {
+				active: 8,
+				label: 10,
+				barLabel: 10,
+				legend: [13, 11],
+				legendLabel: 10,
+				ticks: 12
+			};
+		} else if (columns === 12) {
+			return {
+				active: 8,
+				label: 10,
+				barLabel: 10,
+				legend: [13, 11],
+				legendLabel: 8,
+				ticks: 12
+			};
+		}
 	}
 
 	makeLegend(data) {
@@ -65,6 +98,14 @@ class GroupedBars extends Component {
 		}
 	}
 
+	componentDidUpdate(prevProps, prevState) {
+		if (prevProps.columns !== this.props.columns) {
+			this.setState({
+				fontSizes: this.fontSizes(this.props.columns)
+			});
+		}
+	}
+
 	render() {
 		const activeStyle = [
 			{
@@ -81,7 +122,7 @@ class GroupedBars extends Component {
 					style: Object.assign({}, props.style, {
 						display: "block",
 						fill: this.state.activeColor,
-						fontSize: 8,
+						fontSize: this.state.fontSizes.active,
 						fontWeight: "bold"
 					})
 				})
@@ -99,7 +140,7 @@ class GroupedBars extends Component {
 		];
 
 		const legendLabelStyle = {
-			fontSize: 10,
+			fontSize: this.state.fontSizes.legendLabel,
 			fontFamily: "Asap",
 			fontWeight: a => {
 				if (this.state.activeCat === a.name) {
@@ -294,7 +335,7 @@ class GroupedBars extends Component {
 						labelComponent={
 							<VictoryLabel
 								style={{
-									fontSize: 10,
+									fontSize: this.state.fontSizes.label,
 									fontWeight: "bold",
 									fill: (d, active) =>
 										this.getLabelState(
@@ -310,9 +351,9 @@ class GroupedBars extends Component {
 				);
 			});
 
-		return (
-			<div className="chart-widget">
-				<VictorySharedEvents events={events}>
+		const RunLegend = () => {
+			if (this.props.columns === 6) {
+				return (
 					<VictoryLegend
 						title={[
 							this.state.title.toUpperCase(),
@@ -335,12 +376,78 @@ class GroupedBars extends Component {
 						titleComponent={
 							<VictoryLabel
 								style={[
-									{ fontSize: 13, fontWeight: "bold" },
-									{ fontSize: 11, fontWeight: "normal" }
+									{
+										fontSize: this.state.fontSizes
+											.legend[0],
+										fontWeight: "bold"
+									},
+									{
+										fontSize: this.state.fontSizes
+											.legend[1],
+										fontWeight: "normal"
+									}
 								]}
 							/>
 						}
 					/>
+				);
+			} else if (this.props.columns === 4) {
+				return (
+					<VictoryLegend
+						titleOrientation="left"
+						theme={this.props.theme}
+						name="legend"
+						data={this.makeLegend(this.state.data)}
+						orientation="vertical"
+						itemsPerRow={1}
+						gutter={20}
+						height={60}
+						labelComponent={
+							<VictoryLabel style={legendLabelStyle} />
+						}
+						dataComponent={
+							<Point size={5} style={legendDataStyle} />
+						}
+					/>
+				);
+			}
+		};
+
+		const RunHTMLTitle = () => {
+			if (this.props.columns === 4) {
+				return (
+					<div style={{ padding: "5px" }}>
+						<p
+							style={{
+								fontFamily: "Asap",
+								fontSize: 14,
+								display: "block",
+								margin: 0
+							}}
+						>
+							{this.state.title.toUpperCase()}
+						</p>
+						<p
+							style={{
+								margin: 0,
+								fontFamily: "Asap",
+								fontSize: 12,
+								fontWeight: "normal",
+								display: "block"
+							}}
+						>
+							{this.state.subtitle}
+						</p>
+					</div>
+				);
+			}
+		};
+
+		return (
+			<div className="chart-widget">
+				{RunHTMLTitle()}
+				<VictorySharedEvents events={events}>
+					{RunLegend()}
 					<VictoryChart
 						padding={{ top: 10, left: 50, right: 50, bottom: 50 }}
 						responsive={false}
@@ -352,7 +459,11 @@ class GroupedBars extends Component {
 					>
 						<VictoryAxis tickValues={[1, 2, 3, 4]} />
 						<VictoryAxis
-							style={{ tickLabels: { fontSize: 12 } }}
+							style={{
+								tickLabels: {
+									fontSize: this.state.fontSizes.ticks
+								}
+							}}
 							dependentAxis
 						/>
 

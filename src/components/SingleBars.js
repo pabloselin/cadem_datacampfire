@@ -113,32 +113,34 @@ class SingleBars extends Component {
 		return (
 			<div className="chart-widget">
 				<div style={{ padding: "5px" }}>
-					<VictoryLabel
-						theme={this.props.theme}
-						text={[
-							this.state.title.toUpperCase(),
-							this.state.subtitle
-						]}
-						style={[
-							{
-								fontFamily: "Asap",
-								fontSize: 15,
-								fontWeight: "bold",
-								display: "block"
-							},
-							{
-								fontFamily: "Asap",
-								fontSize: 13,
-								fontWeight: "normal"
-							}
-						]}
-					/>
+					<p
+						style={{
+							fontFamily: "Asap",
+							fontSize: 14,
+							display: "block",
+							margin: 0
+						}}
+					>
+						{this.state.title.toUpperCase()}
+					</p>
+					<p
+						style={{
+							margin: 0,
+							fontFamily: "Asap",
+							fontSize: 12,
+							fontWeight: "normal",
+							display: "block"
+						}}
+					>
+						{this.state.subtitle}
+					</p>
 				</div>
 				<VictoryChart
 					responsive={false}
 					theme={this.props.theme}
 					height={this.props.height}
 					width={this.props.width}
+					padding={{ top: 20, left: 30, bottom: 20, right: 0 }}
 					domainPadding={{ y: 0, x: 40 }}
 					containerComponent={
 						<VictoryContainer

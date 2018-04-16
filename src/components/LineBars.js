@@ -424,16 +424,22 @@ class LineBars extends Component {
 						height={this.props.height}
 						theme={this.props.theme}
 						domainPadding={this.state.domainPadding}
+						padding={{ top: 10, left: 30, right: 30, bottom: 50 }}
 					>
 						<VictoryAxis
 							key="horizontalAxis"
 							height={this.props.height}
 							width={this.props.width}
 							style={{
-								tickLabels: { fontSize: 8 }
+								tickLabels: { fontSize: 12 }
 							}}
 							tickLabelComponent={
-								<VictoryLabel textAnchor="middle" dy={35} />
+								<VictoryLabel
+									textAnchor="middle"
+									dy={25}
+									dx={-40}
+									angle={-45}
+								/>
 							}
 							tickValues={this.state.data.data[0].data.map(
 								point => point.x
@@ -445,7 +451,7 @@ class LineBars extends Component {
 							height={this.props.height}
 							width={this.props.width}
 							style={{
-								tickLabels: { fontSize: 8 },
+								tickLabels: { fontSize: 12 },
 								grid: { stroke: "#ccc", strokeWidth: 0.4 }
 							}}
 							tickLabelComponent={
