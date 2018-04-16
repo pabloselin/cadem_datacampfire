@@ -46,7 +46,6 @@ class GroupedBars extends Component {
 				}
 			};
 		});
-
 		return legData;
 	}
 
@@ -64,12 +63,6 @@ class GroupedBars extends Component {
 		} else {
 			return "transparent";
 		}
-	}
-
-	componentDidMount() {
-		this.setState({
-			svgrefs: [this.containerRef]
-		});
 	}
 
 	render() {
@@ -140,6 +133,7 @@ class GroupedBars extends Component {
 				target: "data",
 				eventHandlers: {
 					onMouseOver: (evt, obj, idx) => {
+						console.log("over");
 						let activeCat = obj.data[0].cat;
 						let activeBar = `${obj.datum.cat}-${idx}`;
 						this.setState({
