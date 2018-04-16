@@ -100,7 +100,7 @@ class Pie extends Component {
 			}
 		};
 		return (
-			<div className="Pie chart-widget" style={{ padding: 20 }}>
+			<div className="Pie chart-widget">
 				<VictorySharedEvents
 					className="pieWrapper"
 					events={[
@@ -160,6 +160,7 @@ class Pie extends Component {
 					]}
 				>
 					<VictoryLabel
+						theme={this.props.theme}
 						text={[
 							this.state.title.toUpperCase(),
 							this.state.subtitle
@@ -173,8 +174,9 @@ class Pie extends Component {
 							},
 							{
 								fontFamily: "Asap",
-								fontSize: 13,
-								fontWeight: "normal"
+								fontSize: 13.5,
+								fontWeight: "normal",
+								display: "block"
 							}
 						]}
 					/>
@@ -188,37 +190,30 @@ class Pie extends Component {
 							style={{
 								parent: { maxWidth: "65%", marginTop: 12 }
 							}}
-							width={290}
 						>
-							<svg
-								ref={viewBox => (this.viewBox = viewBox)}
-								viewBox="0 0 260 260"
-							>
-								<VictoryPie
-									width={260}
-									height={260}
-									ref={Pie => (this.Pie = Pie)}
-									theme={this.props.theme}
-									name="pie"
-									style={{
-										data: {
-											fill: d => piecolor(d.eventKey)
-										}
-									}}
-									padAngle={0}
-									innerRadius={65}
-									data={this.getData(this.state.data)}
-									standalone={false}
-									labels={d => ""}
-									containerComponent={
-										<VictoryContainer
-											containerRef={pieref =>
-												(this.pieref = pieref)
-											}
-										/>
+							<VictoryPie
+								ref={Pie => (this.Pie = Pie)}
+								theme={this.props.theme}
+								name="pie"
+								style={{
+									data: {
+										fill: d => piecolor(d.eventKey)
 									}
-								/>
-							</svg>
+								}}
+								padAngle={0}
+								innerRadius={65}
+								data={this.getData(this.state.data)}
+								standalone={false}
+								labels={d => ""}
+								containerComponent={
+									<VictoryContainer
+										containerRef={pieref =>
+											(this.pieref = pieref)
+										}
+									/>
+								}
+							/>
+
 							<VictoryLabel
 								className="percent"
 								theme={this.props.theme}
@@ -226,8 +221,8 @@ class Pie extends Component {
 								text={percentPortal()}
 								textAnchor="middle"
 								verticalAnchor="middle"
-								x={140}
-								y={150}
+								x={this.props.width / 2}
+								y={this.props.height / 2}
 								style={{
 									fontSize: 42,
 									fill: this.state.activeColor,
@@ -244,8 +239,6 @@ class Pie extends Component {
 							orientation="vertical"
 							borderPadding={{ top: 40 }}
 							rowGutter={-15}
-							width={200}
-							height={400}
 							style={{
 								labels: {
 									fontFamily: "Asap",

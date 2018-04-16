@@ -281,17 +281,12 @@ class GroupedBars extends Component {
 			<div className="chart-widget">
 				<VictorySharedEvents events={events}>
 					<VictoryChart
+						responsive={false}
 						theme={this.props.theme}
 						height={this.props.height}
+						width={this.props.width}
 						domain={{ y: [0, 100] }}
 						domainPadding={{ x: 40, y: 0 }}
-						containerComponent={
-							<VictoryContainer
-								containerRef={containerRef =>
-									(this.containerRef = containerRef)
-								}
-							/>
-						}
 					>
 						<VictoryAxis tickValues={[1, 2, 3, 4]} />
 						<VictoryAxis dependentAxis />
@@ -318,8 +313,8 @@ class GroupedBars extends Component {
 							titleComponent={
 								<VictoryLabel
 									style={[
-										{ fontSize: 10, fontWeight: "bold" },
-										{ fontSize: 8, fontWeight: "normal" }
+										{ fontSize: 17, fontWeight: "bold" },
+										{ fontSize: 15, fontWeight: "normal" }
 									]}
 								/>
 							}

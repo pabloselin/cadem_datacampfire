@@ -70,7 +70,7 @@ const baseLabelStyles = {
 };
 
 const tickLabelStyles = {
-  fontSize: 12,
+  fontSize: 10,
   fill: "#555",
   padding: 6,
   fontFamily: sansSerif

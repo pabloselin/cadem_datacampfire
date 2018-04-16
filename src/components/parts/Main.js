@@ -38,25 +38,27 @@ const Main = () => (
 				path="/"
 				render={props => (
 					<Dashboard>
-						<Grid.Column width={8}>
+						<Grid.Column width={6}>
 							<GroupedBars
 								data={groupbar_data}
-								height={326}
+								height={300}
 								width={600}
 								theme={cadem_theme}
 							/>
 						</Grid.Column>
-						<Grid.Column width={4}>
+						<Grid.Column width={6}>
 							<SingleBars
 								data={singlebar_data}
-								height={200}
-								width={300}
+								height={300}
+								width={600}
 								theme={cadem_theme}
 							/>
+						</Grid.Column>
+						<Grid.Column width={6}>
 							<Pie
 								data={pie_data}
 								height={300}
-								width={300}
+								width={600}
 								theme={cadem_theme}
 							/>
 						</Grid.Column>
@@ -77,11 +79,19 @@ const Main = () => (
 								theme={cadem_theme}
 							/>
 						</Grid.Column>
-						<Grid.Column width={12}>
+						<Grid.Column width={6}>
 							<LineBars
 								data={linebars_data}
-								height={260}
+								height={300}
 								width={600}
+								theme={cadem_theme}
+							/>
+						</Grid.Column>
+						<Grid.Column width={6}>
+							<Lines
+								height={300}
+								width={600}
+								data={lines_data}
 								theme={cadem_theme}
 							/>
 						</Grid.Column>

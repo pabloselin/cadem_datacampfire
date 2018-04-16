@@ -89,7 +89,7 @@ class SingleBars extends Component {
 		];
 
 		const labelStyle = {
-			fontSize: 8,
+			fontSize: 10,
 			fontWeight: a => {
 				if (
 					this.state.clickedKeys.indexOf(a) !== -1 ||
@@ -114,6 +114,7 @@ class SingleBars extends Component {
 		return (
 			<div className="chart-widget">
 				<VictoryChart
+					responsive={false}
 					theme={this.props.theme}
 					height={this.props.height}
 					width={this.props.width}
