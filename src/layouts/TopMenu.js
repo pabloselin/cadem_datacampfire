@@ -31,13 +31,13 @@ const TopMenu = props => (
 		<Dropdown item simple text="Ver más">
 			<Dropdown.Menu>
 				<Dropdown.Item className="item">
-					<a href="#">Lider.cl</a>
+					<a href="/">Lider.cl</a>
 				</Dropdown.Item>
 				<Dropdown.Item className="item">
-					<a href="#">SSFF</a>
+					<a href="/">SSFF</a>
 				</Dropdown.Item>
 				<Dropdown.Item className="item">
-					<a href="#">Lider.cl Hist.</a>
+					<a href="/">Lider.cl Hist.</a>
 				</Dropdown.Item>
 			</Dropdown.Menu>
 		</Dropdown>

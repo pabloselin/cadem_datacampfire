@@ -5,7 +5,6 @@ import {
 	VictoryScatter,
 	VictoryLegend,
 	VictoryAxis,
-	VictoryContainer,
 	Point,
 	VictoryLabel,
 	VictoryTooltip,
@@ -60,7 +59,7 @@ class Scatter extends Component {
 	}
 
 	checkLength(array) {
-		if (array.length == 0) {
+		if (array.length === 0) {
 			return false;
 		} else {
 			return true;

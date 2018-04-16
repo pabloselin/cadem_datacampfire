@@ -7,7 +7,6 @@ import {
 	VictoryLegend,
 	VictoryLabel,
 	VictoryAxis,
-	VictoryContainer,
 	VictorySharedEvents,
 	Point
 } from "victory";
@@ -150,7 +149,6 @@ class GroupedBars extends Component {
 						return activeStyle;
 					},
 					onClick: (evt, obj, idx) => {
-						let activeCat = obj.data[0].cat;
 						let clicked = `${obj.datum.cat}-${idx}`;
 						if (this.state.clickedBar !== true) {
 							this.setState({

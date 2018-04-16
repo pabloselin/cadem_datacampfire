@@ -8,7 +8,6 @@ import {
 	VictoryLabel,
 	VictoryStack,
 	VictoryAxis,
-	VictoryContainer,
 	VictorySharedEvents,
 	Point
 } from "victory";
@@ -58,7 +57,7 @@ class LineBars extends Component {
 	}
 
 	checkLength(array) {
-		if (array.length == 0) {
+		if (array.length === 0) {
 			return false;
 		} else {
 			return true;
@@ -127,29 +126,6 @@ class LineBars extends Component {
 				mutation: props => null
 			}
 		];
-
-		const labelStyle = {
-			fontWeight: a => {
-				if (
-					this.state.clickedKeys.indexOf(a) !== -1 ||
-					this.state.activeKey === a
-				) {
-					return "bold";
-				} else {
-					return "normal";
-				}
-			},
-			fill: a => {
-				if (
-					this.state.clickedKeys.indexOf(a) !== -1 ||
-					this.state.activeKey === a
-				) {
-					return this.props.activeColor;
-				} else {
-					return "#555";
-				}
-			}
-		};
 
 		const legendLabelStyle = {
 			fontSize: 14,
@@ -225,7 +201,6 @@ class LineBars extends Component {
 						}
 					},
 					onClick: (evt, obj, idx) => {
-						let activeCat = obj.data[0].cat;
 						let clicked = `${obj.datum.x}-${idx}`;
 						if (this.state.clickedBar !== true) {
 							this.setState({
@@ -365,7 +340,6 @@ class LineBars extends Component {
 					onMouseOver: (evt, obj, key) => {
 						if (this.state.isLegendClicked !== true) {
 							if (obj.datum !== undefined) {
-								let refName = obj.datum.name;
 								this.setState({
 									activeCat: obj.datum.name
 								});

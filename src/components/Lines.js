@@ -4,12 +4,10 @@ import DownloadButton from "./mini/DownloadButton.js";
 import {
 	VictoryChart,
 	VictoryLine,
-	VictoryGroup,
 	VictoryTooltip,
 	VictoryLegend,
 	VictorySharedEvents,
 	VictoryVoronoiContainer,
-	VictoryScatter,
 	VictoryLabel,
 	VictoryAxis,
 	Point
@@ -95,13 +93,6 @@ class Lines extends Component {
 						: this.props.colorscale[idx];
 				const linewidth = () =>
 					this.state.activeLine === linename ? 1.8 : 0.7;
-				const labels = d => {
-					if (this.state.activeLine === linename) {
-						return `${d.y}%`;
-					} else {
-						return "";
-					}
-				};
 
 				return (
 					<VictoryLine

@@ -1,7 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import cadem_theme from "../../themes/cadem_theme.js";
-import Inicio from "../../routes/Inicio.js";
 import ChartPage from "../../components/ChartPage.js";
 
 import Lines from "../../components/Lines.js";
@@ -13,10 +12,10 @@ import Scatter from "../../components/Scatter.js";
 import ScatterMini from "../../components/ScatterMini.js";
 import Stacked from "../../components/Stacked.js";
 
-import KPI_semicirculo from "../../components/kpi/KPI_semicirculo.js";
-import KPI_barra from "../../components/kpi/KPI_barra.js";
-import KPI_progreso from "../../components/kpi/KPI_progreso.js";
-import KPI_linea from "../../components/kpi/KPI_linea.js";
+import KpiSemiCirculo from "../../components/kpi/KpiSemiCirculo.js";
+import KpiBarra from "../../components/kpi/KpiBarra.js";
+import KpiProgreso from "../../components/kpi/KpiProgreso.js";
+import KpiLinea from "../../components/kpi/KpiLinea.js";
 
 import Dashboard from "../../layouts/Dashboard.js";
 import { Grid } from "semantic-ui-react";
@@ -29,7 +28,7 @@ import singlebar_data from "../../data/barras_single.json";
 import scatter_data from "../../data/scatter.json";
 import scattermini_data from "../../data/scattermini.json";
 import stacked_data from "../../data/stacked.json";
-import kpi_lineas_data from "../../data/kpi_lineas.json";
+import KpiLineas_data from "../../data/kpi_lineas.json";
 //import stackedmini_data from "../../data/stackedmini.json";
 
 const Main = () => (
@@ -280,7 +279,7 @@ const Main = () => (
 				render={props => (
 					<Dashboard>
 						<Grid.Column width={4}>
-							<KPI_semicirculo
+							<KpiSemiCirculo
 								percent={45}
 								title="Efectividad"
 								subtitle="Abr 2018"
@@ -289,7 +288,7 @@ const Main = () => (
 							/>
 						</Grid.Column>
 						<Grid.Column width={4}>
-							<KPI_semicirculo
+							<KpiSemiCirculo
 								percent={89}
 								title="Desempeño"
 								subtitle="Abr 2018"
@@ -298,7 +297,7 @@ const Main = () => (
 							/>
 						</Grid.Column>
 						<Grid.Column width={4}>
-							<KPI_semicirculo
+							<KpiSemiCirculo
 								percent={12}
 								title="Rendimiento"
 								subtitle="Abr 2018"
@@ -307,7 +306,7 @@ const Main = () => (
 							/>
 						</Grid.Column>
 						<Grid.Column width={4}>
-							<KPI_barra
+							<KpiBarra
 								percent={66.2}
 								title="Rendimiento"
 								subtitle="Abr 2018"
@@ -316,7 +315,7 @@ const Main = () => (
 							/>
 						</Grid.Column>
 						<Grid.Column width={4}>
-							<KPI_barra
+							<KpiBarra
 								percent={26.2}
 								title="Rendimiento"
 								subtitle="Abr 2018"
@@ -325,7 +324,7 @@ const Main = () => (
 							/>
 						</Grid.Column>
 						<Grid.Column width={4}>
-							<KPI_barra
+							<KpiBarra
 								percent={38.2}
 								title="Rendimiento"
 								subtitle="Abr 2018"
@@ -334,7 +333,7 @@ const Main = () => (
 							/>
 						</Grid.Column>
 						<Grid.Column width={4}>
-							<KPI_progreso
+							<KpiProgreso
 								percent={6.2}
 								title="Local A"
 								subtitle="Ene - Mar 2018"
@@ -345,7 +344,7 @@ const Main = () => (
 							/>
 						</Grid.Column>
 						<Grid.Column width={4}>
-							<KPI_progreso
+							<KpiProgreso
 								percent={40.2}
 								title="Local A"
 								subtitle="Ene - Mar 2018"
@@ -356,7 +355,7 @@ const Main = () => (
 							/>
 						</Grid.Column>
 						<Grid.Column width={4}>
-							<KPI_progreso
+							<KpiProgreso
 								percent={66.2}
 								title="Local A"
 								subtitle="Ene - Mar 2018"
@@ -367,14 +366,14 @@ const Main = () => (
 							/>
 						</Grid.Column>
 						<Grid.Column width={12}>
-							<KPI_linea
+							<KpiLinea
 								title="Local A"
 								subtitle="Mensual Mar 2018"
 								caption="Acumulado 2018"
 								goal="76%"
 								theme={cadem_theme}
 								semaforo="verde"
-								data={kpi_lineas_data}
+								data={KpiLineas_data}
 								resumen={
 									([73.12, 111.32, 71.11],
 									[73.43, 100.1, 20.12])

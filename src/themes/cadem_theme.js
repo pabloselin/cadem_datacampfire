@@ -23,7 +23,7 @@ const azules = [
   "#f0efeb"
 ];
 const activeColor = "#0038f0";
-const activeColor_alt = "#08009e";
+//const activeColor_alt = "#08009e";
 const activeColor_alt_2 = "#1abc9c";
 
 const semaforo = {
@@ -90,7 +90,7 @@ const centeredLabelStyles = assign({ textAnchor: "middle" }, baseLabelStyles);
 // *
 const strokeLinecap = "round";
 const strokeLinejoin = "round";
-const strokeDasharray = "10, 5";
+//const strokeDasharray = "10, 5";
 
 export default {
   area: assign(

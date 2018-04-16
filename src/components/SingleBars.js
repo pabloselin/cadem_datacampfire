@@ -41,7 +41,7 @@ class SingleBars extends Component {
 	}
 
 	checkLength(array) {
-		if (array.length == 0) {
+		if (array.length === 0) {
 			return false;
 		} else {
 			return true;
@@ -241,7 +241,6 @@ class SingleBars extends Component {
 				<DownloadButton
 					type="singlebars"
 					data={this.props.data}
-					type="singlebars"
 					fields={[
 						{ label: "Mes", value: "x" },
 						{ label: "Porcentaje", value: "y" }

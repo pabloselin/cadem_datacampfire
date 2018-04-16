@@ -1,7 +1,7 @@
 import React from "react";
 import { VictoryBar, VictoryStack, VictoryLabel } from "victory";
 
-class KPI_barra extends React.Component {
+class KpiBarra extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -72,4 +72,4 @@ class KPI_barra extends React.Component {
 	}
 }
 
-export default KPI_barra;
+export default KpiBarra;

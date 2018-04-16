@@ -10,9 +10,9 @@ import { Grid, Table } from "semantic-ui-react";
 import flecha_verde from "../../assets/flecha_verde.svg";
 import flecha_rojo from "../../assets/flecha_rojo.svg";
 import flecha_amarillo from "../../assets/flecha_amarillo.svg";
-import "./KPI_linea.css";
+import "./KpiLinea.css";
 
-class KPI_linea extends React.Component {
+class KpiLinea extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -140,7 +140,10 @@ class KPI_linea extends React.Component {
 									</Table.Cell>
 									<Table.Cell>30</Table.Cell>
 									<Table.Cell textAlign="center">
-										<img src={this.cualFlecha()} />
+										<img
+											alt="Flecha"
+											src={this.cualFlecha()}
+										/>
 									</Table.Cell>
 								</Table.Row>
 							</Table.Body>
@@ -199,4 +202,4 @@ class KPI_linea extends React.Component {
 	}
 }
 
-export default KPI_linea;
+export default KpiLinea;

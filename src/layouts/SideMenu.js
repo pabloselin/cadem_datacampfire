@@ -1,6 +1,6 @@
 import React from "react";
 import { Menu } from "semantic-ui-react";
-import { NavLink } from "react-router-dom";
+//import { NavLink } from "react-router-dom";
 
 const SideMenu = props => (
 	<Menu visible inverted left vertical className="menu-izquierda">

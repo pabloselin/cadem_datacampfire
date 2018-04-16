@@ -3,9 +3,9 @@ import { VictoryLabel } from "victory";
 import flecha_verde from "../../assets/flecha_verde.svg";
 import flecha_rojo from "../../assets/flecha_rojo.svg";
 import flecha_amarillo from "../../assets/flecha_amarillo.svg";
-import "./KPI_progreso.css";
+import "./KpiProgreso.css";
 
-class KPI_Progreso extends React.Component {
+class KpiProgreso extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -67,11 +67,15 @@ class KPI_Progreso extends React.Component {
 
 				<div className="status">
 					<p>{this.props.goal}</p>
-					<img className="arrow" src={this.cualFlecha()} />
+					<img
+						alt="flecha"
+						className="arrow"
+						src={this.cualFlecha()}
+					/>
 				</div>
 			</div>
 		);
 	}
 }
 
-export default KPI_Progreso;
+export default KpiProgreso;

@@ -11,6 +11,7 @@ const Dashboard = props => (
 			<Grid columns={14} id="detras">
 				<div className="div-logo">
 					<img
+						alt="Logo Walmart"
 						id="logo"
 						src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Walmart_logo.svg/2000px-Walmart_logo.svg.png"
 					/>

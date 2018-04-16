@@ -7,7 +7,7 @@ import {
 	VictorySharedEvents
 } from "victory";
 
-class KPI_Semicirculo extends Component {
+class KpiSemiCirculo extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -57,16 +57,6 @@ class KPI_Semicirculo extends Component {
 			// }
 		};
 
-		const clicked = key => {
-			if (
-				this.state.clicked === true &&
-				Number(this.state.activeKey) === Number(key)
-			) {
-				return false;
-			} else {
-				return true;
-			}
-		};
 		return (
 			<div className="chart-widget">
 				<VictoryLabel
@@ -209,4 +199,4 @@ class KPI_Semicirculo extends Component {
 	}
 }
 
-export default KPI_Semicirculo;
+export default KpiSemiCirculo;

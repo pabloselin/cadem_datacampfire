@@ -143,7 +143,6 @@ class Stacked extends Component {
 						return activeStyle;
 					},
 					onClick: (evt, obj, idx) => {
-						let activeCat = obj.data[0].x;
 						let clicked = `${obj.datum.x}-${idx}`;
 						if (this.state.clickedBar !== true) {
 							this.setState({
