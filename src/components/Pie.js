@@ -38,7 +38,7 @@ class Pie extends Component {
 					return {
 						fill: this.state.activeColor,
 						fontWeight: "bold",
-						fontSize: 24,
+						fontSize: 21,
 						fontColor: this.state.activeColor
 					};
 				} else {
@@ -190,46 +190,48 @@ class Pie extends Component {
 								parent: { maxWidth: "65%", marginTop: 12 }
 							}}
 						>
-							<VictoryPie
-								ref={Pie => (this.Pie = Pie)}
-								theme={this.props.theme}
-								name="pie"
-								style={{
-									data: {
-										fill: d => piecolor(d.eventKey)
-									}
-								}}
-								padAngle={0}
-								innerRadius={65}
-								data={this.getData(this.state.data)}
-								standalone={false}
-								labels={d => ""}
-								containerComponent={
-									<VictoryContainer
-										containerRef={pieref =>
-											(this.pieref = pieref)
+							<svg viewBox={"0 0 400 400"}>
+								<VictoryPie
+									ref={Pie => (this.Pie = Pie)}
+									theme={this.props.theme}
+									name="pie"
+									style={{
+										data: {
+											fill: d => piecolor(d.eventKey)
 										}
-									/>
-								}
-							/>
+									}}
+									padAngle={0}
+									innerRadius={85}
+									data={this.getData(this.state.data)}
+									standalone={false}
+									labels={d => ""}
+									containerComponent={
+										<VictoryContainer
+											containerRef={pieref =>
+												(this.pieref = pieref)
+											}
+										/>
+									}
+								/>
 
-							<VictoryLabel
-								className="percent"
-								theme={this.props.theme}
-								animate={{ duration: 500 }}
-								text={percentPortal()}
-								textAnchor="middle"
-								verticalAnchor="middle"
-								x={this.props.width / 2}
-								y={this.props.height / 2}
-								style={{
-									fontSize: 42,
-									fill: this.state.activeColor,
-									fontFamily: "Asap",
-									fontWeight: "bold"
-								}}
-								ref={percent => (this.percent = percent)}
-							/>
+								<VictoryLabel
+									className="percent"
+									theme={this.props.theme}
+									animate={{ duration: 500 }}
+									text={percentPortal()}
+									textAnchor="middle"
+									verticalAnchor="middle"
+									x={200}
+									y={200}
+									style={{
+										fontSize: 42,
+										fill: this.state.activeColor,
+										fontFamily: "Asap",
+										fontWeight: "bold"
+									}}
+									ref={percent => (this.percent = percent)}
+								/>
+							</svg>
 						</VictoryGroup>
 						<VictoryLegend
 							theme={this.props.theme}
@@ -237,11 +239,13 @@ class Pie extends Component {
 							centerTitle
 							orientation="vertical"
 							borderPadding={{ top: 40 }}
+							width={300}
+							height={450}
 							rowGutter={-15}
 							style={{
 								labels: {
 									fontFamily: "Asap",
-									fontSize: 24
+									fontSize: 20
 								},
 								parent: { maxWidth: "35%" }
 							}}

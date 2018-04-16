@@ -292,12 +292,12 @@ class Lines extends Component {
 								<VictoryLabel
 									style={[
 										{
-											fontSize: 18,
+											fontSize: 17,
 											fontWeight: "bold",
 											display: "block"
 										},
 										{
-											fontSize: 14,
+											fontSize: 13.5,
 											fontWeight: "normal",
 											display: "block"
 										}

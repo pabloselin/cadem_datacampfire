@@ -128,7 +128,7 @@ class SingleBars extends Component {
 							},
 							{
 								fontFamily: "Asap",
-								fontSize: 12,
+								fontSize: 13,
 								fontWeight: "normal"
 							}
 						]}
