@@ -32,7 +32,6 @@ class GroupedBars extends Component {
 	}
 
 	makeLegend(data) {
-		console.log(this.props.colorscale);
 		let legData = data.data.map((item, idx) => {
 			let fill = () => {
 				if (item.title === this.state.activeKey) {

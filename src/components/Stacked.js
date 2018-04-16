@@ -41,7 +41,6 @@ class Stacked extends Component {
 	}
 
 	getCurFill(cat, index, active) {
-		console.log(this.props.colorscale);
 		if (this.state.activeCat === cat) {
 			return this.state.activeColor;
 		} else {
