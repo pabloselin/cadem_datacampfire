@@ -6,7 +6,8 @@ import {
 	VictorySharedEvents,
 	VictoryLabel,
 	VictoryContainer,
-	VictoryGroup
+	VictoryGroup,
+	Point
 } from "victory";
 
 class Pie extends Component {
@@ -38,7 +39,7 @@ class Pie extends Component {
 					return {
 						fill: this.state.activeColor,
 						fontWeight: "bold",
-						fontSize: 21,
+						fontSize: 20,
 						fontColor: this.state.activeColor
 					};
 				} else {
@@ -250,6 +251,7 @@ class Pie extends Component {
 								parent: { maxWidth: "35%" }
 							}}
 							data={this.makeLegend(this.state.data)}
+							dataComponent={<Point size={10} />}
 							containerComponent={
 								<VictoryContainer
 									containerRef={legendref =>

@@ -119,6 +119,11 @@ class Lines extends Component {
 				);
 			});
 
+		const legendLabelStyle = {
+			fontSize: 16,
+			fontFamily: "Asap"
+		};
+
 		const events = [
 			{
 				childName: "all",
@@ -193,6 +198,41 @@ class Lines extends Component {
 		return (
 			<div className="chart-widget">
 				<VictorySharedEvents events={events}>
+					<VictoryLegend
+						title={[
+							this.state.title.toUpperCase(),
+							this.state.subtitle
+						]}
+						width={this.props.width}
+						titleOrientation="left"
+						theme={this.props.theme}
+						name="legend"
+						data={this.makeLegend(this.state.data)}
+						orientation="vertical"
+						itemsPerRow={3}
+						rowGutter={10}
+						height={60}
+						dataComponent={<Point size={6} x={230} />}
+						labelComponent={
+							<VictoryLabel style={legendLabelStyle} x={245} />
+						}
+						titleComponent={
+							<VictoryLabel
+								style={[
+									{
+										fontSize: 18,
+										fontWeight: "bold",
+										display: "block"
+									},
+									{
+										fontSize: 14,
+										fontWeight: "normal",
+										display: "block"
+									}
+								]}
+							/>
+						}
+					/>
 					<VictoryChart
 						height={this.props.height}
 						width={this.props.width}
@@ -273,38 +313,6 @@ class Lines extends Component {
 							}}
 						/>
 						{lines()}
-						<VictoryLegend
-							title={[
-								this.state.title.toUpperCase(),
-								this.state.subtitle
-							]}
-							width={this.props.width}
-							titleOrientation="left"
-							theme={this.props.theme}
-							name="legend"
-							data={this.makeLegend(this.state.data)}
-							orientation="vertical"
-							itemsPerRow={3}
-							height={60}
-							dataComponent={<Point x={230} />}
-							labelComponent={<VictoryLabel x={240} />}
-							titleComponent={
-								<VictoryLabel
-									style={[
-										{
-											fontSize: 17,
-											fontWeight: "bold",
-											display: "block"
-										},
-										{
-											fontSize: 13.5,
-											fontWeight: "normal",
-											display: "block"
-										}
-									]}
-								/>
-							}
-						/>
 					</VictoryChart>
 				</VictorySharedEvents>
 				<DownloadButton

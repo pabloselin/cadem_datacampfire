@@ -223,7 +223,7 @@ class Scatter extends Component {
 						orientation="horizontal"
 						itemsPerRow={4}
 						dataComponent={
-							<Point size={4} style={legendDataStyle} y={50} />
+							<Point size={5} style={legendDataStyle} y={50} />
 						}
 						labelComponent={
 							<VictoryLabel style={legendLabelStyle} y={50} />

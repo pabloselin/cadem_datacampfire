@@ -332,7 +332,7 @@ class Stacked extends Component {
 							this.state.title.toUpperCase(),
 							this.state.subtitle
 						]}
-						x={this.props.width - 260}
+						x={this.props.width - 270}
 						width={this.props.width}
 						titleOrientation="left"
 						gutter={20}

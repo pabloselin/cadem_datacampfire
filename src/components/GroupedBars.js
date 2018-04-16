@@ -338,7 +338,9 @@ class GroupedBars extends Component {
 						labelComponent={
 							<VictoryLabel style={legendLabelStyle} />
 						}
-						dataComponent={<Point style={legendDataStyle} />}
+						dataComponent={
+							<Point size={5} style={legendDataStyle} />
+						}
 						titleComponent={
 							<VictoryLabel
 								style={[
