@@ -108,7 +108,7 @@ class KPI_linea extends React.Component {
 					<Grid.Column>
 						<Table
 							verticalAlign="middle"
-							singleline
+							singleline="true"
 							className={`${this.props.semaforo} kpi_table`}
 						>
 							<Table.Header

@@ -3,20 +3,26 @@ import { Menu, Dropdown } from "semantic-ui-react";
 import { NavLink } from "react-router-dom";
 
 const TopMenu = props => (
-	<Menu tabular column id={props.id}>
+	<Menu tabular id={props.id}>
 		<NavLink exact className="item" to="/">
-			Vista Global
+			6 columnas
 		</NavLink>
 
 		<NavLink className="item" to="/kpis">
-			Lider
+			Kpis
 		</NavLink>
 
 		<NavLink className="item" to="/alt-paleta">
-			Express
+			Paleta 2
 		</NavLink>
 
-		<Menu.Item className="item">Ekono</Menu.Item>
+		<NavLink className="item" to="/4-cols">
+			4 columnas
+		</NavLink>
+
+		<NavLink className="item" to="/12-cols">
+			12 columnas
+		</NavLink>
 		<Menu.Item className="item">Central Ma..</Menu.Item>
 		<Menu.Item className="item">SBA</Menu.Item>
 		<Menu.Item className="item">Líder SSFF</Menu.Item>

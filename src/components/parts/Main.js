@@ -116,6 +116,166 @@ const Main = () => (
 				)}
 			/>
 			<Route
+				exact
+				path="/4-cols"
+				render={props => (
+					<Dashboard>
+						<Grid.Column width={4}>
+							<GroupedBars
+								columns={4}
+								data={groupbar_data}
+								height={300}
+								width={600}
+								theme={cadem_theme}
+								colorscale={cadem_theme.bar.colorScale}
+							/>
+						</Grid.Column>
+						<Grid.Column width={4}>
+							<SingleBars
+								columns={4}
+								data={singlebar_data}
+								height={300}
+								width={600}
+								theme={cadem_theme}
+								colorscale={cadem_theme.bar.colorScale}
+							/>
+						</Grid.Column>
+						<Grid.Column width={4}>
+							<Pie
+								columns={4}
+								data={pie_data}
+								height={300}
+								width={600}
+								theme={cadem_theme}
+								colorscale={cadem_theme.pie.colorScale}
+							/>
+						</Grid.Column>
+						<Grid.Column width={4}>
+							<Stacked
+								columns={4}
+								width={600}
+								height={300}
+								data={stacked_data}
+								theme={cadem_theme}
+								colorscale={cadem_theme.stack.colorScale}
+							/>
+						</Grid.Column>
+						<Grid.Column width={4}>
+							<Scatter
+								columns={4}
+								data={scatter_data}
+								height={300}
+								width={600}
+								theme={cadem_theme}
+								colorscale={cadem_theme.scatter.colorScale}
+							/>
+						</Grid.Column>
+
+						<Grid.Column width={4}>
+							<LineBars
+								columns={4}
+								data={linebars_data}
+								height={300}
+								width={600}
+								theme={cadem_theme}
+								colorscale={cadem_theme.line.colorScale}
+							/>
+						</Grid.Column>
+						<Grid.Column width={4}>
+							<Lines
+								columns={4}
+								height={300}
+								width={600}
+								data={lines_data}
+								theme={cadem_theme}
+								colorscale={cadem_theme.linebar.colorScale}
+								activeColor={cadem_theme.interactions.hover}
+							/>
+						</Grid.Column>
+					</Dashboard>
+				)}
+			/>
+			<Route
+				exact
+				path="/12-cols"
+				render={props => (
+					<Dashboard>
+						<Grid.Column width={12}>
+							<GroupedBars
+								columns={12}
+								data={groupbar_data}
+								height={300}
+								width={600}
+								theme={cadem_theme}
+								colorscale={cadem_theme.bar.colorScale}
+							/>
+						</Grid.Column>
+						<Grid.Column width={12}>
+							<SingleBars
+								columns={12}
+								data={singlebar_data}
+								height={300}
+								width={600}
+								theme={cadem_theme}
+								colorscale={cadem_theme.bar.colorScale}
+							/>
+						</Grid.Column>
+						<Grid.Column width={12}>
+							<Pie
+								columns={12}
+								data={pie_data}
+								height={300}
+								width={600}
+								theme={cadem_theme}
+								colorscale={cadem_theme.pie.colorScale}
+							/>
+						</Grid.Column>
+						<Grid.Column width={12}>
+							<Stacked
+								columns={12}
+								width={600}
+								height={300}
+								data={stacked_data}
+								theme={cadem_theme}
+								colorscale={cadem_theme.stack.colorScale}
+							/>
+						</Grid.Column>
+						<Grid.Column width={12}>
+							<Scatter
+								columns={12}
+								data={scatter_data}
+								height={300}
+								width={600}
+								theme={cadem_theme}
+								colorscale={cadem_theme.scatter.colorScale}
+							/>
+						</Grid.Column>
+
+						<Grid.Column width={12}>
+							<LineBars
+								columns={12}
+								data={linebars_data}
+								height={300}
+								width={600}
+								theme={cadem_theme}
+								colorscale={cadem_theme.line.colorScale}
+							/>
+						</Grid.Column>
+						<Grid.Column width={12}>
+							<Lines
+								columns={12}
+								height={300}
+								width={600}
+								data={lines_data}
+								theme={cadem_theme}
+								colorscale={cadem_theme.linebar.colorScale}
+								activeColor={cadem_theme.interactions.hover}
+							/>
+						</Grid.Column>
+					</Dashboard>
+				)}
+			/>
+			<Route
 				path="/kpis"
 				render={props => (
 					<Dashboard>
