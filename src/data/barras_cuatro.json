@@ -1,0 +1,23 @@
+{
+	"chart_title": "Tipos de material",
+	"chart_subtitle": "Recarga | período Feb 18",
+	"categories": ["Movistar", "Entel", "Claro"],
+	"data": [
+		{
+			"title": "Pendón",
+			"data": [
+				{ "x": "Movistar", "y": 10.4, "y0": 1.3, "cat": "Pendón" },
+				{ "x": "Entel", "y": 21.2, "y0": 1.3, "cat": "Pendón" },
+				{ "x": "Claro", "y": 31.1, "y0": 1.3, "cat": "Pendón" }
+			]
+		},
+		{
+			"title": "Afiche",
+			"data": [
+				{ "x": "Movistar", "y": 12, "y0": 1.3, "cat": "Afiche" },
+				{ "x": "Entel", "y": 6.31, "y0": 1.3, "cat": "Afiche" },
+				{ "x": "Claro", "y": 67.2, "y0": 1.3, "cat": "Afiche" }
+			]
+		}
+	]
+}

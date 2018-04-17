@@ -5,7 +5,13 @@ import ChartPage from "../../components/ChartPage.js";
 
 import Lines from "../../components/Lines.js";
 import Pie from "../../components/Pie.js";
-import GroupedBars from "../../components/GroupedBars.js";
+import GroupedBarsSix from "../../components/six/GroupedBarsSix.js";
+import GroupedBarsFour from "../../components/four/GroupedBarsFour.js";
+import SingleBarsSix from "../../components/six/SingleBarsSix.js";
+import SingleBarsFour from "../../components/four/SingleBarsFour.js";
+import PieFour from "../../components/four/PieFour.js";
+import PieSix from "../../components/six/PieSix.js";
+
 import SingleBars from "../../components/SingleBars.js";
 import LineBars from "../../components/LineBars.js";
 import Scatter from "../../components/Scatter.js";
@@ -19,11 +25,15 @@ import KpiLinea from "../../components/kpi/KpiLinea.js";
 
 import Dashboard from "../../layouts/Dashboard.js";
 import { Grid } from "semantic-ui-react";
+
 //Data
 import linebars_data from "../../data/linebars.json";
 import pie_data from "../../data/pie.json";
 import lines_data from "../../data/lineas_corto.json";
+
 import groupbar_data from "../../data/barras.json";
+import barras_cuatro from "../../data/barras_cuatro.json";
+
 import singlebar_data from "../../data/barras_single.json";
 import scatter_data from "../../data/scatter.json";
 import scattermini_data from "../../data/scattermini.json";
@@ -40,7 +50,7 @@ const Main = () => (
 				render={props => (
 					<Dashboard>
 						<Grid.Column width={6}>
-							<GroupedBars
+							<GroupedBarsSix
 								columns={6}
 								data={groupbar_data}
 								height={300}
@@ -121,27 +131,27 @@ const Main = () => (
 				render={props => (
 					<Dashboard>
 						<Grid.Column width={4}>
-							<GroupedBars
+							<GroupedBarsFour
 								columns={4}
-								data={groupbar_data}
+								data={barras_cuatro}
 								height={300}
 								width={600}
 								theme={cadem_theme}
-								colorscale={cadem_theme.bar.colorScale}
+								colorscale={["#B3AEA4", "#3F3F3F"]}
 							/>
 						</Grid.Column>
 						<Grid.Column width={4}>
-							<SingleBars
+							<SingleBarsFour
 								columns={4}
 								data={singlebar_data}
-								height={300}
-								width={600}
+								height={290}
+								width={300}
 								theme={cadem_theme}
 								colorscale={cadem_theme.bar.colorScale}
 							/>
 						</Grid.Column>
 						<Grid.Column width={4}>
-							<Pie
+							<PieSix
 								columns={4}
 								data={pie_data}
 								height={300}
@@ -201,7 +211,7 @@ const Main = () => (
 				render={props => (
 					<Dashboard>
 						<Grid.Column width={12}>
-							<GroupedBars
+							<GroupedBarsSix
 								columns={12}
 								data={groupbar_data}
 								height={300}
@@ -211,7 +221,7 @@ const Main = () => (
 							/>
 						</Grid.Column>
 						<Grid.Column width={12}>
-							<SingleBars
+							<SingleBarsSix
 								columns={12}
 								data={singlebar_data}
 								height={300}
@@ -221,7 +231,7 @@ const Main = () => (
 							/>
 						</Grid.Column>
 						<Grid.Column width={12}>
-							<Pie
+							<PieFour
 								columns={12}
 								data={pie_data}
 								height={300}
@@ -420,22 +430,6 @@ const Main = () => (
 					/>
 				)}
 				path="/lines"
-			/>
-
-			<Route
-				render={props => (
-					<ChartPage
-						chart={
-							<GroupedBars
-								{...props}
-								data={groupbar_data}
-								height={240}
-								theme={cadem_theme}
-							/>
-						}
-					/>
-				)}
-				path="/grouped-bars"
 			/>
 
 			<Route
