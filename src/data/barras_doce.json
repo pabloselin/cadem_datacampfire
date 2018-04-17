@@ -1,0 +1,62 @@
+{
+	"chart_title": "Tipos de material",
+	"chart_subtitle": "Recarga | período Feb 18",
+	"categories": ["Movistar", "Entel", "Claro", "Virgin", "Wom", "Nextel"],
+	"data": [
+		{
+			"title": "Pendón",
+			"data": [
+				{ "x": "Movistar", "y": 10.4, "y0": 1.3, "cat": "Pendón" },
+				{ "x": "Entel", "y": 21.2, "y0": 1.3, "cat": "Pendón" },
+				{ "x": "Claro", "y": 31.1, "y0": 1.3, "cat": "Pendón" },
+				{ "x": "Virgin", "y": 10.4, "y0": 1.3, "cat": "Pendón" },
+				{ "x": "Wom", "y": 21.2, "y0": 1.3, "cat": "Pendón" },
+				{ "x": "Nextel", "y": 31.1, "y0": 1.3, "cat": "Pendón" }
+			]
+		},
+		{
+			"title": "Afiche",
+			"data": [
+				{ "x": "Movistar", "y": 12, "y0": 1.3, "cat": "Afiche" },
+				{ "x": "Entel", "y": 6.31, "y0": 1.3, "cat": "Afiche" },
+				{ "x": "Claro", "y": 67.2, "y0": 1.3, "cat": "Afiche" },
+				{ "x": "Virgin", "y": 10.4, "y0": 1.3, "cat": "Afiche" },
+				{ "x": "Wom", "y": 21.2, "y0": 1.3, "cat": "Afiche" },
+				{ "x": "Nextel", "y": 31.1, "y0": 1.3, "cat": "Afiche" }
+			]
+		},
+		{
+			"title": "Sticker",
+			"data": [
+				{ "x": "Movistar", "y": 34.1, "y0": 1.3, "cat": "Sticker" },
+				{ "x": "Entel", "y": 12.4, "y0": 1.3, "cat": "Sticker" },
+				{ "x": "Claro", "y": 31.5, "y0": 1.3, "cat": "Sticker" },
+				{ "x": "Virgin", "y": 10.4, "y0": 1.3, "cat": "Sticker" },
+				{ "x": "Wom", "y": 21.2, "y0": 1.3, "cat": "Sticker" },
+				{ "x": "Nextel", "y": 31.1, "y0": 1.3, "cat": "Sticker" }
+			]
+		},
+		{
+			"title": "Stopper",
+			"data": [
+				{ "x": "Movistar", "y": 20.1, "y0": 1.3, "cat": "Stopper" },
+				{ "x": "Entel", "y": 9.8, "y0": 1.3, "cat": "Stopper" },
+				{ "x": "Claro", "y": 10.2, "y0": 1.3, "cat": "Stopper" },
+				{ "x": "Virgin", "y": 10.4, "y0": 1.3, "cat": "Stopper" },
+				{ "x": "Wom", "y": 21.2, "y0": 1.3, "cat": "Stopper" },
+				{ "x": "Nextel", "y": 31.1, "y0": 1.3, "cat": "Stopper" }
+			]
+		},
+		{
+			"title": "Stopper_b",
+			"data": [
+				{ "x": "Movistar", "y": 20.1, "y0": 1.3, "cat": "Stopper_b" },
+				{ "x": "Entel", "y": 9.8, "y0": 1.3, "cat": "Stopper_b" },
+				{ "x": "Claro", "y": 10.2, "y0": 1.3, "cat": "Stopper_b" },
+				{ "x": "Virgin", "y": 10.4, "y0": 1.3, "cat": "Stopper_b" },
+				{ "x": "Wom", "y": 21.2, "y0": 1.3, "cat": "Stopper_b" },
+				{ "x": "Nextel", "y": 31.1, "y0": 1.3, "cat": "Stopper_b" }
+			]
+		}
+	]
+}

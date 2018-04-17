@@ -12,7 +12,7 @@ import {
 	Point
 } from "victory";
 
-class StackedFour extends Component {
+class StackedTwelve extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -27,15 +27,15 @@ class StackedFour extends Component {
 			clickedBar: false,
 			activeClickedBar: null,
 			clicked: false,
-			labelOffset: 1.8,
+			labelOffset: 1.4,
 			svgrefs: [],
 			barNames: [
 				this.props.data.data[0].title,
 				this.props.data.data[1].title
 			],
-			axisLabelSize: 9,
-			barWidth: 18,
-			activeBarFontSize: 9
+			axisLabelSize: 6,
+			barWidth: 12,
+			activeBarFontSize: 6
 		};
 	}
 
@@ -106,7 +106,7 @@ class StackedFour extends Component {
 		];
 
 		const legendLabelStyle = {
-			fontSize: 12,
+			fontSize: 7,
 			fontFamily: "Asap",
 			fontWeight: a => {
 				if (this.state.activeCat === a.name) {
@@ -320,7 +320,6 @@ class StackedFour extends Component {
 						barRatio={0.2}
 						style={{
 							data: {
-								fontSize: this.state.activeBarFontSize,
 								fill: (d, active) =>
 									this.getCurFill(
 										this.state.barNames[idx],
@@ -358,7 +357,7 @@ class StackedFour extends Component {
 							this.state.title.toUpperCase(),
 							this.state.subtitle
 						]}
-						x={120}
+						x={this.props.width - 275}
 						width={this.props.width}
 						titleOrientation="left"
 						gutter={20}
@@ -367,24 +366,24 @@ class StackedFour extends Component {
 						name="legend"
 						data={this.makeLegend(this.state.data)}
 						orientation="vertical"
-						itemsPerRow={2}
+						itemsPerRow={1}
 						colorscale={this.props.colorscale}
 						labelComponent={
-							<VictoryLabel style={legendLabelStyle} />
+							<VictoryLabel style={legendLabelStyle} y={16} />
 						}
 						dataComponent={
-							<Point size={5} style={legendDataStyle} />
+							<Point size={4} style={legendDataStyle} y={16} />
 						}
 						titleComponent={
 							<VictoryLabel
-								dx={-120}
+								dx={-330}
 								style={[
 									{
-										fontSize: 14,
+										fontSize: 9,
 										fontWeight: "bold"
 									},
 									{
-										fontSize: 11,
+										fontSize: 7,
 										fontWeight: "normal"
 									}
 								]}
@@ -396,7 +395,7 @@ class StackedFour extends Component {
 						theme={this.props.theme}
 						height={this.props.height}
 						width={this.props.width}
-						padding={{ top: 25, right: 40, bottom: 40, left: 40 }}
+						padding={{ top: 25, right: 30, bottom: 40, left: 30 }}
 						domainPadding={{ y: 0, x: 40 }}
 						containerComponent={
 							<VictoryContainer
@@ -418,7 +417,11 @@ class StackedFour extends Component {
 								/>
 							}
 						/>
-						<VictoryAxis key="y" dependentAxis />
+						<VictoryAxis
+							key="y"
+							dependentAxis
+							style={{ tickLabels: { fontSize: 6 } }}
+						/>
 						<VictoryStack
 							domain={{ y: [0, 100] }}
 							style={{
@@ -451,4 +454,4 @@ class StackedFour extends Component {
 	}
 }
 
-export default StackedFour;
+export default StackedTwelve;

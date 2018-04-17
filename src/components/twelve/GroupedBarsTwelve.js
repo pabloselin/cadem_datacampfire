@@ -1,18 +1,21 @@
 import React, { Component } from "react";
 import DownloadButton from "../mini/DownloadButton.js";
+import GroupedBarsCols from "../cols/GroupedBarsCols.js";
 import {
 	VictoryChart,
 	VictoryBar,
-	VictoryStack,
+	VictoryGroup,
+	VictoryLegend,
 	VictoryLabel,
 	VictoryAxis,
-	VictoryContainer,
-	VictoryLegend,
 	VictorySharedEvents,
+	VictoryContainer,
+	VictoryTooltip,
+	Flyout,
 	Point
 } from "victory";
 
-class StackedFour extends Component {
+class GroupedBarsTwelve extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -21,28 +24,37 @@ class StackedFour extends Component {
 			data: this.props.data,
 			activeKey: null,
 			activeCat: null,
-			activeMonth: null,
 			activeColor: this.props.theme.interactions.hover,
 			isLegendClicked: false,
 			clickedBar: false,
 			activeClickedBar: null,
-			clicked: false,
-			labelOffset: 1.8,
 			svgrefs: [],
-			barNames: [
-				this.props.data.data[0].title,
-				this.props.data.data[1].title
-			],
-			axisLabelSize: 9,
-			barWidth: 18,
-			activeBarFontSize: 9
+			domainY: [0, 100],
+			domainX: [0, 100],
+			activeBarFontSize: 6,
+			barWidth: 8,
+			barOffset: 12,
+			domainPadding: { x: 60, y: 0 }
 		};
 	}
 
-	componentDidMount() {
-		this.setState({
-			svgrefs: [this.containerRef]
+	makeLegend(data) {
+		let legData = data.data.map((item, idx) => {
+			let fill = () => {
+				if (item.title === this.state.activeKey) {
+					return this.state.activeColor;
+				} else {
+					return this.props.colorscale[idx];
+				}
+			};
+			return {
+				name: item.title,
+				symbol: {
+					fill: fill()
+				}
+			};
 		});
+		return legData;
 	}
 
 	getCurFill(cat, index, active) {
@@ -53,23 +65,12 @@ class StackedFour extends Component {
 		}
 	}
 
-	getCurFillAlt(cat, index, active) {
+	getLabelState(cat, index, active) {
 		if (this.state.activeCat === cat) {
 			return this.state.activeColor;
 		} else {
 			return "transparent";
 		}
-	}
-
-	makeLegend() {
-		return this.state.data.data.map((item, idx) => {
-			return {
-				name: item.title,
-				symbol: {
-					fill: this.props.colorscale[idx]
-				}
-			};
-		});
 	}
 
 	render() {
@@ -106,7 +107,7 @@ class StackedFour extends Component {
 		];
 
 		const legendLabelStyle = {
-			fontSize: 12,
+			fontSize: 5,
 			fontFamily: "Asap",
 			fontWeight: a => {
 				if (this.state.activeCat === a.name) {
@@ -133,40 +134,23 @@ class StackedFour extends Component {
 				}
 			}
 		};
-		const axisLabelStyle = {
-			fontSize: this.state.axisLabelSize,
-			fontWeight: a => {
-				if (this.state.activeCat === a) {
-					return "bold";
-				} else {
-					return "normal";
-				}
-			},
-			fill: a => {
-				if (this.state.activeCat === a) {
-					return this.state.activeColor;
-				} else {
-					return "#555";
-				}
-			}
-		};
+
 		const events = [
 			{
 				childName: "all",
 				target: "data",
 				eventHandlers: {
 					onMouseOver: (evt, obj, idx) => {
-						let activeCat = obj.data[0].x;
-						let activeBar = `${obj.datum.x}-${idx}`;
+						let activeCat = obj.data[0].cat;
+						let activeBar = `${obj.datum.cat}-${idx}`;
 						this.setState({
 							activeKey: activeCat,
-							activeBar: activeBar,
-							activeCat: idx
+							activeBar: activeBar
 						});
 						return activeStyle;
 					},
 					onClick: (evt, obj, idx) => {
-						let clicked = `${obj.datum.x}-${idx}`;
+						let clicked = `${obj.datum.cat}-${idx}`;
 						if (this.state.clickedBar !== true) {
 							this.setState({
 								clickedBar: true,
@@ -232,13 +216,15 @@ class StackedFour extends Component {
 						}
 					},
 					onMouseOut: (evt, obj, idx) => {
-						let clickedthing = `${obj.datum.x}-${idx}`;
-						if (this.state.activeClickedBar !== clickedthing) {
-							this.setState({
-								activeKey: null,
-								activeBar: null
-							});
-							return normalStyle;
+						if (obj.datum.cat !== undefined) {
+							let clickedthing = `${obj.datum.cat}-${idx}`;
+							if (this.state.activeClickedBar !== clickedthing) {
+								this.setState({
+									activeKey: null,
+									activeBar: null
+								});
+								return normalStyle;
+							}
 						}
 					}
 				}
@@ -296,52 +282,35 @@ class StackedFour extends Component {
 			}
 		];
 
-		const bars = () =>
-			this.state.data.data.map((bar, idx) => {
-				//Hay que calcular la altura para poder posicionar el label arriba, esto debería cambiar al haber 3 o más stacks
-				const offset = d => {
-					let dy = 0;
-					if (idx === 0) {
-						dy =
-							-this.state.data.data[1].data[d.eventKey].y *
-							this.state.labelOffset;
-					}
-					return dy;
-				};
+		const groups = () =>
+			this.state.data.data.map((group, idx) => {
 				return (
 					<VictoryBar
-						key={"bar-" + idx}
-						name={this.state.barNames[idx]}
+						name={group.title}
 						theme={this.props.theme}
-						title={bar.title}
-						data={bar.data}
-						eventKey={"bar-" + idx}
-						alignment="middle"
-						barRatio={0.2}
+						key={"bar-" + idx}
+						colorscale={this.props.colorscale}
+						title={group.title}
+						data={group.data}
 						style={{
 							data: {
-								fontSize: this.state.activeBarFontSize,
+								width: this.state.barWidth,
 								fill: (d, active) =>
-									this.getCurFill(
-										this.state.barNames[idx],
-										idx,
-										active
-									)
+									this.getCurFill(group.title, idx, active)
 							}
 						}}
 						labelComponent={
 							<VictoryLabel
 								style={{
 									fill: (d, active) =>
-										this.getCurFillAlt(
-											this.state.barNames[idx],
+										this.getLabelState(
+											group.title,
 											idx,
 											active
 										),
 									fontWeight: "bold",
 									fontSize: this.state.activeBarFontSize
 								}}
-								dy={d => offset(d)}
 								text={d => `${d.y}%`}
 							/>
 						}
@@ -349,7 +318,6 @@ class StackedFour extends Component {
 				);
 			});
 
-		const labels = () => this.state.data.data[0].data.map(item => item.x);
 		return (
 			<div className="chart-widget">
 				<VictorySharedEvents events={events}>
@@ -358,90 +326,58 @@ class StackedFour extends Component {
 							this.state.title.toUpperCase(),
 							this.state.subtitle
 						]}
-						x={120}
-						width={this.props.width}
+						symbolSpacer={3}
 						titleOrientation="left"
-						gutter={20}
-						height={60}
 						theme={this.props.theme}
 						name="legend"
 						data={this.makeLegend(this.state.data)}
-						orientation="vertical"
-						itemsPerRow={2}
-						colorscale={this.props.colorscale}
+						orientation="horizontal"
+						itemsPerRow={5}
+						gutter={0}
+						height={30}
 						labelComponent={
-							<VictoryLabel style={legendLabelStyle} />
+							<VictoryLabel style={legendLabelStyle} y={14} />
 						}
 						dataComponent={
-							<Point size={5} style={legendDataStyle} />
+							<Point size={2} style={legendDataStyle} y={14} />
 						}
 						titleComponent={
 							<VictoryLabel
-								dx={-120}
 								style={[
-									{
-										fontSize: 14,
-										fontWeight: "bold"
-									},
-									{
-										fontSize: 11,
-										fontWeight: "normal"
-									}
+									{ fontSize: 6, fontWeight: "bold" },
+									{ fontSize: 5, fontWeight: "normal" }
 								]}
 							/>
 						}
 					/>
-					<VictoryChart
-						responsive={false}
+					<GroupedBarsCols
+						padding={{
+							top: 10,
+							left: 20,
+							right: 20,
+							bottom: 25
+						}}
+						width={600}
+						height={140}
 						theme={this.props.theme}
-						height={this.props.height}
-						width={this.props.width}
-						padding={{ top: 25, right: 40, bottom: 40, left: 40 }}
-						domainPadding={{ y: 0, x: 40 }}
-						containerComponent={
-							<VictoryContainer
-								containerRef={containerRef =>
-									(this.containerRef = containerRef)
-								}
-							/>
-						}
+						domainPadding={this.state.domainPadding}
+						domain={{ y: [0, 100] }}
+						tickLabels={{ tickLabels: { fontSize: 8 } }}
+						tickValues={[1, 2, 3]}
+						tickLabelsFontSize={6}
+						categories={this.state.data.categories}
+						offset={this.state.barOffset}
 					>
-						<VictoryAxis
-							key="x"
-							tickValues={labels()}
-							tickLabelComponent={
-								<VictoryLabel
-									style={axisLabelStyle}
-									dy={0}
-									dx={-14}
-									angle={-45}
-								/>
-							}
-						/>
-						<VictoryAxis key="y" dependentAxis />
-						<VictoryStack
-							domain={{ y: [0, 100] }}
-							style={{
-								labels: {
-									textAlign: "center",
-									fontWeight: "bold"
-								},
-								data: {
-									width: this.state.barWidth
-								}
-							}}
-						>
-							{bars()}
-						</VictoryStack>
-					</VictoryChart>
+						{groups()}
+					</GroupedBarsCols>
 				</VictorySharedEvents>
 
 				<DownloadButton
-					type="stacked"
 					data={this.props.data}
+					type="groupedbars"
 					fields={[
-						{ label: "Mes", value: "data.x" },
-						{ label: "Respuesta", value: "title" },
+						{ label: "Compañía", value: "data.x" },
+						{ label: "Tipo", value: "title" },
 						{ label: "Porcentaje", value: "data.y" }
 					]}
 					unwind={["data"]}
@@ -451,4 +387,4 @@ class StackedFour extends Component {
 	}
 }
 
-export default StackedFour;
+export default GroupedBarsTwelve;

@@ -5,18 +5,32 @@ import ChartPage from "../../components/ChartPage.js";
 
 import Lines from "../../components/Lines.js";
 import Pie from "../../components/Pie.js";
+
+import GroupedBarsTwelve from "../../components/twelve/GroupedBarsTwelve.js";
 import GroupedBarsSix from "../../components/six/GroupedBarsSix.js";
 import GroupedBarsFour from "../../components/four/GroupedBarsFour.js";
+
+import SingleBarsTwelve from "../../components/twelve/SingleBarsTwelve.js";
 import SingleBarsSix from "../../components/six/SingleBarsSix.js";
 import SingleBarsFour from "../../components/four/SingleBarsFour.js";
+
+import PieTwelve from "../../components/twelve/PieTwelve.js";
 import PieFour from "../../components/four/PieFour.js";
 import PieSix from "../../components/six/PieSix.js";
+
+import StackedTwelve from "../../components/twelve/StackedTwelve.js";
 import StackedFour from "../../components/four/StackedFour.js";
 import StackedSix from "../../components/six/StackedSix.js";
+
+import ScatterTwelve from "../../components/twelve/ScatterTwelve.js";
 import ScatterFour from "../../components/four/ScatterFour.js";
 import ScatterSix from "../../components/six/ScatterSix.js";
+
+import LineBarsTwelve from "../../components/twelve/LineBarsTwelve.js";
 import LineBarsFour from "../../components/four/LineBarsFour.js";
 import LineBarsSix from "../../components/six/LineBarsSix.js";
+
+import LinesTwelve from "../../components/twelve/LinesTwelve.js";
 import LinesFour from "../../components/four/LinesFour.js";
 import LinesSix from "../../components/six/LinesSix.js";
 
@@ -38,12 +52,16 @@ import { Grid } from "semantic-ui-react";
 import linebars_data from "../../data/linebars.json";
 import pie_data from "../../data/pie.json";
 import lines_data from "../../data/lineas_corto.json";
+import lineas from "../../data/lineas.json";
 
 import groupbar_data from "../../data/barras.json";
 import barras_cuatro from "../../data/barras_cuatro.json";
 import stacked_cuatro from "../../data/stacked_cuatro.json";
 import scatter_cuatro from "../../data/scatter_cuatro.json";
 import linebars_cuatro from "../../data/linebars_cuatro.json";
+
+import barras_doce from "../../data/barras_doce.json";
+import barras_single_doce from "../../data/barras_single_doce.json";
 
 import singlebar_data from "../../data/barras_single.json";
 import scatter_data from "../../data/scatter.json";
@@ -206,7 +224,7 @@ const Main = () => (
 						<Grid.Column width={4}>
 							<LinesFour
 								columns={4}
-								height={300}
+								height={260}
 								width={300}
 								data={lines_data}
 								theme={cadem_theme}
@@ -223,50 +241,50 @@ const Main = () => (
 				render={props => (
 					<Dashboard>
 						<Grid.Column width={12}>
-							<GroupedBarsSix
+							<GroupedBarsTwelve
 								columns={12}
-								data={groupbar_data}
-								height={300}
+								data={barras_doce}
+								height={200}
 								width={600}
 								theme={cadem_theme}
 								colorscale={cadem_theme.bar.colorScale}
 							/>
 						</Grid.Column>
 						<Grid.Column width={12}>
-							<SingleBarsSix
+							<SingleBarsTwelve
 								columns={12}
-								data={singlebar_data}
-								height={300}
+								data={barras_single_doce}
+								height={180}
 								width={600}
 								theme={cadem_theme}
 								colorscale={cadem_theme.bar.colorScale}
 							/>
 						</Grid.Column>
 						<Grid.Column width={12}>
-							<PieSix
+							<PieTwelve
 								columns={12}
 								data={pie_data}
-								height={300}
+								height={160}
 								width={600}
 								theme={cadem_theme}
 								colorscale={cadem_theme.pie.colorScale}
 							/>
 						</Grid.Column>
 						<Grid.Column width={12}>
-							<Stacked
+							<StackedTwelve
 								columns={12}
 								width={600}
-								height={300}
+								height={200}
 								data={stacked_data}
 								theme={cadem_theme}
 								colorscale={cadem_theme.stack.colorScale}
 							/>
 						</Grid.Column>
 						<Grid.Column width={12}>
-							<Scatter
+							<ScatterTwelve
 								columns={12}
 								data={scatter_data}
-								height={300}
+								height={200}
 								width={600}
 								theme={cadem_theme}
 								colorscale={cadem_theme.scatter.colorScale}
@@ -274,21 +292,22 @@ const Main = () => (
 						</Grid.Column>
 
 						<Grid.Column width={12}>
-							<LineBars
+							<LineBarsTwelve
 								columns={12}
 								data={linebars_data}
-								height={300}
+								height={140}
 								width={600}
 								theme={cadem_theme}
 								colorscale={cadem_theme.line.colorScale}
+								activeColor={cadem_theme.interactions.hover}
 							/>
 						</Grid.Column>
 						<Grid.Column width={12}>
-							<Lines
+							<LinesTwelve
 								columns={12}
-								height={300}
+								height={200}
 								width={600}
-								data={lines_data}
+								data={lineas}
 								theme={cadem_theme}
 								colorscale={cadem_theme.linebar.colorScale}
 								activeColor={cadem_theme.interactions.hover}
