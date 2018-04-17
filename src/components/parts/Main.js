@@ -11,6 +11,12 @@ import SingleBarsSix from "../../components/six/SingleBarsSix.js";
 import SingleBarsFour from "../../components/four/SingleBarsFour.js";
 import PieFour from "../../components/four/PieFour.js";
 import PieSix from "../../components/six/PieSix.js";
+import StackedFour from "../../components/four/StackedFour.js";
+import StackedSix from "../../components/six/StackedSix.js";
+import ScatterFour from "../../components/four/ScatterFour.js";
+import ScatterSix from "../../components/six/ScatterSix.js";
+import LineBarsFour from "../../components/four/LineBarsFour.js";
+import LineBarsSix from "../../components/six/LineBarsSix.js";
 
 import SingleBars from "../../components/SingleBars.js";
 import LineBars from "../../components/LineBars.js";
@@ -33,6 +39,9 @@ import lines_data from "../../data/lineas_corto.json";
 
 import groupbar_data from "../../data/barras.json";
 import barras_cuatro from "../../data/barras_cuatro.json";
+import stacked_cuatro from "../../data/stacked_cuatro.json";
+import scatter_cuatro from "../../data/scatter_cuatro.json";
+import linebars_cuatro from "../../data/linebars_cuatro.json";
 
 import singlebar_data from "../../data/barras_single.json";
 import scatter_data from "../../data/scatter.json";
@@ -60,7 +69,7 @@ const Main = () => (
 							/>
 						</Grid.Column>
 						<Grid.Column width={6}>
-							<SingleBars
+							<SingleBarsSix
 								columns={6}
 								data={singlebar_data}
 								height={300}
@@ -70,7 +79,7 @@ const Main = () => (
 							/>
 						</Grid.Column>
 						<Grid.Column width={6}>
-							<Pie
+							<PieSix
 								columns={6}
 								data={pie_data}
 								height={300}
@@ -80,7 +89,7 @@ const Main = () => (
 							/>
 						</Grid.Column>
 						<Grid.Column width={6}>
-							<Stacked
+							<StackedSix
 								columns={6}
 								width={600}
 								height={300}
@@ -90,7 +99,7 @@ const Main = () => (
 							/>
 						</Grid.Column>
 						<Grid.Column width={6}>
-							<Scatter
+							<ScatterSix
 								columns={6}
 								data={scatter_data}
 								height={300}
@@ -101,7 +110,7 @@ const Main = () => (
 						</Grid.Column>
 
 						<Grid.Column width={6}>
-							<LineBars
+							<LineBarsSix
 								columns={6}
 								data={linebars_data}
 								height={300}
@@ -134,8 +143,8 @@ const Main = () => (
 							<GroupedBarsFour
 								columns={4}
 								data={barras_cuatro}
-								height={300}
-								width={600}
+								height={200}
+								width={300}
 								theme={cadem_theme}
 								colorscale={["#B3AEA4", "#3F3F3F"]}
 							/>
@@ -144,51 +153,52 @@ const Main = () => (
 							<SingleBarsFour
 								columns={4}
 								data={singlebar_data}
-								height={290}
+								height={270}
 								width={300}
 								theme={cadem_theme}
 								colorscale={cadem_theme.bar.colorScale}
 							/>
 						</Grid.Column>
 						<Grid.Column width={4}>
-							<PieSix
+							<PieFour
 								columns={4}
 								data={pie_data}
 								height={300}
-								width={600}
+								width={300}
 								theme={cadem_theme}
 								colorscale={cadem_theme.pie.colorScale}
 							/>
 						</Grid.Column>
 						<Grid.Column width={4}>
-							<Stacked
+							<StackedFour
 								columns={4}
-								width={600}
-								height={300}
-								data={stacked_data}
+								width={300}
+								height={240}
+								data={stacked_cuatro}
 								theme={cadem_theme}
 								colorscale={cadem_theme.stack.colorScale}
 							/>
 						</Grid.Column>
 						<Grid.Column width={4}>
-							<Scatter
+							<ScatterFour
 								columns={4}
-								data={scatter_data}
-								height={300}
-								width={600}
+								data={scatter_cuatro}
+								height={220}
+								width={240}
 								theme={cadem_theme}
 								colorscale={cadem_theme.scatter.colorScale}
 							/>
 						</Grid.Column>
 
 						<Grid.Column width={4}>
-							<LineBars
+							<LineBarsFour
 								columns={4}
-								data={linebars_data}
-								height={300}
-								width={600}
+								data={linebars_cuatro}
+								height={160}
+								width={300}
 								theme={cadem_theme}
 								colorscale={cadem_theme.line.colorScale}
+								activeColor={cadem_theme.interactions.hover}
 							/>
 						</Grid.Column>
 						<Grid.Column width={4}>
@@ -231,7 +241,7 @@ const Main = () => (
 							/>
 						</Grid.Column>
 						<Grid.Column width={12}>
-							<PieFour
+							<PieSix
 								columns={12}
 								data={pie_data}
 								height={300}

@@ -1,0 +1,31 @@
+{
+	"chart_title": "Experiencia de compra",
+	"chart_subtitle": "Feb 18 - Locales",
+	"domainX": [0, 60],
+	"domainY": [0, 80],
+	"data": [
+		{
+			"title": "Local 1",
+			"data": [{ "x": 11, "y": 2, "cantidad": 30 }]
+		},
+		{
+			"title": "Local 2",
+			"data": [
+				{ "x": 31, "y": 51, "cantidad": 16 },
+				{ "x": 42, "y": 43, "cantidad": 9 },
+				{ "x": 50, "y": 71, "cantidad": 45 }
+			]
+		},
+		{
+			"title": "Local 3",
+			"data": [
+				{ "x": 21, "y": 10, "cantidad": 30 },
+				{ "x": 20, "y": 11, "cantidad": 43 },
+				{ "x": 30, "y": 53, "cantidad": 25 },
+				{ "x": 40, "y": 31, "cantidad": 19 },
+				{ "x": 50, "y": 71, "cantidad": 4 },
+				{ "x": 10, "y": 22, "cantidad": 13 }
+			]
+		}
+	]
+}

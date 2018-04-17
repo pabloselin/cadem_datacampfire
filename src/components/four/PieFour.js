@@ -21,7 +21,8 @@ class PieFour extends Component {
 			activeColor: this.props.theme.interactions.active,
 			clicked: false,
 			activeKey: undefined,
-			svgrefs: []
+			svgrefs: [],
+			legendSize: 32
 		};
 	}
 
@@ -39,7 +40,7 @@ class PieFour extends Component {
 					return {
 						fill: this.state.activeColor,
 						fontWeight: "bold",
-						fontSize: 20,
+						fontSize: this.state.legendSize + 1,
 						fontColor: this.state.activeColor
 					};
 				} else {
@@ -188,7 +189,7 @@ class PieFour extends Component {
 					>
 						<VictoryGroup
 							style={{
-								parent: { maxWidth: "65%", marginTop: 12 }
+								parent: { maxWidth: "65%", marginTop: "80px" }
 							}}
 						>
 							<svg viewBox={"0 0 400 400"}>
@@ -225,7 +226,7 @@ class PieFour extends Component {
 									x={200}
 									y={200}
 									style={{
-										fontSize: 42,
+										fontSize: 48,
 										fill: this.state.activeColor,
 										fontFamily: "Asap",
 										fontWeight: "bold"
@@ -239,18 +240,18 @@ class PieFour extends Component {
 							name="legend"
 							centerTitle
 							orientation="vertical"
-							borderPadding={{ top: 40 }}
+							borderPadding={{ top: 150 }}
 							width={300}
-							height={450}
+							height={700}
 							style={{
 								labels: {
 									fontFamily: "Asap",
-									fontSize: 20
+									fontSize: this.state.legendSize
 								},
 								parent: { maxWidth: "35%" }
 							}}
 							data={this.makeLegend(this.state.data)}
-							dataComponent={<Point size={10} />}
+							dataComponent={<Point size={16} />}
 							containerComponent={
 								<VictoryContainer
 									containerRef={legendref =>
