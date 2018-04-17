@@ -380,11 +380,11 @@ class StackedFour extends Component {
 								dx={-120}
 								style={[
 									{
-										fontSize: 15,
+										fontSize: 14,
 										fontWeight: "bold"
 									},
 									{
-										fontSize: 12,
+										fontSize: 11,
 										fontWeight: "normal"
 									}
 								]}

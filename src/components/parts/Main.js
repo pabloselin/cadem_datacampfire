@@ -17,6 +17,8 @@ import ScatterFour from "../../components/four/ScatterFour.js";
 import ScatterSix from "../../components/six/ScatterSix.js";
 import LineBarsFour from "../../components/four/LineBarsFour.js";
 import LineBarsSix from "../../components/six/LineBarsSix.js";
+import LinesFour from "../../components/four/LinesFour.js";
+import LinesSix from "../../components/six/LinesSix.js";
 
 import SingleBars from "../../components/SingleBars.js";
 import LineBars from "../../components/LineBars.js";
@@ -121,7 +123,7 @@ const Main = () => (
 							/>
 						</Grid.Column>
 						<Grid.Column width={6}>
-							<Lines
+							<LinesSix
 								columns={6}
 								height={300}
 								width={600}
@@ -202,10 +204,10 @@ const Main = () => (
 							/>
 						</Grid.Column>
 						<Grid.Column width={4}>
-							<Lines
+							<LinesFour
 								columns={4}
 								height={300}
-								width={600}
+								width={300}
 								data={lines_data}
 								theme={cadem_theme}
 								colorscale={cadem_theme.linebar.colorScale}

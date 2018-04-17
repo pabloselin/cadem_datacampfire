@@ -406,8 +406,8 @@ class LineBarsFour extends Component {
 						theme={this.props.theme}
 						name="legend"
 						data={this.makeLegend(this.state.data)}
-						orientation="vertical"
-						itemsPerRow={2}
+						orientation="horizontal"
+						itemsPerRow={3}
 						responsive={false}
 						height={100}
 						labelComponent={
@@ -420,11 +420,11 @@ class LineBarsFour extends Component {
 							<VictoryLabel
 								style={[
 									{
-										fontSize: 15,
+										fontSize: 14,
 										fontWeight: "bold"
 									},
 									{
-										fontSize: 13,
+										fontSize: 12,
 										fontWeight: "normal"
 									}
 								]}

@@ -377,11 +377,11 @@ class Stacked extends Component {
 								dx={-330}
 								style={[
 									{
-										fontSize: 18,
+										fontSize: 16,
 										fontWeight: "bold"
 									},
 									{
-										fontSize: 14,
+										fontSize: 13,
 										fontWeight: "normal"
 									}
 								]}

@@ -422,11 +422,11 @@ class LineBars extends Component {
 								dx={-120}
 								style={[
 									{
-										fontSize: 18,
+										fontSize: 16,
 										fontWeight: "bold"
 									},
 									{
-										fontSize: 15,
+										fontSize: 13,
 										fontWeight: "normal"
 									}
 								]}

@@ -231,12 +231,12 @@ class ScatterFour extends Component {
 							<VictoryLabel
 								style={[
 									{
-										fontSize: 22,
+										fontSize: 20,
 										fontWeight: "bold",
 										display: "block"
 									},
 									{
-										fontSize: 19,
+										fontSize: 18,
 										fontWeight: "normal",
 										display: "block"
 									}
