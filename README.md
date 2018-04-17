@@ -44,13 +44,30 @@ Estructura de la aplicación:
     /data
     datos de la aplicación
     /components
-    Componentes con gráficos
+    Componentes
+        /four
+        Gráficos de 4 columnas de ancho
+        /six
+        Gráficos de 6 columnas de ancho
+        /twelve
+        Gráficos de 12 columnas de ancho
+        /mini
+        Componentes utilitarios
+        /kpi
+        Componentes para gráficos de KPI
+        /parts
+            Main.js
+            Archivo que distribuye las rutas del dashboard
+    /data
+        Archivos json de ejemplo
     /layouts
-    Componentes para distribución de elementos
-    /parts
-    Archivo del componente Main.js donde se ubican las rutas y la composición del Dashboard
+        Componentes utilitarios del Dashboard (menu, etc)
+    /routes
+        en desuso
+    /themes
+        Temas personalizados de VictoryJS
 
-Los datos se encuentran en formato json en la carpeta /data con el nombre del gráfico
+Los datos se encuentran en formato json en la carpeta /data en el archivo Main.js se puede ver la utilización de estos archivos.
 
 El tema común para los gráficos y distintas variables de configuración se encuentran en el archivo themes/cadem_theme.js
 
@@ -60,61 +77,86 @@ Cada Ruta en /parts/Main.js puede recibir un componente Dashboard distinto con d
 
 Ejemplo usado en la ruta principal:
 
-    <Route
-                exact
-                path="/"
-                render={props => (
-                    <Dashboard>
-                        <Grid.Column width={8}>
-                            <GroupedBars
-                                data={groupbar_data}
-                                height={326}
-                                width={600}
-                                theme={cadem_theme}
-                            />
-                        </Grid.Column>
-                        <Grid.Column width={4}>
-                            <SingleBars
-                                data={singlebar_data}
-                                height={200}
-                                width={300}
-                                theme={cadem_theme}
-                            />
-                            <Pie
-                                data={pie_data}
-                                height={300}
-                                width={300}
-                                theme={cadem_theme}
-                            />
-                        </Grid.Column>
-                        <Grid.Column width={6}>
-                            <Stacked
-                                width={600}
-                                height={300}
-                                data={stacked_data}
-                                theme={cadem_theme}
-                                colorscale={["#595753", "#cccccc"]}
-                            />
-                        </Grid.Column>
-                        <Grid.Column width={6}>
-                            <Scatter
-                                data={scatter_data}
-                                height={300}
-                                width={600}
-                                theme={cadem_theme}
-                            />
-                        </Grid.Column>
-                        <Grid.Column width={12}>
-                            <LineBars
-                                data={linebars_data}
-                                height={260}
-                                width={600}
-                                theme={cadem_theme}
-                            />
-                        </Grid.Column>
-                    </Dashboard>
-                )}
-            />
+        <Route
+        exact
+        path="/"
+        render={props => (
+        <Dashboard>
+        <Grid.Column width={6}>
+        <GroupedBarsSix
+                                        columns={6}
+                                        data={groupbar_data}
+                                        height={300}
+                                        width={600}
+                                        theme={cadem_theme}
+                                        colorscale={cadem_theme.bar.colorScale}
+                                    />
+        </Grid.Column>
+        <Grid.Column width={6}>
+        <SingleBarsSix
+                                        columns={6}
+                                        data={singlebar_data}
+                                        height={300}
+                                        width={600}
+                                        theme={cadem_theme}
+                                        colorscale={cadem_theme.bar.colorScale}
+                                    />
+        </Grid.Column>
+        <Grid.Column width={6}>
+        <PieSix
+                                        columns={6}
+                                        data={pie_data}
+                                        height={300}
+                                        width={600}
+                                        theme={cadem_theme}
+                                        colorscale={cadem_theme.pie.colorScale}
+                                    />
+        </Grid.Column>
+        <Grid.Column width={6}>
+        <StackedSix
+                                        columns={6}
+                                        width={600}
+                                        height={300}
+                                        data={stacked_data}
+                                        theme={cadem_theme}
+                                        colorscale={cadem_theme.stack.colorScale}
+                                    />
+        </Grid.Column>
+        <Grid.Column width={6}>
+        <ScatterSix
+                                        columns={6}
+                                        data={scatter_data}
+                                        height={300}
+                                        width={600}
+                                        theme={cadem_theme}
+                                        colorscale={cadem_theme.scatter.colorScale}
+                                    />
+        </Grid.Column>
+        <Grid.Column width={6}>
+        <LineBarsSix
+                                        columns={6}
+                                        data={linebars_data}
+                                        height={300}
+                                        width={600}
+                                        theme={cadem_theme}
+                                        colorscale={cadem_theme.line.colorScale}
+                                        activeColor={cadem_theme.interactions.hover}
+                                    />
+        </Grid.Column>
+        <Grid.Column width={6}>
+        <LinesSix
+                                        columns={6}
+                                        height={300}
+                                        width={600}
+                                        data={lines_data}
+                                        theme={cadem_theme}
+                                        colorscale={cadem_theme.linebar.colorScale}
+                                        activeColor={cadem_theme.interactions.hover}
+                                    />
+        </Grid.Column>
+        </Dashboard>
+        )}
+        />
 
 Las variables height y width de los componentes de gráfico son para mantener la proporción del SVG y no son píxeles reales.
 

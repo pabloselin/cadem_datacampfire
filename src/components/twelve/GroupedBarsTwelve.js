@@ -337,10 +337,10 @@ class GroupedBarsTwelve extends Component {
 						gutter={0}
 						height={30}
 						labelComponent={
-							<VictoryLabel style={legendLabelStyle} y={14} />
+							<VictoryLabel style={legendLabelStyle} y={4} />
 						}
 						dataComponent={
-							<Point size={2} style={legendDataStyle} y={14} />
+							<Point size={2} style={legendDataStyle} y={4} />
 						}
 						titleComponent={
 							<Title
