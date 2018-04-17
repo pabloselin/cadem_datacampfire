@@ -3,16 +3,10 @@ import DownloadButton from "../mini/DownloadButton.js";
 import GroupedBarsCols from "../cols/GroupedBarsCols.js";
 import Title from "../mini/Title.js";
 import {
-	VictoryChart,
 	VictoryBar,
-	VictoryGroup,
 	VictoryLegend,
 	VictoryLabel,
-	VictoryAxis,
 	VictorySharedEvents,
-	VictoryContainer,
-	VictoryTooltip,
-	Flyout,
 	Point
 } from "victory";
 

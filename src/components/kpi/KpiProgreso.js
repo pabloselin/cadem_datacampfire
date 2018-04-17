@@ -1,5 +1,5 @@
 import React from "react";
-import { VictoryLabel, VictoryContainer, VictoryGroup } from "victory";
+import { VictoryLabel } from "victory";
 import flecha_verde from "../../assets/flecha_verde.svg";
 import flecha_rojo from "../../assets/flecha_rojo.svg";
 import flecha_amarillo from "../../assets/flecha_amarillo.svg";

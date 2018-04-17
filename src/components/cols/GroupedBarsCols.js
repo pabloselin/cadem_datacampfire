@@ -1,12 +1,5 @@
 import React from "react";
-import {
-	VictoryLegend,
-	VictoryLabel,
-	Point,
-	VictoryChart,
-	VictoryAxis,
-	VictoryGroup
-} from "victory";
+import { VictoryChart, VictoryAxis, VictoryGroup } from "victory";
 
 const GroupedBarsCols = props => (
 	<VictoryChart

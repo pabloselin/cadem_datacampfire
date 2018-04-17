@@ -1,10 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import cadem_theme from "../../themes/cadem_theme.js";
-import ChartPage from "../../components/ChartPage.js";
-
-import Lines from "../../components/Lines.js";
-import Pie from "../../components/Pie.js";
 
 import GroupedBarsTwelve from "../../components/twelve/GroupedBarsTwelve.js";
 import GroupedBarsSix from "../../components/six/GroupedBarsSix.js";
@@ -34,12 +30,6 @@ import LinesTwelve from "../../components/twelve/LinesTwelve.js";
 import LinesFour from "../../components/four/LinesFour.js";
 import LinesSix from "../../components/six/LinesSix.js";
 
-import SingleBars from "../../components/SingleBars.js";
-import LineBars from "../../components/LineBars.js";
-import Scatter from "../../components/Scatter.js";
-import ScatterMini from "../../components/ScatterMini.js";
-import Stacked from "../../components/Stacked.js";
-
 import KpiSemiCirculo from "../../components/kpi/KpiSemiCirculo.js";
 import KpiBarra from "../../components/kpi/KpiBarra.js";
 import KpiProgreso from "../../components/kpi/KpiProgreso.js";
@@ -68,7 +58,6 @@ import barras_single_doce from "../../data/barras_single_doce.json";
 
 import singlebar_data from "../../data/barras_single.json";
 import scatter_data from "../../data/scatter.json";
-import scattermini_data from "../../data/scattermini.json";
 import stacked_data from "../../data/stacked.json";
 import KpiLineas_data from "../../data/kpi_lineas.json";
 //import stackedmini_data from "../../data/stackedmini.json";
@@ -527,149 +516,6 @@ const Main = () => (
 					</Dashboard>
 				)}
 			/>
-
-			{/*Rutas adicionales para debugging*/}
-
-			<Route
-				render={props => (
-					<ChartPage
-						chart={
-							<Pie
-								data={pie_data}
-								height={300}
-								width={300}
-								theme={cadem_theme}
-								colorscale={cadem_theme.bar.altColorScale}
-							/>
-						}
-					/>
-				)}
-				path="/pie"
-			/>
-			<Route
-				render={props => (
-					<ChartPage
-						chart={
-							<Lines
-								data={lines_data}
-								{...props}
-								width={300}
-								height={300}
-								theme={cadem_theme}
-								colorscale={cadem_theme.line.altColorScale}
-								activeColor={cadem_theme.interactions.hover_alt}
-							/>
-						}
-					/>
-				)}
-				path="/lines"
-			/>
-
-			<Route
-				render={props => (
-					<ChartPage
-						size="mini"
-						chart={
-							<SingleBars
-								{...props}
-								data={singlebar_data}
-								height={300}
-								width={300}
-								theme={cadem_theme}
-							/>
-						}
-					/>
-				)}
-				path="/single-bars"
-			/>
-
-			<Route
-				render={props => (
-					<ChartPage
-						chart={
-							<LineBars
-								{...props}
-								data={linebars_data}
-								height={300}
-								width={300}
-								theme={cadem_theme}
-							/>
-						}
-					/>
-				)}
-				path="/line-bars"
-			/>
-
-			<Route
-				render={props => (
-					<ChartPage
-						chart={
-							<Scatter
-								{...props}
-								data={scatter_data}
-								height={300}
-								width={600}
-								theme={cadem_theme}
-							/>
-						}
-					/>
-				)}
-				path="/scatter"
-			/>
-
-			<Route
-				render={props => (
-					<ChartPage
-						size="mini"
-						chart={
-							<ScatterMini
-								{...props}
-								data={scattermini_data}
-								height={300}
-								width={300}
-								theme={cadem_theme}
-							/>
-						}
-					/>
-				)}
-				path="/scatter-mini"
-			/>
-
-			<Route
-				render={props => (
-					<ChartPage
-						chart={
-							<Stacked
-								{...props}
-								data={stacked_data}
-								height={300}
-								width={600}
-								theme={cadem_theme}
-								colorscale={["#595753", "#cccccc"]}
-							/>
-						}
-					/>
-				)}
-				path="/stacked"
-			/>
-
-			{/*<Route
-			render={props => (
-				<ChartPage
-					size="mini"
-					chart={
-						<StackedMini
-							{...props}
-							data={stackedmini_data}
-							height={300}
-							width={300}
-							theme={cadem_theme}
-						/>
-					}
-				/>
-			)}
-			path="/stacked-mini"
-		/>*/}
 		</Switch>
 	</Router>
 );

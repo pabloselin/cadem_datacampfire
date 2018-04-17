@@ -160,6 +160,10 @@ Ejemplo usado en la ruta principal:
 
 Las variables height y width de los componentes de gráfico son para mantener la proporción del SVG y no son píxeles reales.
 
+Los componentes reciben sus colores del prop colorscale que a su vez viene del archivo del tema.
+
+También se puede elegir un color de interacción (active)
+
 ## Componentes de Gráficos
 
 Los componentes de Gráficos reciben valores de datos en un objeto json, además de otros props adicionales dependiendo del tipo de gráfico.
