@@ -20,7 +20,9 @@ const TopMenu = props => (
 			Kpis
 		</NavLink>
 
-		<Menu.Item className="item">Central Ma..</Menu.Item>
+		<NavLink className="item" to="/semaforo">
+			Semáforo
+		</NavLink>
 		<Menu.Item className="item">Central</Menu.Item>
 		<Menu.Item className="item">SBA</Menu.Item>
 		<Menu.Item className="item">Líder SSFF</Menu.Item>

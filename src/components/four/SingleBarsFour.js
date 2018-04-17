@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 
 import DownloadButton from "../mini/DownloadButton.js";
+import Title from "../mini/Title.js";
 import {
 	VictoryChart,
 	VictoryBar,
@@ -116,29 +117,17 @@ class SingleBarsFour extends Component {
 		};
 		return (
 			<div className="chart-widget">
-				<div style={{ padding: "5px" }}>
-					<VictoryLabel
-						theme={this.props.theme}
-						text={[
-							this.state.title.toUpperCase(),
-							this.state.subtitle
-						]}
-						style={[
-							{
-								fontFamily: "Asap",
-								fontSize: 15,
-								fontWeight: "bold",
-								display: "block"
-							},
-							{
-								fontFamily: "Asap",
-								fontSize: 13,
-								fontWeight: "normal",
-								display: "block"
-							}
-						]}
+				<svg height={40}>
+					<Title
+						title={this.state.title}
+						subtitle={this.state.subtitle}
+						fontSizeTop={15.5}
+						fontSizeBottom={13}
+						dy1={15}
+						dy2={21}
 					/>
-				</div>
+				</svg>
+
 				<VictoryChart
 					width={this.props.width}
 					height={this.props.height}
@@ -185,7 +174,7 @@ class SingleBarsFour extends Component {
 							},
 							data: {
 								width: this.state.barWidth,
-								fill: d => this.props.colorscale[d.eventKey]
+								fill: this.props.colorscale[3]
 							}
 						}}
 						alignment="middle"

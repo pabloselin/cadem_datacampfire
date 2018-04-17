@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import DownloadButton from "../mini/DownloadButton.js";
+import Title from "../mini/Title.js";
 import {
 	VictoryChart,
 	VictoryBar,
@@ -400,7 +401,7 @@ class LineBarsTwelve extends Component {
 							this.state.subtitle
 						]}
 						width={this.props.width}
-						titleOrientation="top"
+						titleOrientation="left"
 						gutter={2}
 						rowGutter={0}
 						theme={this.props.theme}
@@ -414,20 +415,16 @@ class LineBarsTwelve extends Component {
 							<VictoryLabel style={legendLabelStyle} />
 						}
 						dataComponent={
-							<Point size={4} style={legendDataStyle} />
+							<Point size={3} style={legendDataStyle} />
 						}
 						titleComponent={
-							<VictoryLabel
-								style={[
-									{
-										fontSize: 9,
-										fontWeight: "bold"
-									},
-									{
-										fontSize: 7,
-										fontWeight: "normal"
-									}
-								]}
+							<Title
+								title={this.state.title}
+								subtitle={this.state.subtitle}
+								fontSizeTop={9}
+								fontSizeBottom={7}
+								dy1={10}
+								dy2={12}
 							/>
 						}
 					/>

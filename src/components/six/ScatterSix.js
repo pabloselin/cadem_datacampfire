@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import DownloadButton from "../mini/DownloadButton.js";
+import Title from "../mini/Title.js";
 import {
 	VictoryChart,
 	VictoryScatter,
@@ -228,19 +229,13 @@ class ScatterSix extends Component {
 							<VictoryLabel style={legendLabelStyle} y={50} />
 						}
 						titleComponent={
-							<VictoryLabel
-								style={[
-									{
-										fontSize: 13,
-										fontWeight: "bold",
-										display: "block"
-									},
-									{
-										fontSize: 11,
-										fontWeight: "normal",
-										display: "block"
-									}
-								]}
+							<Title
+								title={this.state.title}
+								subtitle={this.state.subtitle}
+								fontSizeTop={13}
+								fontSizeBottom={11}
+								dy1={15}
+								dy2={18}
 							/>
 						}
 					/>

@@ -294,6 +294,7 @@ export default {
       title: assign({}, baseLabelStyles, { padding: 5 })
     }
   },
+  semaforo: semaforo,
   interactions: {
     hover: activeColor,
     hover_alt: activeColor_alt_2,

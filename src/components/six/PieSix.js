@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import DownloadButton from "../mini/DownloadButton.js";
+import Title from "../mini/Title.js";
 import {
 	VictoryPie,
 	VictoryLegend,
@@ -159,27 +160,16 @@ class PieSix extends Component {
 						}
 					]}
 				>
-					<VictoryLabel
-						theme={this.props.theme}
-						text={[
-							this.state.title.toUpperCase(),
-							this.state.subtitle
-						]}
-						style={[
-							{
-								fontFamily: "Asap",
-								fontSize: 15,
-								fontWeight: "bold",
-								display: "block"
-							},
-							{
-								fontFamily: "Asap",
-								fontSize: 13.5,
-								fontWeight: "normal",
-								display: "block"
-							}
-						]}
-					/>
+					<svg height={40}>
+						<Title
+							title={this.state.title}
+							subtitle={this.state.subtitle}
+							fontSizeTop={15}
+							fontSizeBottom={13.5}
+							dy1={15}
+							dy2={21}
+						/>
+					</svg>
 					<div
 						style={{
 							display: "flex",

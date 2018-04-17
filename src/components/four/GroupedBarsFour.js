@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import DownloadButton from "../mini/DownloadButton.js";
+import Title from "../mini/Title.js";
 import GroupedBarsCols from "../cols/GroupedBarsCols.js";
 import {
 	VictoryChart,
@@ -341,15 +342,13 @@ class GroupedBarsFour extends Component {
 							<Point size={8} y={66} style={legendDataStyle} />
 						}
 						titleComponent={
-							<VictoryLabel
-								style={[
-									{ fontSize: 20, fontWeight: "bold" },
-									{
-										fontSize: 18,
-										fontWeight: "normal",
-										display: "block"
-									}
-								]}
+							<Title
+								title={this.state.title}
+								subtitle={this.state.subtitle}
+								fontSizeTop={20}
+								fontSizeBottom={18}
+								dy1={15}
+								dy2={25}
 							/>
 						}
 					/>

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import DownloadButton from "../mini/DownloadButton.js";
+import Title from "../mini/Title.js";
 import {
 	VictoryChart,
 	VictoryBar,
@@ -376,18 +377,14 @@ class StackedFour extends Component {
 							<Point size={5} style={legendDataStyle} />
 						}
 						titleComponent={
-							<VictoryLabel
+							<Title
+								title={this.state.title}
+								subtitle={this.state.subtitle}
+								fontSizeTop={13.5}
+								fontSizeBottom={11}
+								dy1={15}
+								dy2={18}
 								dx={-120}
-								style={[
-									{
-										fontSize: 14,
-										fontWeight: "bold"
-									},
-									{
-										fontSize: 11,
-										fontWeight: "normal"
-									}
-								]}
 							/>
 						}
 					/>

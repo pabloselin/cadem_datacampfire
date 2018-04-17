@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import LineFlyOut from "../mini/LineFlyOut.js";
 import DownloadButton from "../mini/DownloadButton.js";
+import Title from "../mini/Title.js";
 import {
 	VictoryChart,
 	VictoryLine,
@@ -190,29 +191,16 @@ class LinesTwelve extends Component {
 		return (
 			<div className="chart-widget">
 				<VictorySharedEvents events={events}>
-					<div style={{ padding: "5px" }}>
-						<VictoryLabel
-							theme={this.props.theme}
-							text={[
-								this.state.title.toUpperCase(),
-								this.state.subtitle
-							]}
-							style={[
-								{
-									fontFamily: "Asap",
-									fontSize: 16,
-									fontWeight: "bold",
-									display: "block"
-								},
-								{
-									fontFamily: "Asap",
-									fontSize: 14,
-									fontWeight: "normal",
-									display: "block"
-								}
-							]}
+					<svg height={40}>
+						<Title
+							title={this.state.title}
+							subtitle={this.state.subtitle}
+							fontSizeTop={16}
+							fontSizeBottom={13}
+							dy1={13}
+							dy2={24}
 						/>
-					</div>
+					</svg>
 
 					<VictoryChart
 						height={this.props.height}

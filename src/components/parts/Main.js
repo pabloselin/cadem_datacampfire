@@ -49,6 +49,7 @@ import Dashboard from "../../layouts/Dashboard.js";
 import { Grid } from "semantic-ui-react";
 
 //Data
+
 import linebars_data from "../../data/linebars.json";
 import pie_data from "../../data/pie.json";
 import lines_data from "../../data/lineas_corto.json";
@@ -59,6 +60,8 @@ import barras_cuatro from "../../data/barras_cuatro.json";
 import stacked_cuatro from "../../data/stacked_cuatro.json";
 import scatter_cuatro from "../../data/scatter_cuatro.json";
 import linebars_cuatro from "../../data/linebars_cuatro.json";
+
+import linebars_alerta from "../../data/linebars_alerta.json";
 
 import barras_doce from "../../data/barras_doce.json";
 import barras_single_doce from "../../data/barras_single_doce.json";
@@ -420,6 +423,105 @@ const Main = () => (
 									([73.12, 111.32, 71.11],
 									[73.43, 100.1, 20.12])
 								}
+							/>
+						</Grid.Column>
+					</Dashboard>
+				)}
+			/>
+
+			<Route
+				exact
+				path="/semaforo"
+				render={props => (
+					<Dashboard>
+						<Grid.Column width={4}>
+							<LineBarsFour
+								columns={4}
+								data={linebars_cuatro}
+								height={160}
+								width={300}
+								theme={cadem_theme}
+								colorscale={[
+									cadem_theme.bar.colorScale[2],
+									cadem_theme.semaforo.rojo[1]
+								]}
+								semaforo={true}
+								activeColor={cadem_theme.semaforo.rojo[0]}
+							/>
+						</Grid.Column>
+						<Grid.Column width={4}>
+							<LineBarsFour
+								columns={4}
+								data={linebars_cuatro}
+								height={160}
+								width={300}
+								theme={cadem_theme}
+								colorscale={[
+									cadem_theme.semaforo.verde[1],
+									cadem_theme.bar.colorScale[2]
+								]}
+								semaforo={true}
+								activeColor={cadem_theme.semaforo.verde[0]}
+							/>
+						</Grid.Column>
+						<Grid.Column width={4}>
+							<LineBarsFour
+								columns={4}
+								data={linebars_alerta}
+								height={160}
+								width={300}
+								theme={cadem_theme}
+								colorscale={[
+									cadem_theme.semaforo.amarillo[1],
+									cadem_theme.bar.colorScale[2]
+								]}
+								semaforo={true}
+								activeColor={cadem_theme.semaforo.amarillo[0]}
+							/>
+						</Grid.Column>
+						<Grid.Column width={12}>
+							<LineBarsTwelve
+								columns={12}
+								data={linebars_data}
+								height={140}
+								width={600}
+								theme={cadem_theme}
+								colorscale={[
+									cadem_theme.semaforo.verde[1],
+									cadem_theme.bar.colorScale[2]
+								]}
+								semaforo={true}
+								activeColor={cadem_theme.semaforo.verde[0]}
+							/>
+						</Grid.Column>
+						<Grid.Column width={6}>
+							<LineBarsSix
+								columns={6}
+								data={linebars_data}
+								height={140}
+								width={600}
+								theme={cadem_theme}
+								colorscale={[
+									cadem_theme.bar.colorScale[2],
+									cadem_theme.semaforo.rojo[1]
+								]}
+								semaforo={true}
+								activeColor={cadem_theme.semaforo.rojo[0]}
+							/>
+						</Grid.Column>
+						<Grid.Column width={6}>
+							<LineBarsSix
+								columns={6}
+								data={linebars_data}
+								height={140}
+								width={600}
+								theme={cadem_theme}
+								colorscale={[
+									cadem_theme.semaforo.verde[1],
+									cadem_theme.bar.colorScale[2]
+								]}
+								semaforo={true}
+								activeColor={cadem_theme.semaforo.verde[0]}
 							/>
 						</Grid.Column>
 					</Dashboard>
