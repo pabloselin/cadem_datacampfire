@@ -27,9 +27,9 @@ const activeColor = "#0038f0";
 const activeColor_alt_2 = "#1abc9c";
 
 const semaforo = {
-  rojo: ["#eb9d93", "#e74c3c"],
-  amarillo: ["#f8d376", "#ffb800"],
-  verde: ["#85d5cd", "#1abc9c"]
+  rojo: ["#e74c3c", "#eb9d93"],
+  amarillo: ["#ffb800", "#f8d376"],
+  verde: ["#1abc9c", "#85d5cd"]
 };
 
 const paleta = {

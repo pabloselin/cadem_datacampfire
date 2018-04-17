@@ -110,8 +110,9 @@ class KpiSemiCirculo extends Component {
 														})
 													},
 													{
-														childName: "all",
+														childName: "percent",
 														target: "labels",
+														eventKey: "all",
 														mutation: props => ({
 															style: Object.assign(
 																{},
@@ -173,6 +174,7 @@ class KpiSemiCirculo extends Component {
 							/>
 
 							<VictoryLabel
+								name="percent"
 								padding={0}
 								className="percent"
 								theme={this.props.theme}

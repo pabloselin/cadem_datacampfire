@@ -75,6 +75,7 @@ class KpiProgreso extends React.Component {
 				<div className="status">
 					<p>{this.props.goal}</p>
 					<img
+						style={{ opacity: 0.5 }}
 						alt="flecha"
 						className="arrow"
 						src={this.cualFlecha()}
