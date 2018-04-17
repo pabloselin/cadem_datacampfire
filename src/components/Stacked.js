@@ -21,16 +21,21 @@ class Stacked extends Component {
 			data: this.props.data,
 			activeKey: null,
 			activeCat: null,
+			activeMonth: null,
 			activeColor: this.props.theme.interactions.hover,
 			isLegendClicked: false,
 			clickedBar: false,
 			activeClickedBar: null,
 			clicked: false,
+			labelOffset: 2.3,
 			svgrefs: [],
 			barNames: [
 				this.props.data.data[0].title,
 				this.props.data.data[1].title
-			]
+			],
+			axisLabelSize: 11,
+			barWidth: 24,
+			activeBarFontSize: 12
 		};
 	}
 
@@ -83,7 +88,7 @@ class Stacked extends Component {
 					style: Object.assign({}, props.style, {
 						display: "block",
 						fill: this.state.activeColor,
-						fontSize: 14,
+						fontSize: this.state.activeBarFontSize,
 						fontWeight: "bold"
 					})
 				})
@@ -128,6 +133,23 @@ class Stacked extends Component {
 				}
 			}
 		};
+		const axisLabelStyle = {
+			fontSize: this.state.axisLabelSize,
+			fontWeight: a => {
+				if (this.state.activeCat === a) {
+					return "bold";
+				} else {
+					return "normal";
+				}
+			},
+			fill: a => {
+				if (this.state.activeCat === a) {
+					return this.state.activeColor;
+				} else {
+					return "#555";
+				}
+			}
+		};
 		const events = [
 			{
 				childName: "all",
@@ -138,7 +160,8 @@ class Stacked extends Component {
 						let activeBar = `${obj.datum.x}-${idx}`;
 						this.setState({
 							activeKey: activeCat,
-							activeBar: activeBar
+							activeBar: activeBar,
+							activeCat: idx
 						});
 						return activeStyle;
 					},
@@ -278,7 +301,9 @@ class Stacked extends Component {
 				const offset = d => {
 					let dy = 0;
 					if (idx === 0) {
-						dy = -this.state.data.data[1].data[d.eventKey].y * 2;
+						dy =
+							-this.state.data.data[1].data[d.eventKey].y *
+							this.state.labelOffset;
 					}
 					return dy;
 				};
@@ -383,7 +408,7 @@ class Stacked extends Component {
 							tickValues={labels()}
 							tickLabelComponent={
 								<VictoryLabel
-									style={{ fontSize: 10 }}
+									style={axisLabelStyle}
 									dy={0}
 									dx={-14}
 									angle={-45}
@@ -399,7 +424,7 @@ class Stacked extends Component {
 									fontWeight: "bold"
 								},
 								data: {
-									width: 18
+									width: this.state.barWidth
 								}
 							}}
 						>

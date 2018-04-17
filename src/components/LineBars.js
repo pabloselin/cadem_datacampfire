@@ -26,14 +26,17 @@ class LineBars extends Component {
 			clicked: false,
 			clickedBar: null,
 			isLegendClicked: false,
-			domainPadding: { y: 0, x: 20 },
+			domainPadding: { y: 0, x: 40 },
 			svgrefs: [],
 			clickedKeys: [],
 			barNames: [
 				this.props.data.data[0].title,
 				this.props.data.data[1].title,
 				"Neto"
-			]
+			],
+			barWidth: 24,
+			axisLabelSize: 11,
+			activeBarFontSize: 12
 		};
 	}
 
@@ -89,6 +92,14 @@ class LineBars extends Component {
 		];
 	}
 
+	getLabelState(cat, index, active) {
+		if (this.state.activeCat === cat) {
+			return this.state.activeColor;
+		} else {
+			return "transparent";
+		}
+	}
+
 	componentDidMount() {
 		this.setState({ svgrefs: [this.containerRef] });
 	}
@@ -102,7 +113,7 @@ class LineBars extends Component {
 				mutation: props => ({
 					style: Object.assign({}, props.style, {
 						fill: this.props.activeColor,
-						width: 12
+						width: this.state.barWidth
 					})
 				})
 			},
@@ -111,7 +122,9 @@ class LineBars extends Component {
 				mutation: props => ({
 					style: Object.assign({}, props.style, {
 						display: "block",
-						fill: this.props.activeColor
+						fill: this.props.activeColor,
+						fontSize: this.state.activeBarFontSize,
+						fontWeight: "bold"
 					})
 				})
 			}
@@ -162,7 +175,7 @@ class LineBars extends Component {
 					? { stroke: this.props.activeColor }
 					: {
 							fill: this.props.activeColor,
-							width: 12
+							width: this.state.barWidth
 					  };
 			return [
 				{
@@ -242,7 +255,7 @@ class LineBars extends Component {
 												{
 													fill: this.state
 														.activeColor,
-													width: 12
+													width: this.state.barWidth
 												}
 											)
 										})
@@ -257,7 +270,8 @@ class LineBars extends Component {
 													display: "block",
 													fill: this.state
 														.activeColor,
-													fontSize: 8,
+													fontSize: this.state
+														.activeBarFontSize,
 													fontWeight: "bold"
 												}
 											)
@@ -421,19 +435,27 @@ class LineBars extends Component {
 					/>
 					<VictoryChart
 						width={this.props.width}
-						height={this.props.height}
+						height={320}
 						theme={this.props.theme}
 						domainPadding={this.state.domainPadding}
+						padding={{ top: 20, right: 30, bottom: 40, left: 30 }}
 					>
 						<VictoryAxis
 							key="horizontalAxis"
 							height={this.props.height}
 							width={this.props.width}
 							style={{
-								tickLabels: { fontSize: 8 }
+								tickLabels: {
+									fontSize: this.state.axisLabelSize
+								}
 							}}
 							tickLabelComponent={
-								<VictoryLabel textAnchor="middle" dy={35} />
+								<VictoryLabel
+									textAnchor="start"
+									dy={30}
+									dx={-65}
+									angle={-45}
+								/>
 							}
 							tickValues={this.state.data.data[0].data.map(
 								point => point.x
@@ -445,7 +467,9 @@ class LineBars extends Component {
 							height={this.props.height}
 							width={this.props.width}
 							style={{
-								tickLabels: { fontSize: 8 },
+								tickLabels: {
+									fontSize: this.state.axisLabelSize
+								},
 								grid: { stroke: "#ccc", strokeWidth: 0.4 }
 							}}
 							tickLabelComponent={
@@ -457,8 +481,8 @@ class LineBars extends Component {
 							key="neto"
 							style={{
 								data: {
-									stroke: this.props.colorscale[2],
-									strokeWidth: 1
+									stroke: this.props.theme.linebar.lineColor,
+									strokeWidth: 2
 								}
 							}}
 							data={this.differential(
@@ -473,13 +497,6 @@ class LineBars extends Component {
 							height={this.props.height}
 							width={this.props.width}
 							domain={{ y: [-50, 250] }}
-							style={{
-								labels: {
-									fontSize: 8,
-									textAlign: "center",
-									fontWeight: "bold"
-								}
-							}}
 						>
 							<VictoryBar
 								key="bar"
@@ -489,14 +506,13 @@ class LineBars extends Component {
 								data={this.state.data.data[0].data}
 								style={{
 									data: {
-										width: 12,
+										width: this.state.barWidth,
 										fill: (d, active) =>
 											this.getCurFill(
 												this.state.barNames[0],
 												this.props.colorscale[0],
 												active
-											),
-										opacity: 0.8
+											)
 									},
 									labels: {
 										fill: (d, active) =>
@@ -505,6 +521,26 @@ class LineBars extends Component {
 												: "transparent"
 									}
 								}}
+								labelComponent={
+									<VictoryLabel
+										style={{
+											text: {
+												fontSize: this.state
+													.activeBarFontSize
+											},
+											fill: (d, active) =>
+												this.getLabelState(
+													this.state.barNames[0],
+													this.props.colorscale[0],
+													active
+												),
+											fontWeight: "bold",
+											fontSize: this.state
+												.activeBarFontSize
+										}}
+										text={d => `${d.y}`}
+									/>
+								}
 								alignment="middle"
 								barRatio={0.2}
 								labels={d => `${d.y}`}
@@ -517,7 +553,7 @@ class LineBars extends Component {
 								data={this.state.data.data[1].data}
 								style={{
 									data: {
-										width: 12,
+										width: this.state.barWidth,
 										fill: this.props.colorscale[1]
 									},
 									labels: {

@@ -27,7 +27,8 @@ class Lines extends Component {
 			xLabels: this.props.data.data[0].values.map(item => {
 				return item.x;
 			}),
-			svgrefs: []
+			svgrefs: [],
+			tooltipSize: 13
 		};
 	}
 
@@ -255,7 +256,8 @@ class Lines extends Component {
 													fill: this.props
 														.activeColor,
 													fontWeight: "bold",
-													fontSize: 10
+													fontSize: this.state
+														.tooltipSize
 												}}
 											/>
 										}

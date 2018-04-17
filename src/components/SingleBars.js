@@ -17,10 +17,14 @@ class SingleBars extends Component {
 			subtitle: this.props.data.chart_subtitle,
 			data: this.props.data,
 			activeKey: null,
+			activeMonth: null,
 			activeColor: this.props.theme.interactions.hover,
 			clicked: false,
 			clickedKeys: [],
-			svgrefs: []
+			svgrefs: [],
+			domainPadding: { y: 0, x: 40 },
+			barWidth: 11.4,
+			axisLabelSize: 8.5
 		};
 	}
 
@@ -88,7 +92,7 @@ class SingleBars extends Component {
 		];
 
 		const labelStyle = {
-			fontSize: 10,
+			fontSize: this.state.axisLabelSize,
 			fontWeight: a => {
 				if (
 					this.state.clickedKeys.indexOf(a) !== -1 ||
@@ -137,7 +141,7 @@ class SingleBars extends Component {
 				</div>
 				<VictoryChart
 					theme={this.props.theme}
-					domainPadding={{ y: 0, x: 40 }}
+					domainPadding={this.state.domainPadding}
 					containerComponent={
 						<VictoryContainer
 							containerRef={ref => {
@@ -148,9 +152,22 @@ class SingleBars extends Component {
 				>
 					<VictoryAxis
 						theme={this.props.theme}
-						tickLabelComponent={<VictoryLabel style={labelStyle} />}
+						tickLabelComponent={
+							<VictoryLabel
+								style={labelStyle}
+								angle={-45}
+								dy={0}
+								dx={-15}
+							/>
+						}
 					/>
-					<VictoryAxis theme={this.props.theme} dependentAxis />
+					<VictoryAxis
+						theme={this.props.theme}
+						dependentAxis
+						style={{
+							fontSize: this.state.axisLabelSize
+						}}
+					/>
 					<VictoryBar
 						name={"singlebar"}
 						domain={{ y: [0, 100] }}
@@ -159,9 +176,13 @@ class SingleBars extends Component {
 						title={this.state.title}
 						data={this.state.data.data}
 						style={{
-							labels: { fontSize: 10, textAlign: "left" },
+							labels: {
+								fontSize: 9,
+								textAlign: "left",
+								fontWeight: "bold"
+							},
 							data: {
-								width: 18,
+								width: this.state.barWidth,
 								fill: d => this.props.colorscale[d.eventKey]
 							}
 						}}
@@ -183,7 +204,8 @@ class SingleBars extends Component {
 									onMouseOver: (evt, obj, idx) => {
 										if (this.state.clicked !== true) {
 											this.setState({
-												activeKey: Number(idx) + 1
+												activeKey: Number(idx) + 1,
+												activeMonth: Number(idx) + 1
 											});
 
 											return activeStyle;

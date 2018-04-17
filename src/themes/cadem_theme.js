@@ -70,7 +70,7 @@ const baseProps = {
 // *
 const baseLabelStyles = {
   fontFamily: sansSerif,
-  fontSize: 10,
+  fontSize: 12,
   letterSpacing,
   padding: 6,
   fill: charcoal,
@@ -152,7 +152,8 @@ export default {
   linebar: assign(
     {
       colorScale: ["#8c8981", "#cccccc", "#555"],
-      altColorScale: ["#95c7ce", "#ccc"]
+      altColorScale: ["#95c7ce", "#ccc"],
+      lineColor: "#363531"
     },
     baseProps
   ),

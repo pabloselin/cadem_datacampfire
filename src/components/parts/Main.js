@@ -98,6 +98,7 @@ const Main = () => (
 								width={600}
 								theme={cadem_theme}
 								colorscale={cadem_theme.line.colorScale}
+								activeColor={cadem_theme.interactions.hover}
 							/>
 						</Grid.Column>
 						<Grid.Column width={6}>
@@ -378,78 +379,6 @@ const Main = () => (
 									([73.12, 111.32, 71.11],
 									[73.43, 100.1, 20.12])
 								}
-							/>
-						</Grid.Column>
-					</Dashboard>
-				)}
-			/>
-
-			<Route
-				exact
-				path="/alt-paleta"
-				render={props => (
-					<Dashboard>
-						<Grid.Column width={8}>
-							<GroupedBars
-								data={groupbar_data}
-								height={326}
-								width={600}
-								theme={cadem_theme}
-								colorscale={cadem_theme.bar.altColorScale}
-							/>
-						</Grid.Column>
-						<Grid.Column width={4}>
-							<SingleBars
-								data={singlebar_data}
-								height={200}
-								width={300}
-								theme={cadem_theme}
-								colorscale={cadem_theme.bar.altColorScale}
-							/>
-							<Pie
-								data={pie_data}
-								height={300}
-								width={300}
-								theme={cadem_theme}
-								colorscale={cadem_theme.bar.altColorScale}
-							/>
-						</Grid.Column>
-						<Grid.Column width={6}>
-							<Stacked
-								width={600}
-								height={300}
-								data={stacked_data}
-								theme={cadem_theme}
-								colorscale={cadem_theme.stack.altColorScale}
-							/>
-						</Grid.Column>
-						<Grid.Column width={6}>
-							<Scatter
-								data={scatter_data}
-								width={600}
-								height={300}
-								theme={cadem_theme}
-								colorscale={cadem_theme.scatter.altColorScale}
-							/>
-						</Grid.Column>
-						<Grid.Column width={8}>
-							<LineBars
-								data={linebars_data}
-								height={300}
-								width={600}
-								theme={cadem_theme}
-								colorscale={cadem_theme.linebar.altColorScale}
-								activeColor={cadem_theme.interactions.hover_alt}
-							/>
-						</Grid.Column>
-						<Grid.Column width={4}>
-							<Lines
-								data={lines_data}
-								height={300}
-								width={300}
-								theme={cadem_theme}
-								colorscale={cadem_theme.line.altColorScale}
-								activeColor={cadem_theme.interactions.hover_alt}
 							/>
 						</Grid.Column>
 					</Dashboard>

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import DownloadButton from "./mini/DownloadButton.js";
+import GroupedBarsCols from "./cols/GroupedBarsCols.js";
 import {
 	VictoryChart,
 	VictoryBar,
@@ -9,6 +10,8 @@ import {
 	VictoryAxis,
 	VictorySharedEvents,
 	VictoryContainer,
+	VictoryTooltip,
+	Flyout,
 	Point
 } from "victory";
 
@@ -27,7 +30,11 @@ class GroupedBars extends Component {
 			activeClickedBar: null,
 			svgrefs: [],
 			domainY: [0, 100],
-			domainX: [0, 100]
+			domainX: [0, 100],
+			activeBarFontSize: 12,
+			barWidth: 14,
+			barOffset: 20,
+			domainPadding: { x: 60, y: 0 }
 		};
 	}
 
@@ -82,7 +89,7 @@ class GroupedBars extends Component {
 					style: Object.assign({}, props.style, {
 						display: "block",
 						fill: this.state.activeColor,
-						fontSize: 8,
+						fontSize: this.state.activeBarFontSize,
 						fontWeight: "bold"
 					})
 				})
@@ -134,7 +141,6 @@ class GroupedBars extends Component {
 				target: "data",
 				eventHandlers: {
 					onMouseOver: (evt, obj, idx) => {
-						console.log("over");
 						let activeCat = obj.data[0].cat;
 						let activeBar = `${obj.datum.cat}-${idx}`;
 						this.setState({
@@ -198,7 +204,8 @@ class GroupedBars extends Component {
 													display: "block",
 													fill: this.state
 														.activeColor,
-													fontSize: 8,
+													fontSize: this.state
+														.activeBarFontSize,
 													fontWeight: "bold"
 												}
 											)
@@ -287,7 +294,7 @@ class GroupedBars extends Component {
 						data={group.data}
 						style={{
 							data: {
-								width: 10,
+								width: this.state.barWidth,
 								fill: (d, active) =>
 									this.getCurFill(group.title, idx, active)
 							}
@@ -295,14 +302,14 @@ class GroupedBars extends Component {
 						labelComponent={
 							<VictoryLabel
 								style={{
-									fontSize: 10,
-									fontWeight: "bold",
 									fill: (d, active) =>
 										this.getLabelState(
 											group.title,
 											idx,
 											active
-										)
+										),
+									fontWeight: "bold",
+									fontSize: this.state.activeBarFontSize
 								}}
 								text={d => `${d.y}%`}
 							/>
@@ -324,7 +331,7 @@ class GroupedBars extends Component {
 						name="legend"
 						data={this.makeLegend(this.state.data)}
 						orientation="vertical"
-						itemsPerRow={1}
+						itemsPerRow={2}
 						gutter={20}
 						height={60}
 						labelComponent={
@@ -342,34 +349,26 @@ class GroupedBars extends Component {
 							/>
 						}
 					/>
-					<VictoryChart
+					<GroupedBarsCols
 						padding={{
 							top: 10,
 							left: 50,
 							right: 50,
-							bottom: 50
+							bottom: 25
 						}}
-						responsive={false}
+						width={600}
+						height={320}
 						theme={this.props.theme}
-						height={this.props.height}
-						width={this.props.width}
+						domainPadding={this.state.domainPadding}
 						domain={{ y: [0, 100] }}
-						domainPadding={{ x: 40, y: 0 }}
+						tickLabels={{ tickLabels: { fontSize: 14 } }}
+						tickValues={[1, 2, 3]}
+						tickLabelsFontSize={12}
+						categories={this.state.data.categories}
+						offset={this.state.barOffset}
 					>
-						<VictoryAxis tickValues={[1, 2, 3, 4]} />
-						<VictoryAxis
-							style={{ tickLabels: { fontSize: 12 } }}
-							dependentAxis
-						/>
-
-						<VictoryGroup
-							name="BarGroup"
-							categories={{ x: this.state.data.categories }}
-							offset={14}
-						>
-							{groups()}
-						</VictoryGroup>
-					</VictoryChart>
+						{groups()}
+					</GroupedBarsCols>
 				</VictorySharedEvents>
 
 				<DownloadButton
