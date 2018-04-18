@@ -10,7 +10,6 @@ import SingleBarsTwelve from "../../components/twelve/SingleBarsTwelve.js";
 import SingleBarsSix from "../../components/six/SingleBarsSix.js";
 import SingleBarsFour from "../../components/four/SingleBarsFour.js";
 
-import PieTwelve from "../../components/twelve/PieTwelve.js";
 import PieFour from "../../components/four/PieFour.js";
 import PieSix from "../../components/six/PieSix.js";
 
@@ -250,16 +249,6 @@ const Main = () => (
 								width={600}
 								theme={cadem_theme}
 								colorscale={cadem_theme.bar.colorScale}
-							/>
-						</Grid.Column>
-						<Grid.Column width={12}>
-							<PieTwelve
-								columns={12}
-								data={pie_data}
-								height={160}
-								width={600}
-								theme={cadem_theme}
-								colorscale={cadem_theme.pie.colorScale}
 							/>
 						</Grid.Column>
 						<Grid.Column width={12}>

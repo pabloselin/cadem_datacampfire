@@ -220,7 +220,7 @@ class PieFour extends Component {
 										fontSize: 48,
 										fill: this.state.activeColor,
 										fontFamily: "Asap",
-										fontWeight: "bold"
+										fontWeight: "700"
 									}}
 									ref={percent => (this.percent = percent)}
 								/>

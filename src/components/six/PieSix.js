@@ -218,7 +218,7 @@ class PieSix extends Component {
 										fontSize: 42,
 										fill: this.state.activeColor,
 										fontFamily: "Asap",
-										fontWeight: "bold"
+										fontWeight: "700"
 									}}
 									ref={percent => (this.percent = percent)}
 								/>
