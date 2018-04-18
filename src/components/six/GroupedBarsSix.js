@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import DownloadButton from "../mini/DownloadButton.js";
+import MiniLabel from "../mini/MiniLabel.js";
 import GroupedBarsCols from "../cols/GroupedBarsCols.js";
 import Title from "../mini/Title.js";
 import {
@@ -83,9 +84,9 @@ class GroupedBarsSix extends Component {
 				mutation: props => ({
 					style: Object.assign({}, props.style, {
 						display: "block",
-						fill: this.state.activeColor,
+
 						fontSize: this.state.activeBarFontSize,
-						fontWeight: "bold",
+						fontWeight: "700",
 						fontFamily: "Asap"
 					})
 				})
@@ -296,18 +297,14 @@ class GroupedBarsSix extends Component {
 							}
 						}}
 						labelComponent={
-							<VictoryLabel
-								style={{
-									fill: (d, active) =>
-										this.getLabelState(
-											group.title,
-											idx,
-											active
-										),
-									fontWeight: "bold",
-									fontSize: this.state.activeBarFontSize
-								}}
+							<MiniLabel
+								width={38}
+								height={16}
 								text={d => `${d.y}%`}
+								color={this.state.activeColor}
+								style={{
+									display: "none"
+								}}
 							/>
 						}
 					/>
