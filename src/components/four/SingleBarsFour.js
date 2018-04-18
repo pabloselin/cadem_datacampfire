@@ -76,6 +76,7 @@ class SingleBarsFour extends Component {
 				mutation: props => ({
 					style: Object.assign({}, props.style, {
 						display: "block",
+						fontFamily: "Asap",
 						fill: this.state.activeColor
 					})
 				})
@@ -94,6 +95,7 @@ class SingleBarsFour extends Component {
 
 		const labelStyle = {
 			fontSize: this.state.axisLabelSize,
+			fontFamily: "Asap",
 			fontWeight: a => {
 				if (
 					this.state.clickedKeys.indexOf(a) !== -1 ||
@@ -143,6 +145,7 @@ class SingleBarsFour extends Component {
 				>
 					<VictoryAxis
 						theme={this.props.theme}
+						style={{ tickLabels: { fontFamily: "Asap" } }}
 						tickLabelComponent={
 							<VictoryLabel
 								style={labelStyle}
@@ -156,6 +159,7 @@ class SingleBarsFour extends Component {
 						theme={this.props.theme}
 						dependentAxis
 						style={{
+							fontFamily: "Asap",
 							fontSize: this.state.axisLabelSize
 						}}
 					/>
@@ -168,9 +172,10 @@ class SingleBarsFour extends Component {
 						data={this.state.data.data}
 						style={{
 							labels: {
+								fontFamily: "Asap",
 								fontSize: 9,
 								textAlign: "left",
-								fontWeight: "bold"
+								fontWeight: "700"
 							},
 							data: {
 								width: this.state.barWidth,

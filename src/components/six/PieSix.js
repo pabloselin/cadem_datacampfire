@@ -39,7 +39,7 @@ class PieSix extends Component {
 				if (idx === Number(this.state.activeKey)) {
 					return {
 						fill: this.state.activeColor,
-						fontWeight: "bold",
+						fontWeight: "700",
 						fontSize: 20,
 						fontColor: this.state.activeColor
 					};

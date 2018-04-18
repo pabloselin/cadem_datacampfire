@@ -85,7 +85,8 @@ class GroupedBarsSix extends Component {
 						display: "block",
 						fill: this.state.activeColor,
 						fontSize: this.state.activeBarFontSize,
-						fontWeight: "bold"
+						fontWeight: "bold",
+						fontFamily: "Asap"
 					})
 				})
 			}
@@ -360,7 +361,7 @@ class GroupedBarsSix extends Component {
 						domain={{ y: [0, 100] }}
 						tickLabels={{ tickLabels: { fontSize: 14 } }}
 						tickValues={[1, 2, 3]}
-						tickLabelsFontSize={12}
+						tickLabelsFontSize={13}
 						categories={this.state.data.categories}
 						offset={this.state.barOffset}
 					>

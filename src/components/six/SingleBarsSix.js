@@ -93,6 +93,7 @@ class SingleBarsSix extends Component {
 		];
 
 		const labelStyle = {
+			fontFamily: "Asap",
 			fontSize: this.state.axisLabelSize,
 			fontWeight: a => {
 				if (
@@ -153,7 +154,9 @@ class SingleBarsSix extends Component {
 						theme={this.props.theme}
 						dependentAxis
 						style={{
-							fontSize: this.state.axisLabelSize
+							tickLabels: {
+								fontSize: this.state.axisLabelSize
+							}
 						}}
 					/>
 					<VictoryBar

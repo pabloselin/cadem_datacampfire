@@ -85,12 +85,14 @@ class StackedSix extends Component {
 			},
 			{
 				target: "labels",
+
 				mutation: props => ({
 					style: Object.assign({}, props.style, {
 						display: "block",
 						fill: this.state.activeColor,
 						fontSize: this.state.activeBarFontSize,
-						fontWeight: "bold"
+						fontWeight: "700",
+						fontFamily: "Asap"
 					})
 				})
 			}
@@ -111,7 +113,7 @@ class StackedSix extends Component {
 			fontFamily: "Asap",
 			fontWeight: a => {
 				if (this.state.activeCat === a.name) {
-					return "bold";
+					return "700";
 				} else {
 					return "normal";
 				}
@@ -136,9 +138,10 @@ class StackedSix extends Component {
 		};
 		const axisLabelStyle = {
 			fontSize: this.state.axisLabelSize,
+			fontFamily: "Asap",
 			fontWeight: a => {
 				if (this.state.activeCat === a) {
-					return "bold";
+					return "700";
 				} else {
 					return "normal";
 				}
@@ -222,7 +225,7 @@ class StackedSix extends Component {
 													fill: this.state
 														.activeColor,
 													fontSize: 14,
-													fontWeight: "bold"
+													fontWeight: "700"
 												}
 											)
 										})
@@ -337,7 +340,7 @@ class StackedSix extends Component {
 											idx,
 											active
 										),
-									fontWeight: "bold"
+									fontWeight: "700"
 								}}
 								dy={d => offset(d)}
 								text={d => `${d.y}%`}
@@ -411,13 +414,18 @@ class StackedSix extends Component {
 								/>
 							}
 						/>
-						<VictoryAxis key="y" dependentAxis />
+						<VictoryAxis
+							key="y"
+							dependentAxis
+							style={axisLabelStyle}
+						/>
 						<VictoryStack
 							domain={{ y: [0, 100] }}
 							style={{
 								labels: {
 									textAlign: "center",
-									fontWeight: "bold"
+									fontWeight: "700",
+									fontFamily: "Asap"
 								},
 								data: {
 									width: this.state.barWidth

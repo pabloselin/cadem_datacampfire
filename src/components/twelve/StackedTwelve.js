@@ -90,7 +90,8 @@ class StackedTwelve extends Component {
 						display: "block",
 						fill: this.state.activeColor,
 						fontSize: this.state.activeBarFontSize,
-						fontWeight: "bold"
+						fontWeight: "700",
+						fontFamily: "Asap"
 					})
 				})
 			}
@@ -111,7 +112,7 @@ class StackedTwelve extends Component {
 			fontFamily: "Asap",
 			fontWeight: a => {
 				if (this.state.activeCat === a.name) {
-					return "bold";
+					return "700";
 				} else {
 					return "normal";
 				}
@@ -136,9 +137,10 @@ class StackedTwelve extends Component {
 		};
 		const axisLabelStyle = {
 			fontSize: this.state.axisLabelSize,
+			fontFamily: "Asap",
 			fontWeight: a => {
 				if (this.state.activeCat === a) {
-					return "bold";
+					return "700";
 				} else {
 					return "normal";
 				}
@@ -223,7 +225,8 @@ class StackedTwelve extends Component {
 														.activeColor,
 													fontSize: this.state
 														.activeBarFontSize,
-													fontWeight: "bold"
+													fontWeight: "700",
+													fontFamily: "Asap"
 												}
 											)
 										})
@@ -332,13 +335,13 @@ class StackedTwelve extends Component {
 						labelComponent={
 							<VictoryLabel
 								style={{
+									fontFamily: "Asap",
 									fill: (d, active) =>
 										this.getCurFillAlt(
 											this.state.barNames[idx],
 											idx,
 											active
 										),
-									fontWeight: "bold",
 									fontSize: this.state.activeBarFontSize
 								}}
 								dy={d => offset(d)}
@@ -416,14 +419,17 @@ class StackedTwelve extends Component {
 						<VictoryAxis
 							key="y"
 							dependentAxis
-							style={{ tickLabels: { fontSize: 6 } }}
+							style={{
+								tickLabels: { fontFamily: "Asap", fontSize: 6 }
+							}}
 						/>
 						<VictoryStack
 							domain={{ y: [0, 100] }}
 							style={{
 								labels: {
 									textAlign: "center",
-									fontWeight: "bold"
+									fontWeight: "700",
+									fontFamily: "Asap"
 								},
 								data: {
 									width: this.state.barWidth

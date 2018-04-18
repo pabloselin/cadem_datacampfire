@@ -85,7 +85,8 @@ class GroupedBarsFour extends Component {
 						display: "block",
 						fill: this.state.activeColor,
 						fontSize: this.state.activeBarFontSize,
-						fontWeight: "bold"
+						fontWeight: "700",
+						fontFamily: "Asap"
 					})
 				})
 			}
@@ -106,7 +107,7 @@ class GroupedBarsFour extends Component {
 			fontFamily: "Asap",
 			fontWeight: a => {
 				if (this.state.activeCat === a.name) {
-					return "bold";
+					return "700";
 				} else {
 					return "normal";
 				}
@@ -201,7 +202,7 @@ class GroupedBarsFour extends Component {
 														.activeColor,
 													fontSize: this.state
 														.activeBarFontSize,
-													fontWeight: "bold"
+													fontWeight: "700"
 												}
 											)
 										})
@@ -303,8 +304,9 @@ class GroupedBarsFour extends Component {
 											idx,
 											active
 										),
-									fontWeight: "bold",
-									fontSize: this.state.activeBarFontSize
+									fontWeight: "700",
+									fontSize: this.state.activeBarFontSize,
+									fontFamily: "Asap"
 								}}
 								text={d => `${d.y}%`}
 							/>
@@ -360,7 +362,7 @@ class GroupedBarsFour extends Component {
 						domain={{ y: [0, 100] }}
 						tickLabels={{ tickLabels: { fontSize: 14 } }}
 						tickValues={[1, 2]}
-						tickLabelsFontSize={16}
+						tickLabelsFontSize={14}
 						categories={this.state.data.categories}
 						offset={this.state.barOffset}
 					>

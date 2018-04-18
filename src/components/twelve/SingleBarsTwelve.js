@@ -93,13 +93,14 @@ class SingleBarsTwelve extends Component {
 		];
 
 		const labelStyle = {
+			fontFamily: "Asap",
 			fontSize: this.state.axisLabelSize,
 			fontWeight: a => {
 				if (
 					this.state.clickedKeys.indexOf(a) !== -1 ||
 					this.state.activeKey === a
 				) {
-					return "bold";
+					return "700";
 				} else {
 					return "normal";
 				}
@@ -170,7 +171,7 @@ class SingleBarsTwelve extends Component {
 							labels: {
 								fontSize: 6,
 								textAlign: "left",
-								fontWeight: "bold"
+								fontWeight: "700"
 							},
 							data: {
 								width: this.state.barWidth,

@@ -23,23 +23,6 @@ const TopMenu = props => (
 		<NavLink className="item" to="/semaforo">
 			Semáforo
 		</NavLink>
-		<Menu.Item className="item">Central</Menu.Item>
-		<Menu.Item className="item">SBA</Menu.Item>
-		<Menu.Item className="item">Líder SSFF</Menu.Item>
-		<Menu.Item className="item">Express SSFF</Menu.Item>
-		<Dropdown item simple text="Ver más">
-			<Dropdown.Menu>
-				<Dropdown.Item className="item">
-					<a href="/">Lider.cl</a>
-				</Dropdown.Item>
-				<Dropdown.Item className="item">
-					<a href="/">SSFF</a>
-				</Dropdown.Item>
-				<Dropdown.Item className="item">
-					<a href="/">Lider.cl Hist.</a>
-				</Dropdown.Item>
-			</Dropdown.Menu>
-		</Dropdown>
 	</Menu>
 );
 

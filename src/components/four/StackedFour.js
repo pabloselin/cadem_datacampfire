@@ -87,10 +87,11 @@ class StackedFour extends Component {
 				target: "labels",
 				mutation: props => ({
 					style: Object.assign({}, props.style, {
+						fontFamily: "Asap",
 						display: "block",
 						fill: this.state.activeColor,
 						fontSize: this.state.activeBarFontSize,
-						fontWeight: "bold"
+						fontWeight: "700"
 					})
 				})
 			}
@@ -111,7 +112,7 @@ class StackedFour extends Component {
 			fontFamily: "Asap",
 			fontWeight: a => {
 				if (this.state.activeCat === a.name) {
-					return "bold";
+					return "700";
 				} else {
 					return "normal";
 				}
@@ -135,10 +136,11 @@ class StackedFour extends Component {
 			}
 		};
 		const axisLabelStyle = {
+			fontFamily: "Asap",
 			fontSize: this.state.axisLabelSize,
 			fontWeight: a => {
 				if (this.state.activeCat === a) {
-					return "bold";
+					return "700";
 				} else {
 					return "normal";
 				}
@@ -223,7 +225,7 @@ class StackedFour extends Component {
 														.activeColor,
 													fontSize: this.state
 														.activeBarFontSize,
-													fontWeight: "bold"
+													fontWeight: "700"
 												}
 											)
 										})
@@ -339,7 +341,7 @@ class StackedFour extends Component {
 											idx,
 											active
 										),
-									fontWeight: "bold",
+									fontWeight: "700",
 									fontSize: this.state.activeBarFontSize
 								}}
 								dy={d => offset(d)}
@@ -415,13 +417,20 @@ class StackedFour extends Component {
 								/>
 							}
 						/>
-						<VictoryAxis key="y" dependentAxis />
+						<VictoryAxis
+							key="y"
+							dependentAxis
+							tickLabelComponent={
+								<VictoryLabel style={axisLabelStyle} />
+							}
+						/>
 						<VictoryStack
 							domain={{ y: [0, 100] }}
 							style={{
 								labels: {
 									textAlign: "center",
-									fontWeight: "bold"
+									fontWeight: "700",
+									fontFamily: "Asap"
 								},
 								data: {
 									width: this.state.barWidth

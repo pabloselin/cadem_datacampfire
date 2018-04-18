@@ -27,9 +27,9 @@ const activeColor = "#0038f0";
 const activeColor_alt_2 = "#1abc9c";
 
 const semaforo = {
-  rojo: ["#e74c3c", "#eb9d93"],
-  amarillo: ["#ffb800", "#f8d376"],
-  verde: ["#1abc9c", "#85d5cd"]
+  rojo: ["#eb9d93", "#e74c3c"],
+  amarillo: ["#f8d376", "#ffb800"],
+  verde: ["#85d5cd", "#1abc9c"]
 };
 
 const paleta = {
@@ -151,7 +151,7 @@ export default {
   ),
   linebar: assign(
     {
-      colorScale: ["#8c8981", "#cccccc", "#555"],
+      colorScale: ["#8c8981", "#d4cfc4", "#555"],
       altColorScale: ["#95c7ce", "#ccc"],
       lineColor: "#363531"
     },

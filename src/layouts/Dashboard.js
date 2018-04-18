@@ -1,5 +1,6 @@
 import React from "react";
 import { Grid, Container } from "semantic-ui-react";
+import logo from "../assets/logo.png";
 import "./Dashboard.css";
 
 import TopMenu from "./TopMenu.js";
@@ -10,11 +11,7 @@ const Dashboard = props => (
 		<Grid verticalAlign="middle" centered>
 			<Grid columns={14} id="detras">
 				<div className="div-logo">
-					<img
-						alt="Logo Walmart"
-						id="logo"
-						src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Walmart_logo.svg/2000px-Walmart_logo.svg.png"
-					/>
+					<img alt="Cadem" id="logo" src={logo} />
 				</div>
 
 				<TopMenu id="quieto" />

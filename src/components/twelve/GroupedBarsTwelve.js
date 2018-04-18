@@ -85,7 +85,8 @@ class GroupedBarsTwelve extends Component {
 						display: "block",
 						fill: this.state.activeColor,
 						fontSize: this.state.activeBarFontSize,
-						fontWeight: "bold"
+						fontWeight: "bold",
+						fontFamily: "Asap"
 					})
 				})
 			}
