@@ -19,7 +19,8 @@ class KpiSemiCirculo extends Component {
 			clicked: false,
 			activeKey: undefined,
 			colorscale: this.props.theme.interactions.paleta.escala_semaforo,
-			svgrefs: []
+			svgrefs: [],
+			status: null
 		};
 	}
 
@@ -34,6 +35,14 @@ class KpiSemiCirculo extends Component {
 		this.setState({
 			svgrefs: [this.pieref, this.legendref, this.percent]
 		});
+	}
+
+	getStatusFill() {
+		if (this.state.status === "hovered") {
+			return this.state.colorscale[this.props.semaforo][0];
+		} else {
+			return this.state.colorscale[this.props.semaforo][1];
+		}
 	}
 
 	render() {
@@ -88,51 +97,31 @@ class KpiSemiCirculo extends Component {
 									target: "data",
 									eventHandlers: {
 										onMouseOver: (evt, obj, key) => {
-											console.log(key);
-											if (Number(key) === 1) {
-												return [
-													{
-														target: "data",
-														mutation: props => ({
-															style: Object.assign(
-																{},
-																props.style,
-																{
-																	fill: this
-																		.state
-																		.colorscale[
-																		this
-																			.props
-																			.semaforo
-																	][0]
-																}
-															)
-														})
-													},
-													{
-														childName: "percent",
-														target: "labels",
-														eventKey: "all",
-														mutation: props => ({
-															style: Object.assign(
-																{},
-																props.style,
-																{
-																	stroke: this
-																		.state
-																		.colorscale[
-																		this
-																			.props
-																			.semaforo
-																	][0]
-																}
-															)
-														})
-													}
-												];
-											}
+											this.setState({
+												status: "hovered"
+											});
+
+											return [
+												{
+													target: "data",
+													mutation: props => ({
+														style: Object.assign(
+															{},
+															props.style,
+															{
+																fill: this.state
+																	.colorscale[
+																	this.props
+																		.semaforo
+																][0]
+															}
+														)
+													})
+												}
+											];
 										},
 										onMouseOut: () => {
+											this.setState({ status: null });
 											return [
 												{
 													target: "data",
@@ -186,9 +175,7 @@ class KpiSemiCirculo extends Component {
 								y={170}
 								style={{
 									fontSize: 56,
-									fill: this.state.colorscale[
-										this.props.semaforo
-									][1],
+									fill: this.getStatusFill(),
 									fontFamily: "Asap",
 									fontWeight: "bold"
 								}}

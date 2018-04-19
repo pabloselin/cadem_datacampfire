@@ -430,6 +430,7 @@ const Main = () => (
 								activeColor={cadem_theme.semaforo.rojo[0]}
 							/>
 						</Grid.Column>
+						<Grid.Column width={4} />
 						<Grid.Column width={4}>
 							<LineBarsFour
 								columns={4}
@@ -445,21 +446,7 @@ const Main = () => (
 								activeColor={cadem_theme.semaforo.verde[0]}
 							/>
 						</Grid.Column>
-						<Grid.Column width={4}>
-							<LineBarsFour
-								columns={4}
-								data={linebars_alerta}
-								height={160}
-								width={300}
-								theme={cadem_theme}
-								colorscale={[
-									cadem_theme.semaforo.amarillo[1],
-									cadem_theme.bar.colorScale[2]
-								]}
-								semaforo={true}
-								activeColor={cadem_theme.semaforo.amarillo[0]}
-							/>
-						</Grid.Column>
+
 						<Grid.Column width={12}>
 							<LineBarsTwelve
 								columns={12}
