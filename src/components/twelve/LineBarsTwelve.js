@@ -465,8 +465,8 @@ class LineBarsTwelve extends Component {
 								<VictoryLabel
 									style={axisLabelStyle}
 									textAnchor="start"
-									dy={10}
-									dx={-30}
+									dy={20}
+									dx={-40}
 									angle={-45}
 								/>
 							}

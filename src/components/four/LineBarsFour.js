@@ -465,7 +465,7 @@ class LineBarsFour extends Component {
 								<VictoryLabel
 									style={axisLabelStyle}
 									textAnchor="start"
-									dy={10}
+									dy={15}
 									dx={-45}
 									angle={-45}
 								/>
