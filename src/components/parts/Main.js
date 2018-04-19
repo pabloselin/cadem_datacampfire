@@ -295,6 +295,7 @@ const Main = () => (
 								theme={cadem_theme}
 								colorscale={cadem_theme.line.colorScale}
 								activeColor={cadem_theme.interactions.hover}
+								debug={true}
 							/>
 						</Grid.Column>
 					</Dashboard>

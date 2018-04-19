@@ -20,7 +20,10 @@ class LinesTwelve extends Component {
 		this.state = {
 			title: this.props.data.chart_title,
 			subtitle: this.props.data.chart_subtitle,
-			data: this.props.data.data,
+			data:
+				this.props.debug === true
+					? this.randomize(this.props.data.data)
+					: this.props.data.data,
 			activeLine: null,
 			activeMonth: null,
 			clicked: false,
@@ -64,10 +67,6 @@ class LinesTwelve extends Component {
 		return legData;
 	}
 
-	getData(data) {
-		return data;
-	}
-
 	componentWillReceiveProps(nextProps) {
 		if (nextProps.data !== this.props.data) {
 			this.setState({
@@ -83,10 +82,27 @@ class LinesTwelve extends Component {
 		});
 	}
 
+	randomize(data) {
+		let fullData = data.map(line => {
+			let newData = line.values.map(item => {
+				return {
+					x: item.x,
+					y: Math.round(Math.random() * 100 * 100) / 100
+				};
+			});
+			return { title: line.title, values: newData };
+		});
+
+		return fullData;
+	}
+
 	render() {
 		const linenames = [];
+
+		const curdata = this.state.data;
+
 		const lines = () =>
-			this.state.data.map((line, idx) => {
+			curdata.map((line, idx) => {
 				let linename = "line-" + idx;
 				linenames.push(linename);
 				const linecolor = () =>
@@ -113,7 +129,7 @@ class LinesTwelve extends Component {
 			});
 
 		const legendLabelStyle = {
-			fontSize: 6,
+			fontSize: 5,
 			fontFamily: "Asap"
 		};
 
@@ -288,18 +304,17 @@ class LinesTwelve extends Component {
 						{lines()}
 					</VictoryChart>
 					<VictoryLegend
-						x={10}
 						theme={this.props.theme}
 						name="legend"
 						data={this.makeLegend(this.state.data)}
 						orientation="vertical"
-						itemsPerRow={2}
-						rowGutter={-10}
-						gutter={-20}
+						itemsPerRow={3}
+						rowGutter={-15}
+						gutter={-60}
 						height={50}
-						dataComponent={<Point size={3} />}
+						dataComponent={<Point size={2} />}
 						labelComponent={
-							<VictoryLabel style={legendLabelStyle} />
+							<VictoryLabel dx={-10} style={legendLabelStyle} />
 						}
 					/>
 				</VictorySharedEvents>
