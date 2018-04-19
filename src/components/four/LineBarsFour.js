@@ -39,7 +39,8 @@ class LineBarsFour extends Component {
 			],
 			barWidth: 19,
 			axisLabelSize: 10,
-			activeBarFontSize: 10
+			activeBarFontSize: 10,
+			semaforo: this.props.theme.semaforo
 		};
 	}
 
@@ -82,11 +83,13 @@ class LineBarsFour extends Component {
 		return [
 			{
 				name: this.state.data.data[0].title,
-				symbol: { fill: this.props.colorscale[0] }
+				symbol: { fill: this.props.colorscale[0] },
+				value: 1
 			},
 			{
 				name: this.state.data.data[1].title,
-				symbol: { fill: this.props.colorscale[1] }
+				symbol: { fill: this.props.colorscale[1] },
+				value: -1
 			},
 			{
 				name: this.state.data.line_title,
@@ -110,6 +113,36 @@ class LineBarsFour extends Component {
 	componentDidUpdate(prevProps, prevState) {}
 
 	render() {
+		const semaforoActiveStyle = yval => {
+			let fill;
+			if (yval > 0) {
+				fill = this.state.semaforo.verde[1];
+			} else {
+				fill = this.state.semaforo.rojo[1];
+			}
+			return [
+				{
+					target: "data",
+					mutation: props => ({
+						style: Object.assign({}, props.style, {
+							fill: fill,
+							width: this.state.barWidth
+						})
+					})
+				},
+				{
+					target: "labels",
+					mutation: props => ({
+						style: Object.assign({}, props.style, {
+							display: "block",
+							fill: fill,
+							fontSize: this.state.activeBarFontSize,
+							fontWeight: 700
+						})
+					})
+				}
+			];
+		};
 		const activeStyle = [
 			{
 				target: "data",
@@ -127,7 +160,7 @@ class LineBarsFour extends Component {
 						display: "block",
 						fill: this.props.activeColor,
 						fontSize: this.state.activeBarFontSize,
-						fontWeight: "bold"
+						fontWeight: 700
 					})
 				})
 			}
@@ -143,34 +176,73 @@ class LineBarsFour extends Component {
 			}
 		];
 
-		const legendLabelStyle = {
-			fontSize: 12,
-			fontFamily: "Asap",
-			fontWeight: a => {
-				if (this.state.activeCat === a.name) {
-					return "bold";
-				} else {
-					return "normal";
-				}
-			},
-			fill: a => {
-				if (this.state.activeCat === a.name) {
-					return this.props.activeColor;
-				} else {
-					return "#555";
-				}
-			}
-		};
+		let legendLabelStyle, legendDataStyle;
 
-		const legendDataStyle = {
-			fill: a => {
-				if (this.state.activeCat === a.name) {
-					return this.props.activeColor;
-				} else {
-					return a.symbol.fill;
+		if (this.props.semaforo === true) {
+			legendLabelStyle = {
+				fontSize: 12,
+				fontFamily: "Asap",
+				fontWeight: a => {
+					if (this.state.activeCat === a.name) {
+						return 700;
+					} else {
+						return "normal";
+					}
+				},
+				fill: a => {
+					if (this.state.activeCat === a.name) {
+						if (a.name === "Sí") {
+							return this.state.semaforo.verde[1];
+						} else if (a.name === "No") {
+							return this.state.semaforo.rojo[1];
+						}
+					} else {
+						return "#555";
+					}
 				}
-			}
-		};
+			};
+			legendDataStyle = {
+				fill: a => {
+					if (this.state.activeCat === a.name) {
+						if (a.name === "Sí") {
+							return this.state.semaforo.verde[1];
+						} else if (a.name === "No") {
+							return this.state.semaforo.rojo[1];
+						}
+					} else {
+						return a.symbol.fill;
+					}
+				}
+			};
+		} else {
+			legendDataStyle = {
+				fill: a => {
+					if (this.state.activeCat === a.name) {
+						return this.props.activeColor;
+					} else {
+						return a.symbol.fill;
+					}
+				}
+			};
+			legendLabelStyle = {
+				fontSize: 12,
+				fontFamily: "Asap",
+				fontWeight: a => {
+					if (this.state.activeCat === a.name) {
+						return 700;
+					} else {
+						return "normal";
+					}
+				},
+				fill: a => {
+					if (this.state.activeCat === a.name) {
+						return this.props.activeColor;
+					} else {
+						return "#555";
+					}
+				}
+			};
+		}
 
 		const axisLabelStyle = {
 			fontFamily: "Asap",
@@ -221,19 +293,77 @@ class LineBarsFour extends Component {
 			];
 		};
 
+		const activeSemaforoLegend = (refName, value, index) => {
+			let fill;
+			if (index === 0 || value === 0) {
+				fill = this.props.theme.semaforo.verde[0];
+			} else if (index === 1 || value === -1) {
+				fill = this.props.theme.semaforo.rojo[0];
+			}
+			let mutation = refName =>
+				refName === "Neto"
+					? { stroke: "#555", strokeWidth: 3 }
+					: {
+							fill: fill,
+							width: this.state.barWidth
+					  };
+			return [
+				{
+					target: "data",
+					childName: refName,
+					eventKey: "all",
+					mutation: props => ({
+						style: Object.assign({}, props.style, mutation(refName))
+					})
+				},
+				{
+					target: "labels",
+					childName: refName,
+					eventKey: "all",
+					mutation: props => ({
+						style: Object.assign({}, props.style, {
+							fill: fill
+						})
+					})
+				}
+			];
+		};
+
+		const semaforoLegendLabelStyle = yval => {
+			console.log(yval);
+			return {
+				fontSize: 12,
+				fontFamily: "Asap",
+				fontWeight: a => {
+					if (this.state.activeCat === a.name) {
+						return 700;
+					} else {
+						return "normal";
+					}
+				},
+				fill: a => {
+					if (this.state.activeCat === a.name) {
+						return this.props.activeColor;
+					} else {
+						return "#555";
+					}
+				}
+			};
+		};
+
 		const events = [
 			{
 				childName: "Neto",
 				target: "data",
 				eventHandlers: {
 					onMouseOver: (evt, obj, idx) => {
-						console.log("hover line");
 						return [
 							{
 								target: "data",
 								mutation: props => ({
 									style: Object.assign({}, props.style, {
-										stroke: this.props.activeColor
+										stroke: "#555",
+										strokeWidth: 2
 									})
 								})
 							}
@@ -258,7 +388,11 @@ class LineBarsFour extends Component {
 								activeCat: idx
 							});
 
-							return activeStyle;
+							if (this.props.semaforo === true) {
+								return semaforoActiveStyle(obj.datum.y);
+							} else {
+								return activeStyle;
+							}
 						}
 					},
 					onClick: (evt, obj, idx) => {
@@ -269,7 +403,12 @@ class LineBarsFour extends Component {
 								activeClickedBar: clicked,
 								activeCat: idx
 							});
-							return activeStyle;
+
+							if (this.props.semaforo === true) {
+								return semaforoActiveStyle(obj.datum.y);
+							} else {
+								return activeStyle;
+							}
 						} else {
 							if (this.state.activeClickedBar === clicked) {
 								this.setState({
@@ -352,13 +491,20 @@ class LineBarsFour extends Component {
 					onClick: (evt, obj, key) => {
 						if (obj.datum !== undefined) {
 							let refName = obj.datum.name;
-
 							if (this.state.isLegendClicked !== true) {
 								this.setState({
 									activeCat: refName,
 									isLegendClicked: true
 								});
-								return activeLegend(refName);
+								if (this.props.semaforo !== true) {
+									return activeLegend(refName);
+								} else {
+									return activeSemaforoLegend(
+										refName,
+										obj.datum.value,
+										obj.index
+									);
+								}
 							} else {
 								//Está cliqueada una leyenda
 								if (this.state.activeCat === refName) {
@@ -382,21 +528,43 @@ class LineBarsFour extends Component {
 									];
 								} else {
 									this.setState({ activeCat: refName });
-									return [
-										{
-											target: "data",
-											childName: this.state.barNames,
-											eventKey: "all",
-											mutation: props => null
-										},
-										{
-											target: "labels",
-											childName: this.state.barNames,
-											eventKey: "all",
-											mutation: props => null
-										},
-										...activeLegend(refName)
-									];
+									if (this.props.semaforo === true) {
+										return [
+											{
+												target: "data",
+												childName: this.state.barNames,
+												eventKey: "all",
+												mutation: props => null
+											},
+											{
+												target: "labels",
+												childName: this.state.barNames,
+												eventKey: "all",
+												mutation: props => null
+											},
+											...activeSemaforoLegend(
+												obj.datum.name,
+												obj.datum.value,
+												obj.index
+											)
+										];
+									} else {
+										return [
+											{
+												target: "data",
+												childName: this.state.barNames,
+												eventKey: "all",
+												mutation: props => null
+											},
+											{
+												target: "labels",
+												childName: this.state.barNames,
+												eventKey: "all",
+												mutation: props => null
+											},
+											...activeLegend(refName)
+										];
+									}
 								}
 							}
 						}
@@ -408,7 +576,15 @@ class LineBarsFour extends Component {
 									activeCat: obj.datum.name
 								});
 							}
-							return activeLegend(obj.datum.name);
+							if (this.props.semaforo !== true) {
+								return activeLegend(obj.datum.name);
+							} else {
+								return activeSemaforoLegend(
+									obj.datum.name,
+									obj.datum.value,
+									obj.index
+								);
+							}
 						}
 					},
 					onMouseOut: (evt, obj, key) => {
@@ -562,7 +738,7 @@ class LineBarsFour extends Component {
 													this.props.colorscale[0],
 													active
 												),
-											fontWeight: "bold",
+											fontWeight: "700",
 											fontSize: this.state
 												.activeBarFontSize
 										}}

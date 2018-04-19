@@ -27,6 +27,7 @@ class LinesSix extends Component {
 			activeLine: null,
 			activeMonth: null,
 			clicked: false,
+			clickedKeys: [],
 			domainLength: this.props.data.data[0].values.length,
 			xLabels: this.props.data.data[0].values.map(item => {
 				return item.x;
@@ -67,12 +68,39 @@ class LinesSix extends Component {
 		return legData;
 	}
 
+	removeKey(array, element) {
+		return array.filter(e => e !== element);
+	}
+
+	updateClickeds(array, element) {
+		//Debe ser un listado de valores únicos
+		//console.log(element, this.state.clickedKeys);
+		array.push(element);
+		return array.filter((v, i, a) => a.indexOf(v) === i);
+	}
+
+	checkLength(array) {
+		if (array.length === 0) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	componentDidUpdate(prevProps, prevState) {
+		if (this.state.clickedKeys !== prevState.clickedKeys) {
+			this.setState({
+				clicked: this.checkLength(this.state.clickedKeys)
+			});
+		}
+	}
+
 	randomize(data) {
 		let fullData = data.map(line => {
 			let newData = line.values.map(item => {
 				return {
 					x: item.x,
-					y: Math.round(Math.random() * 100 * 100) / 100
+					y: Math.round(Math.random() * 70 * 100) / 100
 				};
 			});
 			return { title: line.title, values: newData };
@@ -157,6 +185,43 @@ class LinesSix extends Component {
 											clicked: true,
 											activeMonth: null
 										});
+									}
+								}
+							},
+							{
+								target: "data",
+								childName: "all",
+								eventKey: key,
+								mutation: props => {
+									if (this.state.clicked !== true) {
+										this.setState({
+											clickedKeys: this.updateClickeds(
+												this.state.clickedKeys,
+												obj.key
+											),
+											clicked: true
+										});
+									} else {
+										if (
+											this.state.clickedKeys.indexOf(
+												obj.key
+											) !== -1
+										) {
+											this.setState({
+												clickedKeys: this.removeKey(
+													this.state.clickedKeys,
+													obj.key
+												)
+											});
+										} else {
+											console.log(obj.key);
+											this.setState({
+												clickedKeys: this.updateClickeds(
+													this.state.clickedKeys,
+													obj.key
+												)
+											});
+										}
 									}
 								}
 							}
@@ -309,9 +374,9 @@ class LinesSix extends Component {
 						data={this.makeLegend(this.state.data)}
 						orientation="horizontal"
 						itemsPerRow={3}
-						rowGutter={-10}
+						rowGutter={-12}
 						gutter={0}
-						height={50}
+						height={60}
 						dataComponent={<Point size={3} />}
 						labelComponent={
 							<VictoryLabel style={legendLabelStyle} />
