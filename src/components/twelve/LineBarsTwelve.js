@@ -221,6 +221,31 @@ class LineBarsTwelve extends Component {
 
 		const events = [
 			{
+				childName: "Neto",
+				target: "data",
+				eventHandlers: {
+					onMouseOver: (evt, obj, idx) => {
+						console.log("hover line");
+						return [
+							{
+								target: "data",
+								mutation: props => ({
+									style: Object.assign({}, props.style, {
+										stroke: this.props.activeColor
+									})
+								})
+							}
+						];
+					},
+					onMouseOut: () => {
+						return [
+							{ target: "data", mutation: props => null },
+							{ target: "labels", mutation: props => null }
+						];
+					}
+				}
+			},
+			{
 				childName: [this.state.barNames[0], this.state.barNames[1]],
 				target: "data",
 				eventHandlers: {
@@ -517,7 +542,9 @@ class LineBarsTwelve extends Component {
 										fill: (d, active) =>
 											active === true
 												? this.props.activeColor
-												: "transparent"
+												: "transparent",
+										fontFamily: "Asap",
+										fontWeight: 700
 									}
 								}}
 								labelComponent={
@@ -526,7 +553,7 @@ class LineBarsTwelve extends Component {
 											text: {
 												fontSize: this.state
 													.activeBarFontSize,
-												fontWeight: "bold"
+												fontWeight: "700"
 											},
 											fill: (d, active) =>
 												this.getLabelState(
@@ -534,9 +561,10 @@ class LineBarsTwelve extends Component {
 													this.props.colorscale[0],
 													active
 												),
-											fontWeight: "bold",
+											fontWeight: "700",
 											fontSize: this.state
-												.activeBarFontSize
+												.activeBarFontSize,
+											fontFamily: "Asap"
 										}}
 										text={d => `${d.y}`}
 									/>
@@ -558,11 +586,12 @@ class LineBarsTwelve extends Component {
 									},
 									labels: {
 										fontSize: this.state.activeBarFontSize,
-										fontWeight: "bold",
+										fontWeight: "700",
 										fill: (d, active) =>
 											active === true
 												? this.props.activeColor
-												: "transparent"
+												: "transparent",
+										fontFamily: "Asap"
 									}
 								}}
 								alignment="middle"

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import DownloadButton from "../mini/DownloadButton.js";
+import LineFlyOut from "../mini/LineFlyOut.js";
 import Title from "../mini/Title.js";
 import {
 	VictoryChart,
@@ -10,6 +11,7 @@ import {
 	VictoryStack,
 	VictoryAxis,
 	VictorySharedEvents,
+	VictoryTooltip,
 	Point
 } from "victory";
 
@@ -220,6 +222,31 @@ class LineBarsFour extends Component {
 		};
 
 		const events = [
+			{
+				childName: "Neto",
+				target: "data",
+				eventHandlers: {
+					onMouseOver: (evt, obj, idx) => {
+						console.log("hover line");
+						return [
+							{
+								target: "data",
+								mutation: props => ({
+									style: Object.assign({}, props.style, {
+										stroke: this.props.activeColor
+									})
+								})
+							}
+						];
+					},
+					onMouseOut: () => {
+						return [
+							{ target: "data", mutation: props => null },
+							{ target: "labels", mutation: props => null }
+						];
+					}
+				}
+			},
 			{
 				childName: [this.state.barNames[0], this.state.barNames[1]],
 				target: "data",
@@ -516,7 +543,10 @@ class LineBarsFour extends Component {
 										fill: (d, active) =>
 											active === true
 												? this.props.activeColor
-												: "transparent"
+												: "transparent",
+										fontWeight: 700,
+										fontFamily: "Asap",
+										fontSize: this.state.activeBarFontSize
 									}
 								}}
 								labelComponent={
@@ -555,6 +585,9 @@ class LineBarsFour extends Component {
 										fill: this.props.colorscale[1]
 									},
 									labels: {
+										fontWeight: 700,
+										fontFamily: "Asap",
+										fontSize: this.state.activeBarFontSize,
 										fill: (d, active) =>
 											active === true
 												? this.props.activeColor
@@ -573,6 +606,12 @@ class LineBarsFour extends Component {
 								data: {
 									stroke: this.props.theme.linebar.lineColor,
 									strokeWidth: 2
+								},
+								labels: {
+									fontWeight: 700,
+									fontFamily: "Asap",
+									fontSize: this.state.activeBarFontSize,
+									fill: "transparent"
 								}
 							}}
 							data={this.differential(
@@ -581,6 +620,7 @@ class LineBarsFour extends Component {
 							)}
 							domain={{ y: [0, 250] }}
 							standalone={false}
+							//labels={d => `${d.y}%`}
 						/>
 					</VictoryChart>
 				</VictorySharedEvents>

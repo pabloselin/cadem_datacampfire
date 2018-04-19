@@ -221,6 +221,31 @@ class LineBarsSix extends Component {
 
 		const events = [
 			{
+				childName: "Neto",
+				target: "data",
+				eventHandlers: {
+					onMouseOver: (evt, obj, idx) => {
+						console.log("hover line");
+						return [
+							{
+								target: "data",
+								mutation: props => ({
+									style: Object.assign({}, props.style, {
+										stroke: this.props.activeColor
+									})
+								})
+							}
+						];
+					},
+					onMouseOut: () => {
+						return [
+							{ target: "data", mutation: props => null },
+							{ target: "labels", mutation: props => null }
+						];
+					}
+				}
+			},
+			{
 				childName: [this.state.barNames[0], this.state.barNames[1]],
 				target: "data",
 				eventHandlers: {
@@ -517,7 +542,10 @@ class LineBarsSix extends Component {
 										fill: (d, active) =>
 											active === true
 												? this.props.activeColor
-												: "transparent"
+												: "transparent",
+										fontWeight: 700,
+										fontFamily: "Asap",
+										fontSize: this.state.activeBarFontSize
 									}
 								}}
 								labelComponent={
@@ -559,7 +587,10 @@ class LineBarsSix extends Component {
 										fill: (d, active) =>
 											active === true
 												? this.props.activeColor
-												: "transparent"
+												: "transparent",
+										fontWeight: 700,
+										fontFamily: "Asap",
+										fontSize: this.state.activeBarFontSize
 									}
 								}}
 								alignment="middle"
