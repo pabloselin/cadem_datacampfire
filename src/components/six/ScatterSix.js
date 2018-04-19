@@ -25,7 +25,8 @@ class ScatterSix extends Component {
 			domainX: this.props.data.domainX,
 			domainY: this.props.data.domainY,
 			svgrefs: [],
-			clicked: false
+			clicked: false,
+			colorscale: this.props.colorscale
 		};
 	}
 
@@ -33,7 +34,7 @@ class ScatterSix extends Component {
 		let legend = data.map((item, idx) => {
 			return {
 				name: item.title,
-				symbol: { fill: this.props.colorscale[idx] }
+				symbol: { fill: this.state.colorscale[idx] }
 			};
 		});
 		return legend;
@@ -45,7 +46,7 @@ class ScatterSix extends Component {
 		if (this.state.activeCat === cat || active === true) {
 			return this.state.activeColor;
 		} else {
-			return this.props.colorscale[index];
+			return this.state.colorscale[index];
 		}
 	}
 
@@ -87,16 +88,18 @@ class ScatterSix extends Component {
 						maxBubbleSize={15}
 						minBubbleSize={5}
 						labels={d =>
-							`${d.x}% Recomendación\n${d.y}% Satisfacción \n${
+							`${d.x}% Recomendación\n${d.y}% Satisfacción\n${
 								d.cantidad
 							} Cartera`
 						}
+						pointerLength={52}
 						labelComponent={
 							<VictoryTooltip
 								dy={-3.5}
 								theme={this.props.theme}
 								horizontal={true}
 								activateData={true}
+								style={{ textAnchor: "start" }}
 							/>
 						}
 					/>

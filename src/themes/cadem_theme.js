@@ -14,6 +14,15 @@ const colors = [
   "#f0efeb"
 ];
 
+const colors_reversed = [
+  "#d4cfc4",
+  "#b3aea4",
+  "#8c8981",
+  "#595753",
+  "#363531",
+  "#000000"
+];
+
 const azules = [
   "#71b0e5",
   "#95c7ce",
@@ -216,7 +225,7 @@ export default {
   },
   scatter: assign(
     {
-      colorScale: colors,
+      colorScale: colors_reversed,
       altColorScale: azules,
       style: {
         data: {
