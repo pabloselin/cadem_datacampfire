@@ -32,6 +32,7 @@ class LineBarsFour extends Component {
 			domainPadding: { y: 0, x: 40 },
 			svgrefs: [],
 			clickedKeys: [],
+			activeLegend: undefined,
 			barNames: [
 				this.props.data.data[0].title,
 				this.props.data.data[1].title,
@@ -191,9 +192,9 @@ class LineBarsFour extends Component {
 				},
 				fill: a => {
 					if (this.state.activeCat === a.name) {
-						if (a.name === "Sí") {
+						if (a.name === this.props.positiveValue) {
 							return this.state.semaforo.verde[1];
-						} else if (a.name === "No") {
+						} else if (a.name === this.props.negativeValue) {
 							return this.state.semaforo.rojo[1];
 						}
 					} else {
@@ -204,9 +205,9 @@ class LineBarsFour extends Component {
 			legendDataStyle = {
 				fill: a => {
 					if (this.state.activeCat === a.name) {
-						if (a.name === "Sí") {
+						if (a.name === this.props.positiveValue) {
 							return this.state.semaforo.verde[1];
-						} else if (a.name === "No") {
+						} else if (a.name === this.props.negativeValue) {
 							return this.state.semaforo.rojo[1];
 						}
 					} else {
@@ -305,7 +306,8 @@ class LineBarsFour extends Component {
 					? { stroke: "#555", strokeWidth: 3 }
 					: {
 							fill: fill,
-							width: this.state.barWidth
+							width: this.state.barWidth,
+							fontFamily: "Asap"
 					  };
 			return [
 				{
@@ -330,7 +332,6 @@ class LineBarsFour extends Component {
 		};
 
 		const semaforoLegendLabelStyle = yval => {
-			console.log(yval);
 			return {
 				fontSize: 12,
 				fontFamily: "Asap",
@@ -362,8 +363,8 @@ class LineBarsFour extends Component {
 								target: "data",
 								mutation: props => ({
 									style: Object.assign({}, props.style, {
-										stroke: "#555",
-										strokeWidth: 2
+										stroke: this.props.activeColor,
+										strokeWidth: 3
 									})
 								})
 							}
@@ -470,16 +471,61 @@ class LineBarsFour extends Component {
 						}
 					},
 					onMouseOut: (evt, obj, idx) => {
-						if (obj.datum.x !== undefined) {
-							let clickedthing = `${obj.datum.x}-${idx}`;
-							if (this.state.activeClickedBar !== clickedthing) {
-								this.setState({
-									activeKey: null,
-									activeBar: null,
-									activeCat: undefined
-								});
-								return normalStyle;
+						if (this.state.isLegendClicked !== true) {
+							if (obj.datum.x !== undefined) {
+								let clickedthing = `${obj.datum.x}-${idx}`;
+								if (
+									this.state.activeClickedBar !== clickedthing
+								) {
+									this.setState({
+										activeKey: null,
+										activeBar: null,
+										activeCat: undefined
+									});
+									return normalStyle;
+								}
 							}
+						} else {
+							let semfill;
+							if (
+								this.state.activeLegend ===
+									this.props.positiveValue &&
+								obj.datum.y > 0
+							) {
+								semfill = this.state.semaforo.verde[0];
+							} else if (
+								this.state.activeLegend ===
+									this.props.negativeValue &&
+								obj.datum.y < 0
+							) {
+								semfill = this.state.semaforo.rojo[0];
+							} else {
+								semfill =
+									obj.datum.y > 0
+										? this.props.colorscale[0]
+										: this.props.colorscale[1];
+							}
+
+							return [
+								{
+									target: "data",
+									mutation: props => ({
+										style: Object.assign({}, props.style, {
+											fill: semfill,
+											width: this.state.barWidth
+										})
+									})
+								},
+								{
+									target: "labels",
+									mutation: props => ({
+										style: Object.assign({}, props.style, {
+											fill: "transparent"
+										})
+									})
+								}
+							];
+							console.log(obj.datum.y);
 						}
 					}
 				}
@@ -494,7 +540,8 @@ class LineBarsFour extends Component {
 							if (this.state.isLegendClicked !== true) {
 								this.setState({
 									activeCat: refName,
-									isLegendClicked: true
+									isLegendClicked: true,
+									activeLegend: refName
 								});
 								if (this.props.semaforo !== true) {
 									return activeLegend(refName);
@@ -510,7 +557,8 @@ class LineBarsFour extends Component {
 								if (this.state.activeCat === refName) {
 									this.setState({
 										activeCat: undefined,
-										isLegendClicked: false
+										isLegendClicked: false,
+										activeLegend: undefined
 									});
 									return [
 										{
@@ -527,7 +575,10 @@ class LineBarsFour extends Component {
 										}
 									];
 								} else {
-									this.setState({ activeCat: refName });
+									this.setState({
+										activeCat: refName,
+										activeLegend: refName
+									});
 									if (this.props.semaforo === true) {
 										return [
 											{

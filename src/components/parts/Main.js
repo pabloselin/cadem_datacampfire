@@ -425,8 +425,11 @@ const Main = () => (
 								height={160}
 								width={300}
 								theme={cadem_theme}
+								activeColor="#000"
 								colorscale={cadem_theme.linebar.colorScale}
 								semaforo={true}
+								positiveValue="Sí"
+								negativeValue="No"
 							/>
 						</Grid.Column>
 						<Grid.Column width={4} />
