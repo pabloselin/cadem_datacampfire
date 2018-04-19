@@ -42,6 +42,7 @@ import { Grid } from "semantic-ui-react";
 import linebars_data from "../../data/linebars.json";
 import pie_data from "../../data/pie.json";
 import lines_data from "../../data/lineas_corto.json";
+import lineas_dos from "../../data/lineas_dos.json";
 import lineas from "../../data/lineas.json";
 
 import groupbar_data from "../../data/barras.json";
@@ -137,7 +138,8 @@ const Main = () => (
 								columns={6}
 								height={300}
 								width={600}
-								data={lines_data}
+								data={lineas_dos}
+								debug={true}
 								theme={cadem_theme}
 								colorscale={cadem_theme.line.colorScale}
 								activeColor={cadem_theme.interactions.hover}

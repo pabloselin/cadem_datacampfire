@@ -20,7 +20,10 @@ class LinesSix extends Component {
 		this.state = {
 			title: this.props.data.chart_title,
 			subtitle: this.props.data.chart_subtitle,
-			data: this.props.data.data,
+			data:
+				this.props.debug === true
+					? this.randomize(this.props.data.data)
+					: this.props.data.data,
 			activeLine: null,
 			activeMonth: null,
 			clicked: false,
@@ -62,6 +65,20 @@ class LinesSix extends Component {
 			};
 		});
 		return legData;
+	}
+
+	randomize(data) {
+		let fullData = data.map(line => {
+			let newData = line.values.map(item => {
+				return {
+					x: item.x,
+					y: Math.round(Math.random() * 100 * 100) / 100
+				};
+			});
+			return { title: line.title, values: newData };
+		});
+
+		return fullData;
 	}
 
 	getData(data) {
@@ -113,7 +130,7 @@ class LinesSix extends Component {
 			});
 
 		const legendLabelStyle = {
-			fontSize: 13,
+			fontSize: 11,
 			fontFamily: "Asap"
 		};
 
@@ -286,15 +303,16 @@ class LinesSix extends Component {
 						{lines()}
 					</VictoryChart>
 					<VictoryLegend
-						x={30}
+						x={0}
 						theme={this.props.theme}
 						name="legend"
 						data={this.makeLegend(this.state.data)}
 						orientation="horizontal"
-						itemsPerRow={4}
-						rowGutter={10}
-						height={30}
-						dataComponent={<Point size={4} />}
+						itemsPerRow={3}
+						rowGutter={-10}
+						gutter={0}
+						height={50}
+						dataComponent={<Point size={3} />}
 						labelComponent={
 							<VictoryLabel style={legendLabelStyle} />
 						}
