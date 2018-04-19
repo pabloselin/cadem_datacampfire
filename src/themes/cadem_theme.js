@@ -39,15 +39,6 @@ const paleta = {
   destacado: activeColor
 };
 
-const colors_b = [
-  "#828282",
-  "#969696",
-  "#aaaaaa",
-  "#bebebe",
-  "#d2d2d2",
-  "#dcdcdc"
-];
-
 const charcoal = "#252525";
 //const green = "#1abc9c";
 
@@ -203,7 +194,7 @@ export default {
       },
       labels: centeredLabelStyles
     },
-    colorScale: colors_b,
+    colorScale: colors,
     altColorScale: azules,
     width: 450,
     height: 300,
@@ -225,7 +216,7 @@ export default {
   },
   scatter: assign(
     {
-      colorScale: colors_b,
+      colorScale: colors,
       altColorScale: azules,
       style: {
         data: {

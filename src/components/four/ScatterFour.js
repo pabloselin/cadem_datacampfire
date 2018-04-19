@@ -93,6 +93,8 @@ class ScatterFour extends Component {
 							<VictoryTooltip
 								style={{ fontSize: 9 }}
 								theme={this.props.theme}
+								orientation="right"
+								dy={-3.5}
 								horizontal={true}
 								activateData={true}
 							/>
