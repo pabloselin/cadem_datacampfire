@@ -44,7 +44,7 @@ class LinesTwelve extends Component {
 					};
 				} else {
 					return {
-						fill: this.props.colorscale[idx],
+						fill: this.props.colorscale[3],
 						fontWeight: "normal"
 					};
 				}
@@ -92,9 +92,9 @@ class LinesTwelve extends Component {
 				const linecolor = () =>
 					this.state.activeLine === linename
 						? this.props.activeColor
-						: this.props.colorscale[idx];
+						: this.props.colorscale[3];
 				const linewidth = () =>
-					this.state.activeLine === linename ? 1.8 : 0.7;
+					this.state.activeLine === linename ? 1 : 0.5;
 
 				return (
 					<VictoryLine
