@@ -471,22 +471,7 @@ class LineBarsTwelve extends Component {
 								<VictoryLabel dx={-6} textAnchor="middle" />
 							}
 						/>
-						<VictoryLine
-							name="Neto"
-							key="neto"
-							style={{
-								data: {
-									stroke: this.props.theme.linebar.lineColor,
-									strokeWidth: 2
-								}
-							}}
-							data={this.differential(
-								this.state.data.data[0].data,
-								this.state.data.data[1].data
-							)}
-							domain={{ y: [0, 250] }}
-							standalone={true}
-						/>
+
 						<VictoryStack
 							theme={this.props.theme}
 							height={this.props.height}
@@ -567,6 +552,22 @@ class LineBarsTwelve extends Component {
 								labels={d => `${d.y}`}
 							/>
 						</VictoryStack>
+						<VictoryLine
+							name="Neto"
+							key="neto"
+							style={{
+								data: {
+									stroke: this.props.theme.linebar.lineColor,
+									strokeWidth: 1
+								}
+							}}
+							data={this.differential(
+								this.state.data.data[0].data,
+								this.state.data.data[1].data
+							)}
+							domain={{ y: [0, 250] }}
+							standalone={false}
+						/>
 					</VictoryChart>
 				</VictorySharedEvents>
 				<DownloadButton

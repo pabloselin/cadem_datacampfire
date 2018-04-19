@@ -25,7 +25,8 @@ class ScatterFour extends Component {
 			domainX: this.props.data.domainX,
 			domainY: this.props.data.domainY,
 			svgrefs: [],
-			clicked: false
+			clicked: false,
+			colorscale: this.props.colorscale
 		};
 	}
 
@@ -33,7 +34,7 @@ class ScatterFour extends Component {
 		let legend = data.map((item, idx) => {
 			return {
 				name: item.title,
-				symbol: { fill: this.props.colorscale[idx] }
+				symbol: { fill: this.state.colorscale[idx] }
 			};
 		});
 		return legend;
@@ -45,7 +46,7 @@ class ScatterFour extends Component {
 		if (this.state.activeCat === cat || active === true) {
 			return this.state.activeColor;
 		} else {
-			return this.props.colorscale[index];
+			return this.state.colorscale[index];
 		}
 	}
 
@@ -91,10 +92,15 @@ class ScatterFour extends Component {
 						}
 						labelComponent={
 							<VictoryTooltip
-								style={{ fontSize: 9 }}
 								theme={this.props.theme}
+								orientation="right"
+								dy={-3.5}
 								horizontal={true}
 								activateData={true}
+								style={{
+									textAnchor: "start",
+									fontSize: 8
+								}}
 							/>
 						}
 					/>
@@ -250,9 +256,13 @@ class ScatterFour extends Component {
 						<VictoryAxis
 							domain={this.state.domainY}
 							dependentAxis
+							style={{ tickLabels: { fontSize: 7.5 } }}
 						/>
 						<VictoryAxis
-							style={{ grid: { stroke: "#ccc" } }}
+							style={{
+								grid: { stroke: "#ccc" },
+								tickLabels: { fontSize: 7.5 }
+							}}
 							domain={this.state.domainX}
 						/>
 						{scatters()}

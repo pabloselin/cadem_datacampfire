@@ -14,6 +14,15 @@ const colors = [
   "#f0efeb"
 ];
 
+const colors_reversed = [
+  "#d4cfc4",
+  "#b3aea4",
+  "#8c8981",
+  "#595753",
+  "#363531",
+  "#000000"
+];
+
 const azules = [
   "#71b0e5",
   "#95c7ce",
@@ -38,15 +47,6 @@ const paleta = {
   escala_semaforo: semaforo,
   destacado: activeColor
 };
-
-const colors_b = [
-  "#828282",
-  "#969696",
-  "#aaaaaa",
-  "#bebebe",
-  "#d2d2d2",
-  "#dcdcdc"
-];
 
 const charcoal = "#252525";
 //const green = "#1abc9c";
@@ -203,7 +203,7 @@ export default {
       },
       labels: centeredLabelStyles
     },
-    colorScale: colors_b,
+    colorScale: colors,
     altColorScale: azules,
     width: 450,
     height: 300,
@@ -225,7 +225,7 @@ export default {
   },
   scatter: assign(
     {
-      colorScale: colors_b,
+      colorScale: colors_reversed,
       altColorScale: azules,
       style: {
         data: {
