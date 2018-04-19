@@ -100,25 +100,28 @@ class KpiSemiCirculo extends Component {
 											this.setState({
 												status: "hovered"
 											});
-
-											return [
-												{
-													target: "data",
-													mutation: props => ({
-														style: Object.assign(
-															{},
-															props.style,
-															{
-																fill: this.state
-																	.colorscale[
-																	this.props
-																		.semaforo
-																][0]
-															}
-														)
-													})
-												}
-											];
+											if (Number(key) === 1) {
+												return [
+													{
+														target: "data",
+														mutation: props => ({
+															style: Object.assign(
+																{},
+																props.style,
+																{
+																	fill: this
+																		.state
+																		.colorscale[
+																		this
+																			.props
+																			.semaforo
+																	][0]
+																}
+															)
+														})
+													}
+												];
+											}
 										},
 										onMouseOut: () => {
 											this.setState({ status: null });
