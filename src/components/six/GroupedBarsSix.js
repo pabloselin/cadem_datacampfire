@@ -87,7 +87,8 @@ class GroupedBarsSix extends Component {
 
 						fontSize: this.state.activeBarFontSize,
 						fontWeight: "700",
-						fontFamily: "Asap"
+						fontFamily: "Asap",
+						fill: this.state.activeColor
 					})
 				})
 			}
@@ -297,14 +298,19 @@ class GroupedBarsSix extends Component {
 							}
 						}}
 						labelComponent={
-							<MiniLabel
-								width={38}
-								height={16}
-								text={d => `${d.y}%`}
-								color={this.state.activeColor}
+							<VictoryLabel
 								style={{
-									display: "none"
+									fill: (d, active) =>
+										this.getLabelState(
+											group.title,
+											idx,
+											active
+										),
+									fontWeight: "700",
+									fontSize: this.state.activeBarFontSize,
+									fontFamily: "Asap"
 								}}
+								text={d => `${d.y}%`}
 							/>
 						}
 					/>

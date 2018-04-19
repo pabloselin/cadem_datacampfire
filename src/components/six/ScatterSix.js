@@ -43,8 +43,10 @@ class ScatterSix extends Component {
 	componentDidMount() {}
 
 	getCurFill(cat, index, active) {
-		if (this.state.activeCat === cat || active === true) {
+		if (this.state.activeCat === cat) {
 			return this.state.activeColor;
+		} else if (active === true) {
+			return this.props.altActiveColor;
 		} else {
 			return this.state.colorscale[index];
 		}
@@ -152,6 +154,20 @@ class ScatterSix extends Component {
 													fill: this.state.activeColor
 												}
 										  };
+								}
+							}
+						];
+					},
+					onMouseOver: (evt, obj, key) => {
+						return [
+							{
+								target: "data",
+								mutation: props => {
+									return {
+										style: {
+											fill: this.props.altActiveColor
+										}
+									};
 								}
 							}
 						];

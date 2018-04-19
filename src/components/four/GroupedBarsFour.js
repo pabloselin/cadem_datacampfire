@@ -29,7 +29,7 @@ class GroupedBarsFour extends Component {
 			domainX: [0, 100],
 			activeBarFontSize: 12,
 			barWidth: 14,
-			barOffset: 20,
+			barOffset: 24,
 			domainPadding: { x: 60, y: 0 }
 		};
 	}
@@ -86,7 +86,8 @@ class GroupedBarsFour extends Component {
 						display: "block",
 						fontWeight: "700",
 						fontSize: this.state.activeBarFontSize,
-						fontFamily: "Asap"
+						fontFamily: "Asap",
+						fill: this.state.activeColor
 					})
 				})
 			}
@@ -296,14 +297,19 @@ class GroupedBarsFour extends Component {
 							}
 						}}
 						labelComponent={
-							<MiniLabel
-								width={38}
-								height={16}
-								text={d => `${d.y}%`}
-								color={this.state.activeColor}
+							<VictoryLabel
 								style={{
-									display: "none"
+									fill: (d, active) =>
+										this.getLabelState(
+											group.title,
+											idx,
+											active
+										),
+									fontWeight: "700",
+									fontSize: this.state.activeBarFontSize,
+									fontFamily: "Asap"
 								}}
+								text={d => `${d.y}%`}
 							/>
 						}
 					/>

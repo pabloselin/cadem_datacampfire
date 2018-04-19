@@ -76,7 +76,7 @@ const Main = () => (
 								height={300}
 								width={600}
 								theme={cadem_theme}
-								colorscale={cadem_theme.bar.colorScale}
+								colorscale={cadem_theme.groupbar.colorScale}
 							/>
 						</Grid.Column>
 						<Grid.Column width={6}>
@@ -117,6 +117,7 @@ const Main = () => (
 								width={600}
 								theme={cadem_theme}
 								colorscale={cadem_theme.scatter.colorScale}
+								altActiveColor={cadem_theme.scatter.activeColor}
 							/>
 						</Grid.Column>
 
@@ -198,6 +199,7 @@ const Main = () => (
 								width={240}
 								theme={cadem_theme}
 								colorscale={cadem_theme.scatter.colorScale}
+								altActiveColor={cadem_theme.scatter.activeColor}
 							/>
 						</Grid.Column>
 
@@ -238,7 +240,7 @@ const Main = () => (
 								height={200}
 								width={600}
 								theme={cadem_theme}
-								colorscale={cadem_theme.bar.colorScale}
+								colorscale={cadem_theme.groupbar.colorScale}
 							/>
 						</Grid.Column>
 						<Grid.Column width={12}>
@@ -269,6 +271,7 @@ const Main = () => (
 								width={600}
 								theme={cadem_theme}
 								colorscale={cadem_theme.scatter.colorScale}
+								altActiveColor={cadem_theme.scatter.activeColor}
 							/>
 						</Grid.Column>
 

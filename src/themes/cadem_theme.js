@@ -135,6 +135,20 @@ export default {
     },
     baseProps
   ),
+  groupbar: assign(
+    {
+      colorScale: colors_reversed,
+      altColorScale: azules,
+      style: {
+        data: {
+          padding: 8,
+          strokeWidth: 0
+        },
+        labels: baseLabelStyles
+      }
+    },
+    baseProps
+  ),
   bar: assign(
     {
       colorScale: colors,
@@ -226,6 +240,7 @@ export default {
   scatter: assign(
     {
       colorScale: colors_reversed,
+      activeColor: azules[0],
       altColorScale: azules,
       style: {
         data: {
