@@ -21,7 +21,7 @@ class StackedTwelve extends Component {
 			subtitle: this.props.data.chart_subtitle,
 			data: this.props.data,
 			activeKey: null,
-			activeCat: null,
+			activeCat: undefined,
 			activeMonth: null,
 			activeColor: this.props.theme.interactions.hover,
 			isLegendClicked: false,
@@ -139,14 +139,14 @@ class StackedTwelve extends Component {
 			fontSize: this.state.axisLabelSize,
 			fontFamily: "Asap",
 			fontWeight: a => {
-				if (this.state.activeCat === a) {
+				if (Number(this.state.activeCat) === a - 1) {
 					return "700";
 				} else {
 					return "normal";
 				}
 			},
 			fill: a => {
-				if (this.state.activeCat === a) {
+				if (Number(this.state.activeCat) === a - 1) {
 					return this.state.activeColor;
 				} else {
 					return "#555";
@@ -240,7 +240,8 @@ class StackedTwelve extends Component {
 						if (this.state.activeClickedBar !== clickedthing) {
 							this.setState({
 								activeKey: null,
-								activeBar: null
+								activeBar: null,
+								activeCat: undefined
 							});
 							return normalStyle;
 						}
@@ -263,7 +264,7 @@ class StackedTwelve extends Component {
 								//Está cliqueada una leyenda
 								if (this.state.activeCat === refName) {
 									this.setState({
-										activeCat: null,
+										activeCat: undefined,
 										isLegendClicked: false
 									});
 								} else {
@@ -283,7 +284,7 @@ class StackedTwelve extends Component {
 					},
 					onMouseOut: (evt, obj, key) => {
 						if (this.state.isLegendClicked !== true) {
-							this.setState({ activeCat: null });
+							this.setState({ activeCat: undefined });
 							return [
 								{
 									target: "data",
