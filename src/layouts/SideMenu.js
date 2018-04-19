@@ -4,26 +4,15 @@ import { Menu } from "semantic-ui-react";
 
 const SideMenu = props => (
 	<Menu inverted vertical className="menu-izquierda">
+		<Menu.Item className="item">Menu Lateral</Menu.Item>
 		<Menu.Item className="item">
-			<i className="far fa-circle" /> Vista global resumen
+			<i className="far fa-circle" /> Reporte A
 		</Menu.Item>
 		<Menu.Item className="item">
-			<i className="far fa-circle" /> Vista general formato
+			<i className="far fa-circle" /> Reporte B
 		</Menu.Item>
 		<Menu.Item className="item">
-			<i className="far fa-circle" /> Vista general mercado
-		</Menu.Item>
-		<Menu.Item className="item">
-			<i className="far fa-circle" /> Vista general local
-		</Menu.Item>
-		<Menu.Item className="item">
-			<i className="far fa-circle" /> Ranking locales
-		</Menu.Item>
-		<Menu.Item className="item">
-			<i className="far fa-circle" /> Respuestas locales
-		</Menu.Item>
-		<Menu.Item className="item">
-			<i className="far fa-circle" /> Verbatims
+			<i className="far fa-circle" /> Reporte C
 		</Menu.Item>
 	</Menu>
 );
