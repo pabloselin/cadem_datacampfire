@@ -235,7 +235,8 @@ class LinesTwelve extends Component {
 														.activeColor,
 													fontWeight: "bold",
 													fontSize: this.state
-														.tooltipSize
+														.tooltipSize,
+													fontFamily: "Asap"
 												}}
 											/>
 										}
