@@ -20,7 +20,7 @@ class LineBarsTwelve extends Component {
 			title: this.props.data.chart_title,
 			subtitle: this.props.data.chart_subtitle,
 			data: this.props.data,
-			activeCat: null,
+			activeCat: undefined,
 			activeKey: null,
 			activeBar: null,
 			activeIndex: null,
@@ -36,7 +36,7 @@ class LineBarsTwelve extends Component {
 				"Neto"
 			],
 			barWidth: 14,
-			axisLabelSize: 6,
+			axisLabelSize: 7,
 			activeBarFontSize: 6
 		};
 	}
@@ -170,6 +170,25 @@ class LineBarsTwelve extends Component {
 			}
 		};
 
+		const axisLabelStyle = {
+			fontFamily: "Asap",
+			fontSize: this.state.axisLabelSize,
+			fontWeight: a => {
+				if (Number(this.state.activeCat) === a - 1) {
+					return "700";
+				} else {
+					return "normal";
+				}
+			},
+			fill: a => {
+				if (Number(this.state.activeCat) === a - 1) {
+					return this.props.activeColor;
+				} else {
+					return "#555";
+				}
+			}
+		};
+
 		const activeLegend = refName => {
 			let mutation = refName =>
 				refName === "Neto"
@@ -208,7 +227,8 @@ class LineBarsTwelve extends Component {
 					onMouseOver: (evt, obj, idx) => {
 						if (this.state.clicked !== true) {
 							this.setState({
-								activeKey: Number(idx)
+								activeKey: Number(idx),
+								activeCat: idx
 							});
 
 							return activeStyle;
@@ -219,7 +239,8 @@ class LineBarsTwelve extends Component {
 						if (this.state.clickedBar !== true) {
 							this.setState({
 								clickedBar: true,
-								activeClickedBar: clicked
+								activeClickedBar: clicked,
+								activeCat: idx
 							});
 							return activeStyle;
 						} else {
@@ -288,7 +309,8 @@ class LineBarsTwelve extends Component {
 							if (this.state.activeClickedBar !== clickedthing) {
 								this.setState({
 									activeKey: null,
-									activeBar: null
+									activeBar: null,
+									activeCat: undefined
 								});
 								return normalStyle;
 							}
@@ -314,7 +336,7 @@ class LineBarsTwelve extends Component {
 								//Está cliqueada una leyenda
 								if (this.state.activeCat === refName) {
 									this.setState({
-										activeCat: null,
+										activeCat: undefined,
 										isLegendClicked: false
 									});
 									return [
@@ -364,7 +386,7 @@ class LineBarsTwelve extends Component {
 					},
 					onMouseOut: (evt, obj, key) => {
 						if (this.state.isLegendClicked !== true) {
-							this.setState({ activeCat: null });
+							this.setState({ activeCat: undefined });
 							return [
 								{
 									target: "data",
@@ -439,13 +461,9 @@ class LineBarsTwelve extends Component {
 							key="horizontalAxis"
 							height={this.props.height}
 							width={this.props.width}
-							style={{
-								tickLabels: {
-									fontSize: this.state.axisLabelSize
-								}
-							}}
 							tickLabelComponent={
 								<VictoryLabel
+									style={axisLabelStyle}
 									textAnchor="start"
 									dy={10}
 									dx={-30}
