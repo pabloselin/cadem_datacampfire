@@ -93,7 +93,7 @@ class LineBarsFour extends Component {
 			},
 			{
 				name: this.state.data.line_title,
-				symbol: { fill: "#555", type: "rect" }
+				symbol: { fill: "#555", type: "minus" }
 			}
 		];
 	}
@@ -125,6 +125,7 @@ class LineBarsFour extends Component {
 					target: "data",
 					mutation: props => ({
 						style: Object.assign({}, props.style, {
+							cursor: "pointer",
 							fill: fill,
 							width: this.state.barWidth
 						})
@@ -148,6 +149,7 @@ class LineBarsFour extends Component {
 				target: "data",
 				mutation: props => ({
 					style: Object.assign({}, props.style, {
+						cursor: "pointer",
 						fill: this.props.activeColor,
 						width: this.state.barWidth
 					})
@@ -182,6 +184,7 @@ class LineBarsFour extends Component {
 			legendLabelStyle = {
 				fontSize: 11,
 				fontFamily: "Asap",
+				cursor: "pointer",
 				fontWeight: a => {
 					if (this.state.activeCat === a.name) {
 						return 700;
@@ -202,6 +205,7 @@ class LineBarsFour extends Component {
 				}
 			};
 			legendDataStyle = {
+				cursor: "pointer",
 				fill: a => {
 					if (this.state.activeCat === a.name) {
 						if (a.name === this.props.positiveValue) {
@@ -216,6 +220,7 @@ class LineBarsFour extends Component {
 			};
 		} else {
 			legendDataStyle = {
+				cursor: "pointer",
 				fill: a => {
 					if (this.state.activeCat === a.name) {
 						return this.props.activeColor;
@@ -227,6 +232,7 @@ class LineBarsFour extends Component {
 			legendLabelStyle = {
 				fontSize: 11,
 				fontFamily: "Asap",
+				cursor: "pointer",
 				fontWeight: a => {
 					if (this.state.activeCat === a.name) {
 						return 700;
@@ -344,6 +350,7 @@ class LineBarsFour extends Component {
 			return {
 				fontSize: 12,
 				fontFamily: "Asap",
+				cursor: "pointer",
 				fontWeight: a => {
 					if (this.state.activeCat === a.name) {
 						return 700;
@@ -541,7 +548,7 @@ class LineBarsFour extends Component {
 			},
 			{
 				childName: "legend",
-				target: "data",
+
 				eventHandlers: {
 					onClick: (evt, obj, key) => {
 						if (obj.datum !== undefined) {
@@ -635,15 +642,16 @@ class LineBarsFour extends Component {
 								this.setState({
 									activeCat: obj.datum.name
 								});
-							}
-							if (this.props.semaforo !== true) {
-								return activeLegend(obj.datum.name);
-							} else {
-								return activeSemaforoLegend(
-									obj.datum.name,
-									obj.datum.value,
-									obj.index
-								);
+
+								if (this.props.semaforo !== true) {
+									return activeLegend(obj.datum.name);
+								} else {
+									return activeSemaforoLegend(
+										obj.datum.name,
+										obj.datum.value,
+										obj.index
+									);
+								}
 							}
 						}
 					},
