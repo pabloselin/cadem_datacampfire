@@ -303,7 +303,8 @@ export default {
     titleOrientation: "top",
     style: {
       data: {
-        type: "circle"
+        type: "circle",
+        cursor: "pointer"
       },
       labels: baseLabelStyles,
       title: assign({}, baseLabelStyles, { padding: 5 })

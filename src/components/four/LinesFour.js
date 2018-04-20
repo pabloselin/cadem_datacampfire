@@ -21,15 +21,17 @@ class LinesFour extends Component {
 			title: this.props.data.chart_title,
 			subtitle: this.props.data.chart_subtitle,
 			data: this.props.data.data,
-			activeLine: null,
+			activeLine: undefined,
 			activeMonth: null,
+			activeKey: undefined,
 			clicked: false,
 			domainLength: this.props.data.data[0].values.length,
 			xLabels: this.props.data.data[0].values.map(item => {
 				return item.x;
 			}),
 			svgrefs: [],
-			tooltipSize: 11
+			tooltipSize: 11,
+			labelDisplay: false
 		};
 	}
 
@@ -39,12 +41,12 @@ class LinesFour extends Component {
 			let eventStyles = () => {
 				if (linename === this.state.activeLine) {
 					return {
-						fill: this.props.activeColor,
+						fill: this.props.colorscale[idx],
 						fontWeight: "bold"
 					};
 				} else {
 					return {
-						fill: this.props.colorscale[3],
+						fill: this.props.colorscale[idx],
 						fontWeight: "normal"
 					};
 				}
@@ -77,6 +79,16 @@ class LinesFour extends Component {
 		}
 	}
 
+	componentDidUpdate(prevProps, prevState) {
+		if (prevState.activeLine !== this.state.activeLine) {
+			if (this.state.activeLine === undefined) {
+				this.setState({ labelDisplay: false });
+			} else {
+				this.setState({ labelDisplay: true });
+			}
+		}
+	}
+
 	componentDidMount() {
 		this.setState({
 			svgrefs: [this.containerRef]
@@ -91,8 +103,8 @@ class LinesFour extends Component {
 				linenames.push(linename);
 				const linecolor = () =>
 					this.state.activeLine === linename
-						? this.props.activeColor
-						: this.props.colorscale[3];
+						? this.props.colorscale[idx]
+						: this.props.colorscale[idx];
 				const linewidth = () =>
 					this.state.activeLine === linename ? 1.8 : 0.7;
 
@@ -105,7 +117,8 @@ class LinesFour extends Component {
 						style={{
 							data: {
 								stroke: linecolor(),
-								strokeWidth: linewidth()
+								strokeWidth: linewidth(),
+								cursor: "pointer"
 							}
 						}}
 					/>
@@ -113,6 +126,7 @@ class LinesFour extends Component {
 			});
 
 		const legendLabelStyle = {
+			cursor: "pointer",
 			fontSize: 18,
 			fontFamily: "Asap"
 		};
@@ -131,7 +145,79 @@ class LinesFour extends Component {
 								mutation: props => {
 									if (this.state.activeLine === key) {
 										this.setState({
-											activeLine: null,
+											activeLine: undefined,
+
+											clicked: false
+										});
+									} else {
+										this.setState({
+											activeLine: "line-" + key,
+
+											clicked: true,
+											activeMonth: null
+										});
+									}
+								}
+							}
+						];
+					},
+					onMouseOver: (evt, obj, key) => {
+						return [
+							{
+								target: "data",
+								childName: [...linenames],
+								eventKey: key,
+								mutation: props => {
+									if (this.state.clicked !== true) {
+										if (this.state.activeLine === key) {
+											this.setState({
+												activeLine: undefined,
+												activeKey: undefined
+											});
+										} else {
+											this.setState({
+												activeLine: "line-" + key
+											});
+										}
+									}
+								}
+							}
+						];
+					},
+					onMouseOut: (evt, obj, key) => {
+						return [
+							{
+								target: "data",
+								childName: [...linenames],
+								eventKey: key,
+								mutation: props => {
+									if (this.state.clicked !== true) {
+										this.setState({
+											activeLine: undefined,
+											activeMonth: null,
+											clicked: false
+										});
+									}
+								}
+							}
+						];
+					}
+				}
+			},
+			{
+				childName: "legend",
+				target: "labels",
+				eventHandlers: {
+					onClick: (evt, obj, key) => {
+						return [
+							{
+								target: "data",
+								childName: [...linenames],
+								eventKey: key,
+								mutation: props => {
+									if (this.state.activeLine === key) {
+										this.setState({
+											activeLine: undefined,
 											clicked: false
 										});
 									} else {
@@ -155,7 +241,7 @@ class LinesFour extends Component {
 									if (this.state.clicked !== true) {
 										if (this.state.activeLine === key) {
 											this.setState({
-												activeLine: null
+												activeLine: undefined
 											});
 										} else {
 											this.setState({
@@ -176,7 +262,7 @@ class LinesFour extends Component {
 								mutation: props => {
 									if (this.state.clicked !== true) {
 										this.setState({
-											activeLine: null,
+											activeLine: undefined,
 											activeMonth: null,
 											clicked: false
 										});
@@ -188,6 +274,16 @@ class LinesFour extends Component {
 				}
 			}
 		];
+
+		const fillScale = (d, a) => {
+			if (this.state.activeLine !== undefined) {
+				let indexcolor = Number(this.state.activeLine.slice(-1));
+				return this.props.colorscale[indexcolor];
+			} else {
+				return "transparent";
+			}
+		};
+
 		return (
 			<div className="chart-widget">
 				<svg height={40}>
@@ -210,11 +306,10 @@ class LinesFour extends Component {
 						padding={{ top: 20, right: 35, bottom: 50, left: 35 }}
 						containerComponent={
 							<VictoryVoronoiContainer
+								name="voronicontainer"
 								activateLabels={false}
-								radius={40}
-								containerRef={containerRef =>
-									(this.containerRef = containerRef)
-								}
+								radius={60}
+								labels={d => `${d.y}%`}
 								onActivated={(points, props) => {
 									if (points[0] !== undefined) {
 										this.setState({
@@ -227,28 +322,24 @@ class LinesFour extends Component {
 									<VictoryTooltip
 										theme={this.props.theme}
 										activateData={true}
-										labelComponent={
-											<VictoryLabel
-												style={{
-													fill: this.props
-														.activeColor,
-													fontWeight: "bold",
-													fontSize: this.state
-														.tooltipSize,
-													fontFamily: "Asap"
-												}}
-											/>
-										}
+										style={{
+											fontWeight: 700,
+											fill: (d, a) =>
+												fillScale(d, a) !== undefined
+													? fillScale(d, a)
+													: "transparent"
+										}}
 										flyoutComponent={
 											<LineFlyOut
 												graphHeight={this.props.height}
-												color={this.props.activeColor}
+												color={(d, a) =>
+													fillScale(d, a)
+												}
 											/>
 										}
 										orientation="top"
 									/>
 								}
-								labels={d => `${d.y}%`}
 							/>
 						}
 					>
