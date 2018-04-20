@@ -81,6 +81,7 @@ class ScatterSix extends Component {
 						key={"scatter-" + idx}
 						style={{
 							data: {
+								cursor: "pointer",
 								fill: (d, active) =>
 									this.getCurFill(local.title, idx, active)
 							}
@@ -110,6 +111,7 @@ class ScatterSix extends Component {
 		const legendLabelStyle = {
 			fontSize: 5,
 			fontFamily: "Asap",
+			cursor: "pointer",
 			fontWeight: a => {
 				if (this.state.activeCat === a.name) {
 					return "bold";
@@ -127,6 +129,7 @@ class ScatterSix extends Component {
 		};
 
 		const legendDataStyle = {
+			cursor: "pointer",
 			fill: a => {
 				if (this.state.activeCat === a.name) {
 					return this.state.activeColor;
@@ -140,23 +143,6 @@ class ScatterSix extends Component {
 			{
 				childName: "all",
 				eventHandlers: {
-					onClick: (evt, obj, key) => {
-						return [
-							{
-								target: "data",
-								mutation: props => {
-									return props.style.fill ===
-										this.state.activeColor
-										? null
-										: {
-												style: {
-													fill: this.state.activeColor
-												}
-										  };
-								}
-							}
-						];
-					},
 					onMouseOver: (evt, obj, key) => {
 						return [
 							{
