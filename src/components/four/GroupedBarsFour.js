@@ -104,6 +104,7 @@ class GroupedBarsFour extends Component {
 		];
 
 		const legendLabelStyle = {
+			cursor: "pointer",
 			fontSize: 14,
 			fontFamily: "Asap",
 			fontWeight: a => {
@@ -123,6 +124,7 @@ class GroupedBarsFour extends Component {
 		};
 
 		const legendDataStyle = {
+			cursor: "pointer",
 			fill: a => {
 				if (this.state.activeCat === a.name) {
 					return this.state.activeColor;
@@ -276,6 +278,57 @@ class GroupedBarsFour extends Component {
 						}
 					}
 				}
+			},
+			{
+				childName: "legend",
+				target: "labels",
+				eventHandlers: {
+					onClick: (evt, obj, key) => {
+						if (obj.datum !== undefined) {
+							let refName = obj.datum.name;
+							if (this.state.isLegendClicked !== true) {
+								this.setState({
+									activeCat: refName,
+									isLegendClicked: true
+								});
+							} else {
+								//Está cliqueada una leyenda
+								if (this.state.activeCat === refName) {
+									this.setState({
+										activeCat: null,
+										isLegendClicked: false
+									});
+								} else {
+									this.setState({ activeCat: refName });
+								}
+							}
+						}
+					},
+					onMouseOver: (evt, obj, key) => {
+						if (this.state.isLegendClicked !== true) {
+							if (obj.datum !== undefined) {
+								this.setState({
+									activeCat: obj.datum.name
+								});
+							}
+						}
+					},
+					onMouseOut: (evt, obj, key) => {
+						if (this.state.isLegendClicked !== true) {
+							this.setState({ activeCat: null });
+							return [
+								{
+									target: "data",
+									mutation: props => null
+								},
+								{
+									target: "labels",
+									mutation: props => null
+								}
+							];
+						}
+					}
+				}
 			}
 		];
 
@@ -293,7 +346,8 @@ class GroupedBarsFour extends Component {
 							data: {
 								width: this.state.barWidth,
 								fill: (d, active) =>
-									this.getCurFill(group.title, idx, active)
+									this.getCurFill(group.title, idx, active),
+								cursor: "pointer"
 							}
 						}}
 						labelComponent={
