@@ -123,7 +123,8 @@ class LineBarsTwelve extends Component {
 					mutation: props => ({
 						style: Object.assign({}, props.style, {
 							fill: fill,
-							width: this.state.barWidth
+							width: this.state.barWidth,
+							cursor: "pointer"
 						})
 					})
 				},
@@ -146,7 +147,8 @@ class LineBarsTwelve extends Component {
 				mutation: props => ({
 					style: Object.assign({}, props.style, {
 						fill: this.props.activeColor,
-						width: this.state.barWidth
+						width: this.state.barWidth,
+						cursor: "pointer"
 					})
 				})
 			},
@@ -177,6 +179,7 @@ class LineBarsTwelve extends Component {
 
 		if (this.props.semaforo === true) {
 			legendLabelStyle = {
+				cursor: "pointer",
 				fontSize: 8,
 				fontFamily: "Asap",
 				fontWeight: a => {
@@ -199,6 +202,7 @@ class LineBarsTwelve extends Component {
 				}
 			};
 			legendDataStyle = {
+				cursor: "pointer",
 				fill: a => {
 					if (this.state.activeCat === a.name) {
 						if (a.name === this.props.positiveValue) {
@@ -213,6 +217,7 @@ class LineBarsTwelve extends Component {
 			};
 		} else {
 			legendDataStyle = {
+				cursor: "pointer",
 				fill: a => {
 					if (this.state.activeCat === a.name) {
 						return this.props.activeColor;
@@ -222,6 +227,7 @@ class LineBarsTwelve extends Component {
 				}
 			};
 			legendLabelStyle = {
+				cursor: "pointer",
 				fontSize: 8,
 				fontFamily: "Asap",
 				fontWeight: a => {
@@ -341,6 +347,7 @@ class LineBarsTwelve extends Component {
 			return {
 				fontSize: 8,
 				fontFamily: "Asap",
+				cursor: "pointer",
 				fontWeight: a => {
 					if (this.state.activeCat === a.name) {
 						return 700;
@@ -538,7 +545,7 @@ class LineBarsTwelve extends Component {
 			},
 			{
 				childName: "legend",
-				target: "data",
+
 				eventHandlers: {
 					onClick: (evt, obj, key) => {
 						if (obj.datum !== undefined) {
@@ -632,15 +639,16 @@ class LineBarsTwelve extends Component {
 								this.setState({
 									activeCat: obj.datum.name
 								});
-							}
-							if (this.props.semaforo !== true) {
-								return activeLegend(obj.datum.name);
-							} else {
-								return activeSemaforoLegend(
-									obj.datum.name,
-									obj.datum.value,
-									obj.index
-								);
+
+								if (this.props.semaforo !== true) {
+									return activeLegend(obj.datum.name);
+								} else {
+									return activeSemaforoLegend(
+										obj.datum.name,
+										obj.datum.value,
+										obj.index
+									);
+								}
 							}
 						}
 					},
@@ -764,6 +772,7 @@ class LineBarsTwelve extends Component {
 								data={this.state.data.data[0].data}
 								style={{
 									data: {
+										cursor: "pointer",
 										width: this.state.barWidth,
 										fill: (d, active) =>
 											this.getCurFill(
@@ -817,7 +826,8 @@ class LineBarsTwelve extends Component {
 								style={{
 									data: {
 										width: this.state.barWidth,
-										fill: this.props.colorscale[1]
+										fill: this.props.colorscale[1],
+										cursor: "pointer"
 									},
 									labels: {
 										fontSize: this.state.activeBarFontSize,
@@ -840,7 +850,8 @@ class LineBarsTwelve extends Component {
 							style={{
 								data: {
 									stroke: this.props.theme.linebar.lineColor,
-									strokeWidth: 1
+									strokeWidth: 1,
+									cursor: "pointer"
 								}
 							}}
 							data={this.differential(

@@ -846,7 +846,8 @@ class LineBarsFour extends Component {
 							style={{
 								data: {
 									stroke: this.props.theme.linebar.lineColor,
-									strokeWidth: 2
+									strokeWidth: 2,
+									cursor: "pointer"
 								},
 								labels: {
 									fontWeight: 700,

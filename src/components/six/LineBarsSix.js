@@ -122,6 +122,7 @@ class LineBarsSix extends Component {
 					target: "data",
 					mutation: props => ({
 						style: Object.assign({}, props.style, {
+							cursor: "pointer",
 							fill: fill,
 							width: this.state.barWidth
 						})
@@ -146,7 +147,8 @@ class LineBarsSix extends Component {
 				mutation: props => ({
 					style: Object.assign({}, props.style, {
 						fill: this.props.activeColor,
-						width: this.state.barWidth
+						width: this.state.barWidth,
+						cursor: "pointer"
 					})
 				})
 			},
@@ -179,6 +181,7 @@ class LineBarsSix extends Component {
 			legendLabelStyle = {
 				fontSize: 14,
 				fontFamily: "Asap",
+				cursor: "pointer",
 				fontWeight: a => {
 					if (this.state.activeCat === a.name) {
 						return 700;
@@ -199,6 +202,7 @@ class LineBarsSix extends Component {
 				}
 			};
 			legendDataStyle = {
+				cursor: "pointer",
 				fill: a => {
 					if (this.state.activeCat === a.name) {
 						if (a.name === this.props.positiveValue) {
@@ -213,6 +217,7 @@ class LineBarsSix extends Component {
 			};
 		} else {
 			legendDataStyle = {
+				cursor: "pointer",
 				fill: a => {
 					if (this.state.activeCat === a.name) {
 						return this.props.activeColor;
@@ -224,6 +229,7 @@ class LineBarsSix extends Component {
 			legendLabelStyle = {
 				fontSize: 14,
 				fontFamily: "Asap",
+				cursor: "pointer",
 				fontWeight: a => {
 					if (this.state.activeCat === a.name) {
 						return 700;
@@ -341,6 +347,7 @@ class LineBarsSix extends Component {
 			return {
 				fontSize: 12,
 				fontFamily: "Asap",
+				cursor: "pointer",
 				fontWeight: a => {
 					if (this.state.activeCat === a.name) {
 						return 700;
@@ -538,7 +545,7 @@ class LineBarsSix extends Component {
 			},
 			{
 				childName: "legend",
-				target: "data",
+
 				eventHandlers: {
 					onClick: (evt, obj, key) => {
 						if (obj.datum !== undefined) {
@@ -632,15 +639,16 @@ class LineBarsSix extends Component {
 								this.setState({
 									activeCat: obj.datum.name
 								});
-							}
-							if (this.props.semaforo !== true) {
-								return activeLegend(obj.datum.name);
-							} else {
-								return activeSemaforoLegend(
-									obj.datum.name,
-									obj.datum.value,
-									obj.index
-								);
+
+								if (this.props.semaforo !== true) {
+									return activeLegend(obj.datum.name);
+								} else {
+									return activeSemaforoLegend(
+										obj.datum.name,
+										obj.datum.value,
+										obj.index
+									);
+								}
 							}
 						}
 					},
@@ -765,6 +773,7 @@ class LineBarsSix extends Component {
 								data={this.state.data.data[0].data}
 								style={{
 									data: {
+										cursor: "pointer",
 										width: this.state.barWidth,
 										fill: (d, active) =>
 											this.getCurFill(
@@ -815,6 +824,7 @@ class LineBarsSix extends Component {
 								data={this.state.data.data[1].data}
 								style={{
 									data: {
+										cursor: "pointer",
 										width: this.state.barWidth,
 										fill: this.props.colorscale[1]
 									},
@@ -839,7 +849,8 @@ class LineBarsSix extends Component {
 							style={{
 								data: {
 									stroke: this.props.theme.linebar.lineColor,
-									strokeWidth: 2
+									strokeWidth: 2,
+									cursor: "pointer"
 								}
 							}}
 							data={this.differential(
