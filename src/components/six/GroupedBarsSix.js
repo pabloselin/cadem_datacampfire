@@ -107,6 +107,7 @@ class GroupedBarsSix extends Component {
 		const legendLabelStyle = {
 			fontSize: 10,
 			fontFamily: "Asap",
+			cursor: "pointer",
 			fontWeight: a => {
 				if (this.state.activeCat === a.name) {
 					return "bold";
@@ -124,6 +125,7 @@ class GroupedBarsSix extends Component {
 		};
 
 		const legendDataStyle = {
+			cursor: "pointer",
 			fill: a => {
 				if (this.state.activeCat === a.name) {
 					return this.state.activeColor;
@@ -277,6 +279,57 @@ class GroupedBarsSix extends Component {
 						}
 					}
 				}
+			},
+			{
+				childName: "legend",
+				target: "labels",
+				eventHandlers: {
+					onClick: (evt, obj, key) => {
+						if (obj.datum !== undefined) {
+							let refName = obj.datum.name;
+							if (this.state.isLegendClicked !== true) {
+								this.setState({
+									activeCat: refName,
+									isLegendClicked: true
+								});
+							} else {
+								//Está cliqueada una leyenda
+								if (this.state.activeCat === refName) {
+									this.setState({
+										activeCat: null,
+										isLegendClicked: false
+									});
+								} else {
+									this.setState({ activeCat: refName });
+								}
+							}
+						}
+					},
+					onMouseOver: (evt, obj, key) => {
+						if (this.state.isLegendClicked !== true) {
+							if (obj.datum !== undefined) {
+								this.setState({
+									activeCat: obj.datum.name
+								});
+							}
+						}
+					},
+					onMouseOut: (evt, obj, key) => {
+						if (this.state.isLegendClicked !== true) {
+							this.setState({ activeCat: null });
+							return [
+								{
+									target: "data",
+									mutation: props => null
+								},
+								{
+									target: "labels",
+									mutation: props => null
+								}
+							];
+						}
+					}
+				}
 			}
 		];
 
@@ -292,6 +345,7 @@ class GroupedBarsSix extends Component {
 						data={group.data}
 						style={{
 							data: {
+								cursor: "pointer",
 								width: this.state.barWidth,
 								fill: (d, active) =>
 									this.getCurFill(group.title, idx, active)
