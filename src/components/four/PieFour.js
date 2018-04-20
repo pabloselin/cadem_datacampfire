@@ -158,6 +158,59 @@ class PieFour extends Component {
 									];
 								}
 							}
+						},
+						{
+							childName: "legend",
+							target: "labels",
+							eventHandlers: {
+								onMouseOver: (evt, obj, key) => {
+									if (this.state.clicked === false) {
+										return [
+											{
+												childName: ["pie", "legend"],
+												mutation: props => {
+													this.setState({
+														currentPercent:
+															props.datum.percent,
+														activeKey: key
+													});
+												}
+											}
+										];
+									}
+								},
+								onMouseOut: () => {
+									if (this.state.clicked === false) {
+										return [
+											{
+												childName: ["pie", "legend"],
+												mutation: () => {
+													this.setState({
+														currentPercent: 0,
+														activeKey: undefined
+													});
+													return null;
+												}
+											}
+										];
+									}
+								},
+								onClick: (evt, obj, key) => {
+									return [
+										{
+											childName: ["pie", "legend"],
+											mutation: props => {
+												this.setState({
+													currentPercent:
+														props.datum.percent,
+													clicked: clicked(key),
+													activeKey: Number(key)
+												});
+											}
+										}
+									];
+								}
+							}
 						}
 					]}
 				>
@@ -190,7 +243,8 @@ class PieFour extends Component {
 									name="pie"
 									style={{
 										data: {
-											fill: d => piecolor(d.eventKey)
+											fill: d => piecolor(d.eventKey),
+											cursor: "pointer"
 										}
 									}}
 									padAngle={0}
@@ -235,7 +289,9 @@ class PieFour extends Component {
 							width={300}
 							height={700}
 							style={{
+								data: { cursor: "pointer" },
 								labels: {
+									cursor: "pointer",
 									fontFamily: "Asap",
 									fontSize: this.state.legendSize
 								},
