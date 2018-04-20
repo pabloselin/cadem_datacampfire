@@ -167,7 +167,7 @@ export default {
     {
       colorScale: ["#8c8981", "#d4cfc4", "#555"],
       altColorScale: ["#95c7ce", "#ccc"],
-      lineColor: "#363531"
+      lineColor: "#595753"
     },
     baseProps
   ),
