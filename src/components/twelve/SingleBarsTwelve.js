@@ -174,6 +174,7 @@ class SingleBarsTwelve extends Component {
 								fontWeight: "700"
 							},
 							data: {
+								cursor: "pointer",
 								width: this.state.barWidth,
 								fill: this.props.colorscale[3]
 							}

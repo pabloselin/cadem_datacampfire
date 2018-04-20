@@ -179,7 +179,8 @@ class SingleBarsFour extends Component {
 							},
 							data: {
 								width: this.state.barWidth,
-								fill: this.props.colorscale[3]
+								fill: this.props.colorscale[3],
+								cursor: "pointer"
 							}
 						}}
 						alignment="middle"

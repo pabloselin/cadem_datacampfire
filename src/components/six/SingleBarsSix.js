@@ -173,6 +173,7 @@ class SingleBarsSix extends Component {
 								fontWeight: "bold"
 							},
 							data: {
+								cursor: "pointer",
 								width: this.state.barWidth,
 								fill: this.props.colorscale[3]
 							}

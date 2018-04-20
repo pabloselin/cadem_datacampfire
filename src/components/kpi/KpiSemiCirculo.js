@@ -39,9 +39,9 @@ class KpiSemiCirculo extends Component {
 
 	getStatusFill() {
 		if (this.state.status === "hovered") {
-			return this.state.colorscale[this.props.semaforo][0];
-		} else {
 			return this.state.colorscale[this.props.semaforo][1];
+		} else {
+			return this.state.colorscale[this.props.semaforo][0];
 		}
 	}
 
@@ -54,7 +54,7 @@ class KpiSemiCirculo extends Component {
 
 		const piecolor = key => {
 			if (key === 1) {
-				return this.state.colorscale[this.props.semaforo][key];
+				return this.state.colorscale[this.props.semaforo][0];
 			} else {
 				return "#ccc";
 			}
@@ -100,28 +100,26 @@ class KpiSemiCirculo extends Component {
 											this.setState({
 												status: "hovered"
 											});
-											if (Number(key) === 1) {
-												return [
-													{
-														target: "data",
-														mutation: props => ({
-															style: Object.assign(
-																{},
-																props.style,
-																{
-																	fill: this
-																		.state
-																		.colorscale[
-																		this
-																			.props
-																			.semaforo
-																	][0]
-																}
-															)
-														})
-													}
-												];
-											}
+
+											return [
+												{
+													target: "data",
+													eventKey: 1,
+													mutation: props => ({
+														style: Object.assign(
+															{},
+															props.style,
+															{
+																fill: this.state
+																	.colorscale[
+																	this.props
+																		.semaforo
+																][1]
+															}
+														)
+													})
+												}
+											];
 										},
 										onMouseOut: () => {
 											this.setState({ status: null });
@@ -129,6 +127,23 @@ class KpiSemiCirculo extends Component {
 												{
 													target: "data",
 													mutation: props => null
+												},
+												{
+													target: "data",
+													eventKey: 1,
+													mutation: props => ({
+														style: Object.assign(
+															{},
+															props.style,
+															{
+																fill: this.state
+																	.colorscale[
+																	this.props
+																		.semaforo
+																][0]
+															}
+														)
+													})
 												},
 												{
 													target: "labels",
@@ -146,6 +161,7 @@ class KpiSemiCirculo extends Component {
 								name="pie"
 								style={{
 									data: {
+										cursor: "pointer",
 										fill: d => piecolor(d.eventKey)
 									}
 								}}
@@ -180,7 +196,8 @@ class KpiSemiCirculo extends Component {
 									fontSize: 56,
 									fill: this.getStatusFill(),
 									fontFamily: "Asap",
-									fontWeight: "bold"
+									fontWeight: "bold",
+									cursor: "arrow"
 								}}
 							/>
 						</VictorySharedEvents>
