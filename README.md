@@ -210,3 +210,5 @@ El componente /components/mini/DownloadButton.js también tiene una funcionalida
 *   El posicionamiento de la leyenda en algunos gráficos tiene que revisarse manualmente dependiendo de la extensión de los datos
 
 *   La anchura real de cada gráfico la calcula el sistema de grillas de Semantic UI según se indica en el ancho de cada componente (<Grid.Column width={4}> para una sección de 4 columnas de ancho)
+
+*   El gráfico de líneas en versión de 6 y 12 columnas tiene una función de debug que pone datos aleatorios al ponerle el prop debug=true (para que no lo dejen puesto en producción)

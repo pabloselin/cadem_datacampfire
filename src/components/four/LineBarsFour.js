@@ -32,7 +32,6 @@ class LineBarsFour extends Component {
 			domainPadding: { y: 0, x: 40 },
 			svgrefs: [],
 			clickedKeys: [],
-
 			barNames: [
 				this.props.data.data[0].title,
 				this.props.data.data[1].title,
