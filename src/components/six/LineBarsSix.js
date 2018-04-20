@@ -27,6 +27,7 @@ class LineBarsSix extends Component {
 			clicked: false,
 			clickedBar: null,
 			isLegendClicked: false,
+			activeLegend: undefined,
 			domainPadding: { y: 0, x: 40 },
 			svgrefs: [],
 			clickedKeys: [],
@@ -37,7 +38,8 @@ class LineBarsSix extends Component {
 			],
 			barWidth: 24,
 			axisLabelSize: 12,
-			activeBarFontSize: 12
+			activeBarFontSize: 12,
+			semaforo: this.props.theme.semaforo
 		};
 	}
 
@@ -108,6 +110,36 @@ class LineBarsSix extends Component {
 	componentDidUpdate(prevProps, prevState) {}
 
 	render() {
+		const semaforoActiveStyle = yval => {
+			let fill;
+			if (yval > 0) {
+				fill = this.state.semaforo.verde[1];
+			} else {
+				fill = this.state.semaforo.rojo[1];
+			}
+			return [
+				{
+					target: "data",
+					mutation: props => ({
+						style: Object.assign({}, props.style, {
+							fill: fill,
+							width: this.state.barWidth
+						})
+					})
+				},
+				{
+					target: "labels",
+					mutation: props => ({
+						style: Object.assign({}, props.style, {
+							display: "block",
+							fill: fill,
+							fontSize: this.state.activeBarFontSize,
+							fontWeight: 700
+						})
+					})
+				}
+			];
+		};
 		const activeStyle = [
 			{
 				target: "data",
@@ -141,34 +173,73 @@ class LineBarsSix extends Component {
 			}
 		];
 
-		const legendLabelStyle = {
-			fontSize: 14,
-			fontFamily: "Asap",
-			fontWeight: a => {
-				if (this.state.activeCat === a.name) {
-					return "bold";
-				} else {
-					return "normal";
-				}
-			},
-			fill: a => {
-				if (this.state.activeCat === a.name) {
-					return this.props.activeColor;
-				} else {
-					return "#555";
-				}
-			}
-		};
+		let legendLabelStyle, legendDataStyle;
 
-		const legendDataStyle = {
-			fill: a => {
-				if (this.state.activeCat === a.name) {
-					return this.props.activeColor;
-				} else {
-					return a.symbol.fill;
+		if (this.props.semaforo === true) {
+			legendLabelStyle = {
+				fontSize: 14,
+				fontFamily: "Asap",
+				fontWeight: a => {
+					if (this.state.activeCat === a.name) {
+						return 700;
+					} else {
+						return "normal";
+					}
+				},
+				fill: a => {
+					if (this.state.activeCat === a.name) {
+						if (a.name === this.props.positiveValue) {
+							return this.state.semaforo.verde[1];
+						} else if (a.name === this.props.negativeValue) {
+							return this.state.semaforo.rojo[1];
+						}
+					} else {
+						return "#555";
+					}
 				}
-			}
-		};
+			};
+			legendDataStyle = {
+				fill: a => {
+					if (this.state.activeCat === a.name) {
+						if (a.name === this.props.positiveValue) {
+							return this.state.semaforo.verde[1];
+						} else if (a.name === this.props.negativeValue) {
+							return this.state.semaforo.rojo[1];
+						}
+					} else {
+						return a.symbol.fill;
+					}
+				}
+			};
+		} else {
+			legendDataStyle = {
+				fill: a => {
+					if (this.state.activeCat === a.name) {
+						return this.props.activeColor;
+					} else {
+						return a.symbol.fill;
+					}
+				}
+			};
+			legendLabelStyle = {
+				fontSize: 14,
+				fontFamily: "Asap",
+				fontWeight: a => {
+					if (this.state.activeCat === a.name) {
+						return 700;
+					} else {
+						return "normal";
+					}
+				},
+				fill: a => {
+					if (this.state.activeCat === a.name) {
+						return this.props.activeColor;
+					} else {
+						return "#555";
+					}
+				}
+			};
+		}
 
 		const axisLabelStyle = {
 			fontFamily: "Asap",
@@ -219,19 +290,87 @@ class LineBarsSix extends Component {
 			];
 		};
 
+		const activeSemaforoLegend = (refName, value, index) => {
+			let fill;
+			if (index === 0 || value === 0) {
+				fill = this.props.theme.semaforo.verde[0];
+			} else if (index === 1 || value === -1) {
+				fill = this.props.theme.semaforo.rojo[0];
+			}
+			let mutation = refName =>
+				refName === "Neto"
+					? { stroke: "#555", strokeWidth: 3 }
+					: {
+							fill: fill,
+							width: this.state.barWidth,
+							fontFamily: "Asap"
+					  };
+			return [
+				{
+					target: "data",
+					childName: refName,
+					eventKey: "all",
+					mutation: props => ({
+						style: Object.assign({}, props.style, mutation(refName))
+					})
+				},
+				{
+					target: "labels",
+					childName: refName,
+					eventKey: "all",
+					mutation: props => ({
+						style: Object.assign({}, props.style, {
+							fill: fill
+						})
+					})
+				},
+				{
+					target: "labels",
+					childName: this.state.barNames,
+					eventKey: "all",
+					mutation: props => ({
+						style: Object.assign({}, props.style, {
+							fill: "transparent"
+						})
+					})
+				}
+			];
+		};
+
+		const semaforoLegendLabelStyle = yval => {
+			return {
+				fontSize: 12,
+				fontFamily: "Asap",
+				fontWeight: a => {
+					if (this.state.activeCat === a.name) {
+						return 700;
+					} else {
+						return "normal";
+					}
+				},
+				fill: a => {
+					if (this.state.activeCat === a.name) {
+						return this.props.activeColor;
+					} else {
+						return "#555";
+					}
+				}
+			};
+		};
+
 		const events = [
 			{
 				childName: "Neto",
 				target: "data",
 				eventHandlers: {
 					onMouseOver: (evt, obj, idx) => {
-						console.log("hover line");
 						return [
 							{
 								target: "data",
 								mutation: props => ({
 									style: Object.assign({}, props.style, {
-										stroke: this.props.activeColor
+										stroke: this.props.activeColor,
+										strokeWidth: 3
 									})
 								})
 							}
@@ -256,7 +395,11 @@ class LineBarsSix extends Component {
 								activeCat: idx
 							});
 
-							return activeStyle;
+							if (this.props.semaforo === true) {
+								return semaforoActiveStyle(obj.datum.y);
+							} else {
+								return activeStyle;
+							}
 						}
 					},
 					onClick: (evt, obj, idx) => {
@@ -267,7 +410,12 @@ class LineBarsSix extends Component {
 								activeClickedBar: clicked,
 								activeCat: idx
 							});
-							return activeStyle;
+
+							if (this.props.semaforo === true) {
+								return semaforoActiveStyle(obj.datum.y);
+							} else {
+								return activeStyle;
+							}
 						} else {
 							if (this.state.activeClickedBar === clicked) {
 								this.setState({
@@ -329,16 +477,61 @@ class LineBarsSix extends Component {
 						}
 					},
 					onMouseOut: (evt, obj, idx) => {
-						if (obj.datum.x !== undefined) {
-							let clickedthing = `${obj.datum.x}-${idx}`;
-							if (this.state.activeClickedBar !== clickedthing) {
-								this.setState({
-									activeKey: null,
-									activeBar: null,
-									activeCat: undefined
-								});
-								return normalStyle;
+						if (this.state.isLegendClicked !== true) {
+							if (obj.datum.x !== undefined) {
+								let clickedthing = `${obj.datum.x}-${idx}`;
+								if (
+									this.state.activeClickedBar !== clickedthing
+								) {
+									this.setState({
+										activeKey: null,
+										activeBar: null,
+										activeCat: undefined
+									});
+									return normalStyle;
+								}
 							}
+						} else {
+							let semfill;
+							if (
+								this.state.activeLegend ===
+									this.props.positiveValue &&
+								obj.datum.y > 0
+							) {
+								semfill = this.state.semaforo.verde[0];
+							} else if (
+								this.state.activeLegend ===
+									this.props.negativeValue &&
+								obj.datum.y < 0
+							) {
+								semfill = this.state.semaforo.rojo[0];
+							} else {
+								semfill =
+									obj.datum.y > 0
+										? this.props.colorscale[0]
+										: this.props.colorscale[1];
+							}
+
+							return [
+								{
+									target: "data",
+									mutation: props => ({
+										style: Object.assign({}, props.style, {
+											fill: semfill,
+											width: this.state.barWidth
+										})
+									})
+								},
+								{
+									target: "labels",
+									mutation: props => ({
+										style: Object.assign({}, props.style, {
+											fill: "transparent"
+										})
+									})
+								}
+							];
+							console.log(obj.datum.y);
 						}
 					}
 				}
@@ -350,19 +543,28 @@ class LineBarsSix extends Component {
 					onClick: (evt, obj, key) => {
 						if (obj.datum !== undefined) {
 							let refName = obj.datum.name;
-
 							if (this.state.isLegendClicked !== true) {
 								this.setState({
 									activeCat: refName,
-									isLegendClicked: true
+									isLegendClicked: true,
+									activeLegend: refName
 								});
-								return activeLegend(refName);
+								if (this.props.semaforo !== true) {
+									return activeLegend(refName);
+								} else {
+									return activeSemaforoLegend(
+										refName,
+										obj.datum.value,
+										obj.index
+									);
+								}
 							} else {
 								//Está cliqueada una leyenda
 								if (this.state.activeCat === refName) {
 									this.setState({
 										activeCat: undefined,
-										isLegendClicked: false
+										isLegendClicked: false,
+										activeLegend: undefined
 									});
 									return [
 										{
@@ -379,22 +581,47 @@ class LineBarsSix extends Component {
 										}
 									];
 								} else {
-									this.setState({ activeCat: refName });
-									return [
-										{
-											target: "data",
-											childName: this.state.barNames,
-											eventKey: "all",
-											mutation: props => null
-										},
-										{
-											target: "labels",
-											childName: this.state.barNames,
-											eventKey: "all",
-											mutation: props => null
-										},
-										...activeLegend(refName)
-									];
+									this.setState({
+										activeCat: refName,
+										activeLegend: refName
+									});
+									if (this.props.semaforo === true) {
+										return [
+											{
+												target: "data",
+												childName: this.state.barNames,
+												eventKey: "all",
+												mutation: props => null
+											},
+											{
+												target: "labels",
+												childName: this.state.barNames,
+												eventKey: "all",
+												mutation: props => null
+											},
+											...activeSemaforoLegend(
+												obj.datum.name,
+												obj.datum.value,
+												obj.index
+											)
+										];
+									} else {
+										return [
+											{
+												target: "data",
+												childName: this.state.barNames,
+												eventKey: "all",
+												mutation: props => null
+											},
+											{
+												target: "labels",
+												childName: this.state.barNames,
+												eventKey: "all",
+												mutation: props => null
+											},
+											...activeLegend(refName)
+										];
+									}
 								}
 							}
 						}
@@ -406,7 +633,15 @@ class LineBarsSix extends Component {
 									activeCat: obj.datum.name
 								});
 							}
-							return activeLegend(obj.datum.name);
+							if (this.props.semaforo !== true) {
+								return activeLegend(obj.datum.name);
+							} else {
+								return activeSemaforoLegend(
+									obj.datum.name,
+									obj.datum.value,
+									obj.index
+								);
+							}
 						}
 					},
 					onMouseOut: (evt, obj, key) => {

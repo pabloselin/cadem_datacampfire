@@ -11,7 +11,6 @@ import {
 	VictoryStack,
 	VictoryAxis,
 	VictorySharedEvents,
-	VictoryTooltip,
 	Point
 } from "victory";
 
@@ -29,10 +28,11 @@ class LineBarsFour extends Component {
 			clicked: false,
 			clickedBar: null,
 			isLegendClicked: false,
+			activeLegend: undefined,
 			domainPadding: { y: 0, x: 40 },
 			svgrefs: [],
 			clickedKeys: [],
-			activeLegend: undefined,
+
 			barNames: [
 				this.props.data.data[0].title,
 				this.props.data.data[1].title,
@@ -181,7 +181,7 @@ class LineBarsFour extends Component {
 
 		if (this.props.semaforo === true) {
 			legendLabelStyle = {
-				fontSize: 12,
+				fontSize: 11,
 				fontFamily: "Asap",
 				fontWeight: a => {
 					if (this.state.activeCat === a.name) {
@@ -226,7 +226,7 @@ class LineBarsFour extends Component {
 				}
 			};
 			legendLabelStyle = {
-				fontSize: 12,
+				fontSize: 11,
 				fontFamily: "Asap",
 				fontWeight: a => {
 					if (this.state.activeCat === a.name) {
@@ -325,6 +325,16 @@ class LineBarsFour extends Component {
 					mutation: props => ({
 						style: Object.assign({}, props.style, {
 							fill: fill
+						})
+					})
+				},
+				{
+					target: "labels",
+					childName: this.state.barNames,
+					eventKey: "all",
+					mutation: props => ({
+						style: Object.assign({}, props.style, {
+							fill: "transparent"
 						})
 					})
 				}
@@ -815,10 +825,7 @@ class LineBarsFour extends Component {
 										fontWeight: 700,
 										fontFamily: "Asap",
 										fontSize: this.state.activeBarFontSize,
-										fill: (d, active) =>
-											active === true
-												? this.props.activeColor
-												: "transparent"
+										fill: "transparent"
 									}
 								}}
 								alignment="middle"
