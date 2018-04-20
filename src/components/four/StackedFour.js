@@ -79,7 +79,8 @@ class StackedFour extends Component {
 				target: "data",
 				mutation: props => ({
 					style: Object.assign({}, props.style, {
-						fill: this.state.activeColor
+						fill: this.state.activeColor,
+						cursor: "pointer"
 					})
 				})
 			},
@@ -110,6 +111,7 @@ class StackedFour extends Component {
 		const legendLabelStyle = {
 			fontSize: 12,
 			fontFamily: "Asap",
+			cursor: "pointer",
 			fontWeight: a => {
 				if (this.state.activeCat === a.name) {
 					return "700";
@@ -127,6 +129,7 @@ class StackedFour extends Component {
 		};
 
 		const legendDataStyle = {
+			cursor: "pointer",
 			fill: a => {
 				if (this.state.activeCat === a.name) {
 					return this.state.activeColor;
@@ -297,6 +300,57 @@ class StackedFour extends Component {
 						}
 					}
 				}
+			},
+			{
+				childName: "legend",
+				target: "labels",
+				eventHandlers: {
+					onClick: (evt, obj, key) => {
+						if (obj.datum !== undefined) {
+							let refName = obj.datum.name;
+							if (this.state.isLegendClicked !== true) {
+								this.setState({
+									activeCat: refName,
+									isLegendClicked: true
+								});
+							} else {
+								//Está cliqueada una leyenda
+								if (this.state.activeCat === refName) {
+									this.setState({
+										activeCat: undefined,
+										isLegendClicked: false
+									});
+								} else {
+									this.setState({ activeCat: refName });
+								}
+							}
+						}
+					},
+					onMouseOver: (evt, obj, key) => {
+						if (this.state.isLegendClicked !== true) {
+							if (obj.datum !== undefined) {
+								this.setState({
+									activeCat: obj.datum.name
+								});
+							}
+						}
+					},
+					onMouseOut: (evt, obj, key) => {
+						if (this.state.isLegendClicked !== true) {
+							this.setState({ activeCat: undefined });
+							return [
+								{
+									target: "data",
+									mutation: props => null
+								},
+								{
+									target: "labels",
+									mutation: props => null
+								}
+							];
+						}
+					}
+				}
 			}
 		];
 
@@ -324,6 +378,7 @@ class StackedFour extends Component {
 						barRatio={0.2}
 						style={{
 							data: {
+								cursor: "pointer",
 								fontSize: this.state.activeBarFontSize,
 								fill: (d, active) =>
 									this.getCurFill(
