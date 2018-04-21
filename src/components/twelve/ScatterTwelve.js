@@ -105,7 +105,7 @@ class ScatterSix extends Component {
 								style={{
 									fontSize: 6,
 									textAnchor: "start",
-									padding: 20
+									padding: 5
 								}}
 							/>
 						}
