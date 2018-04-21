@@ -110,7 +110,7 @@ class LinesTwelve extends Component {
 						? this.props.activeColor
 						: this.props.colorscale[3];
 				const linewidth = () =>
-					this.state.activeLine === linename ? 1 : 0.5;
+					this.state.activeLine === linename ? 1.7 : 0.5;
 
 				return (
 					<VictoryLine
@@ -259,7 +259,11 @@ class LinesTwelve extends Component {
 										flyoutComponent={
 											<LineFlyOut
 												graphHeight={this.props.height}
-												color={this.props.activeColor}
+												width={20}
+												height={12}
+												color={() =>
+													this.props.activeColor
+												}
 											/>
 										}
 										orientation="top"

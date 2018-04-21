@@ -23,15 +23,14 @@ class LinesFour extends Component {
 			data: this.props.data.data,
 			activeLine: undefined,
 			activeMonth: null,
-			activeKey: undefined,
+
 			clicked: false,
 			domainLength: this.props.data.data[0].values.length,
 			xLabels: this.props.data.data[0].values.map(item => {
 				return item.x;
 			}),
 			svgrefs: [],
-			tooltipSize: 11,
-			labelDisplay: false
+			tooltipSize: 11
 		};
 	}
 
@@ -76,16 +75,6 @@ class LinesFour extends Component {
 				data: nextProps.data,
 				colorscale: nextProps.theme.line.colorScale
 			});
-		}
-	}
-
-	componentDidUpdate(prevProps, prevState) {
-		if (prevState.activeLine !== this.state.activeLine) {
-			if (this.state.activeLine === undefined) {
-				this.setState({ labelDisplay: false });
-			} else {
-				this.setState({ labelDisplay: true });
-			}
 		}
 	}
 
@@ -171,8 +160,7 @@ class LinesFour extends Component {
 									if (this.state.clicked !== true) {
 										if (this.state.activeLine === key) {
 											this.setState({
-												activeLine: undefined,
-												activeKey: undefined
+												activeLine: undefined
 											});
 										} else {
 											this.setState({
@@ -331,6 +319,8 @@ class LinesFour extends Component {
 										}}
 										flyoutComponent={
 											<LineFlyOut
+												width={40}
+												height={20}
 												graphHeight={this.props.height}
 												color={(d, a) =>
 													fillScale(d, a)

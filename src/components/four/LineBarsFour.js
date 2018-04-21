@@ -541,7 +541,6 @@ class LineBarsFour extends Component {
 									})
 								}
 							];
-							console.log(obj.datum.y);
 						}
 					}
 				}

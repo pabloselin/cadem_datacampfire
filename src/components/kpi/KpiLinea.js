@@ -56,8 +56,10 @@ class KpiLinea extends React.Component {
 				<Grid columns={3}>
 					<Grid.Column>
 						<VictoryLine
+							padding={20}
 							height={200}
 							width={600}
+							domain={{ y: [0, 100] }}
 							style={{
 								data: {
 									stroke: this.state.colorscale[
@@ -82,15 +84,19 @@ class KpiLinea extends React.Component {
 															.colorscale[
 															this.props.semaforo
 														][1],
-														fontWeight: "bold",
-														fontSize: 24
+														fontWeight: 700,
+														fontFamily: "Asap",
+														fontSize: 22
 													}}
 												/>
 											}
 											flyoutComponent={
 												<LineFlyOut
 													graphHeight={200}
-													color={
+													pointSize={10}
+													width={70}
+													height={22}
+													color={() =>
 														this.state.colorscale[
 															this.props.semaforo
 														][1]

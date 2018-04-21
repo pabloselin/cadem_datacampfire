@@ -141,7 +141,7 @@ const Main = () => (
 								data={lineas_dos}
 								debug={true}
 								theme={cadem_theme}
-								colorscale={cadem_theme.line.colorScale}
+								colorscale={cadem_theme.line.altColorScale}
 								activeColor={cadem_theme.interactions.hover}
 							/>
 						</Grid.Column>

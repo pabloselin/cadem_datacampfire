@@ -24,7 +24,7 @@ class LinesSix extends Component {
 				this.props.debug === true
 					? this.randomize(this.props.data.data)
 					: this.props.data.data,
-			activeLine: null,
+			activeLine: undefined,
 			activeMonth: null,
 			clicked: false,
 			clickedKeys: [],
@@ -40,28 +40,11 @@ class LinesSix extends Component {
 	makeLegend(data) {
 		let legData = data.map((item, idx) => {
 			let linename = "line-" + idx;
-			let eventStyles = () => {
-				if (linename === this.state.activeLine) {
-					return {
-						fill: this.props.activeColor,
-						fontWeight: "bold"
-					};
-				} else {
-					return {
-						fill: this.props.colorscale[3],
-						fontWeight: "normal"
-					};
-				}
-			};
-			//console.log(ballcolor);
+
 			return {
 				name: item.title,
 				symbol: {
-					fill: eventStyles().fill
-				},
-				labels: {
-					fill: eventStyles().fill,
-					fontWeight: eventStyles().fontWeight
+					fill: this.props.colorscale[idx]
 				}
 			};
 		});
@@ -136,10 +119,10 @@ class LinesSix extends Component {
 				linenames.push(linename);
 				const linecolor = () =>
 					this.state.activeLine === linename
-						? this.props.activeColor
-						: this.props.colorscale[3];
+						? this.props.colorscale[idx]
+						: this.props.colorscale[idx];
 				const linewidth = () =>
-					this.state.activeLine === linename ? 1.8 : 0.7;
+					this.state.activeLine === linename ? 2.8 : 1.2;
 
 				return (
 					<VictoryLine
@@ -150,7 +133,8 @@ class LinesSix extends Component {
 						style={{
 							data: {
 								stroke: linecolor(),
-								strokeWidth: linewidth()
+								strokeWidth: linewidth(),
+								cursor: "pointer"
 							}
 						}}
 					/>
@@ -158,13 +142,19 @@ class LinesSix extends Component {
 			});
 
 		const legendLabelStyle = {
-			fontSize: 11,
-			fontFamily: "Asap"
+			labels: {
+				fontSize: 11,
+				fontFamily: "Asap",
+				cursor: "pointer",
+				fill: d => {
+					return d.symbol.fill;
+				}
+			}
 		};
 
 		const events = [
 			{
-				childName: "all",
+				childName: [...linenames],
 				target: "data",
 				eventHandlers: {
 					onClick: (evt, obj, key) => {
@@ -176,7 +166,7 @@ class LinesSix extends Component {
 								mutation: props => {
 									if (this.state.activeLine === key) {
 										this.setState({
-											activeLine: null,
+											activeLine: undefined,
 											clicked: false
 										});
 									} else {
@@ -214,7 +204,6 @@ class LinesSix extends Component {
 												)
 											});
 										} else {
-											console.log(obj.key);
 											this.setState({
 												clickedKeys: this.updateClickeds(
 													this.state.clickedKeys,
@@ -237,7 +226,7 @@ class LinesSix extends Component {
 									if (this.state.clicked !== true) {
 										if (this.state.activeLine === key) {
 											this.setState({
-												activeLine: null
+												activeLine: undefined
 											});
 										} else {
 											this.setState({
@@ -258,7 +247,94 @@ class LinesSix extends Component {
 								mutation: props => {
 									if (this.state.clicked !== true) {
 										this.setState({
-											activeLine: null,
+											activeLine: undefined,
+											activeMonth: null,
+											clicked: false
+										});
+									}
+								}
+							}
+						];
+					}
+				}
+			},
+			{
+				childName: "legend",
+				target: "labels",
+				eventHandlers: {
+					onClick: (evt, obj, key) => {
+						return [
+							{
+								target: "data",
+								childName: [...linenames],
+								eventKey: key,
+								mutation: props => {
+									if (this.state.activeLine === key) {
+										this.setState({
+											activeLine: undefined,
+											clicked: false
+										});
+									} else {
+										this.setState({
+											activeLine: "line-" + key,
+											clicked: true,
+											activeMonth: null
+										});
+									}
+								}
+							},
+							{
+								eventKey: "all",
+								target: "labels",
+								mutation: props => ({
+									style: Object.assign(props.style, {
+										fontWeight: "normal"
+									})
+								})
+							},
+							{
+								eventKey: key,
+								target: "labels",
+								mutation: props => ({
+									style: Object.assign(props.style, {
+										fontWeight: 700
+									})
+								})
+							}
+						];
+					},
+					onMouseOver: (evt, obj, key) => {
+						return [
+							{
+								target: "data",
+								childName: [...linenames],
+								eventKey: key,
+								mutation: props => {
+									if (this.state.clicked !== true) {
+										if (this.state.activeLine === key) {
+											this.setState({
+												activeLine: undefined
+											});
+										} else {
+											this.setState({
+												activeLine: "line-" + key
+											});
+										}
+									}
+								}
+							}
+						];
+					},
+					onMouseOut: (evt, obj, key) => {
+						return [
+							{
+								target: "data",
+								childName: [...linenames],
+								eventKey: key,
+								mutation: props => {
+									if (this.state.clicked !== true) {
+										this.setState({
+											activeLine: undefined,
 											activeMonth: null,
 											clicked: false
 										});
@@ -270,6 +346,16 @@ class LinesSix extends Component {
 				}
 			}
 		];
+
+		const fillScale = (d, a) => {
+			if (this.state.activeLine !== undefined) {
+				let indexcolor = Number(this.state.activeLine.slice(-1));
+				return this.props.colorscale[indexcolor];
+			} else {
+				return "transparent";
+			}
+		};
+
 		return (
 			<div className="chart-widget">
 				<VictorySharedEvents events={events}>
@@ -293,7 +379,7 @@ class LinesSix extends Component {
 						containerComponent={
 							<VictoryVoronoiContainer
 								activateLabels={false}
-								radius={40}
+								radius={60}
 								containerRef={containerRef =>
 									(this.containerRef = containerRef)
 								}
@@ -309,22 +395,21 @@ class LinesSix extends Component {
 									<VictoryTooltip
 										theme={this.props.theme}
 										activateData={true}
-										labelComponent={
-											<VictoryLabel
-												style={{
-													fill: this.props
-														.activeColor,
-													fontWeight: "bold",
-													fontSize: this.state
-														.tooltipSize,
-													fontFamily: "Asap"
-												}}
-											/>
-										}
+										style={{
+											fontWeight: 700,
+											fill: (d, a) =>
+												fillScale(d, a) !== undefined
+													? fillScale(d, a)
+													: "transparent"
+										}}
 										flyoutComponent={
 											<LineFlyOut
+												width={40}
+												height={14}
 												graphHeight={this.props.height}
-												color={this.props.activeColor}
+												color={(d, a) =>
+													fillScale(d, a)
+												}
 											/>
 										}
 										orientation="top"
@@ -372,15 +457,13 @@ class LinesSix extends Component {
 						theme={this.props.theme}
 						name="legend"
 						data={this.makeLegend(this.state.data)}
-						orientation="horizontal"
-						itemsPerRow={3}
-						rowGutter={-12}
+						orientation="vertical"
+						itemsPerRow={4}
+						rowGutter={-6}
 						gutter={0}
-						height={60}
+						height={70}
+						style={legendLabelStyle}
 						dataComponent={<Point size={3} />}
-						labelComponent={
-							<VictoryLabel style={legendLabelStyle} />
-						}
 					/>
 				</VictorySharedEvents>
 				<DownloadButton

@@ -97,11 +97,16 @@ class ScatterSix extends Component {
 						}
 						labelComponent={
 							<VictoryTooltip
+								dx={10}
 								dy={-5}
 								theme={this.props.theme}
 								horizontal={true}
 								activateData={true}
-								style={{ fontSize: 6, textAnchor: "start" }}
+								style={{
+									fontSize: 6,
+									textAnchor: "start",
+									padding: 20
+								}}
 							/>
 						}
 					/>

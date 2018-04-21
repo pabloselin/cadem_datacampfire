@@ -98,6 +98,7 @@ class ScatterFour extends Component {
 								theme={this.props.theme}
 								orientation="right"
 								dy={-3.5}
+								dx={8}
 								horizontal={true}
 								activateData={true}
 								style={{

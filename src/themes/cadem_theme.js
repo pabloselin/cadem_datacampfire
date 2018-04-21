@@ -10,8 +10,7 @@ const colors = [
   "#595753",
   "#8c8981",
   "#b3aea4",
-  "#d4cfc4",
-  "#f0efeb"
+  "#d4cfc4"
 ];
 
 const colors_reversed = [
@@ -218,7 +217,7 @@ export default {
       labels: centeredLabelStyles
     },
     colorScale: colors,
-    altColorScale: azules,
+    altColorScale: [...colors, ...azules],
     width: 450,
     height: 300,
     padding: 20
@@ -262,12 +261,12 @@ export default {
   ),
   tooltip: {
     style: assign({}, centeredLabelStyles, {
-      padding: 2,
+      padding: 6,
       pointerEvents: "none"
     }),
     flyoutStyle: {
-      stroke: "black",
-      strokeWidth: 0.8,
+      stroke: "#8c8981",
+      strokeWidth: 0.6,
       fill: "#f0f0f0",
       pointerEvents: "none"
     },
