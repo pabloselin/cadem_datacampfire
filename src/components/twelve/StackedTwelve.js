@@ -162,14 +162,16 @@ class StackedTwelve extends Component {
 				target: "data",
 				eventHandlers: {
 					onMouseOver: (evt, obj, idx) => {
-						let activeCat = obj.data[0].x;
-						let activeBar = `${obj.datum.x}-${idx}-${obj.y}`;
-						this.setState({
-							activeKey: activeCat,
-							activeBar: activeBar,
-							activeCat: idx
-						});
-						return activeStyle;
+						if (this.state.clickedBar !== true) {
+							let activeCat = obj.data[0].x;
+							let activeBar = `${obj.datum.x}-${idx}-${obj.y}`;
+							this.setState({
+								activeKey: activeCat,
+								activeBar: activeBar,
+								activeCat: idx
+							});
+							return activeStyle;
+						}
 					},
 					onClick: (evt, obj, idx) => {
 						let clicked = `${obj.datum.x}-${idx}-${obj.y}`;

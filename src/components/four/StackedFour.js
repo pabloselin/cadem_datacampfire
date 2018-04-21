@@ -162,14 +162,16 @@ class StackedFour extends Component {
 				target: "data",
 				eventHandlers: {
 					onMouseOver: (evt, obj, idx) => {
-						let activeCat = obj.data[0].x;
-						let activeBar = `${obj.datum.x}-${idx}-${obj.y}`;
-						this.setState({
-							activeKey: activeCat,
-							activeBar: activeBar,
-							activeCat: idx
-						});
-						return activeStyle;
+						if (this.state.clickedBar !== true) {
+							let activeCat = obj.data[0].x;
+							let activeBar = `${obj.datum.x}-${idx}-${obj.y}`;
+							this.setState({
+								activeKey: activeCat,
+								activeBar: activeBar,
+								activeCat: idx
+							});
+							return activeStyle;
+						}
 					},
 					onClick: (evt, obj, idx) => {
 						console.log(obj);
@@ -229,7 +231,8 @@ class StackedFour extends Component {
 														.activeColor,
 													fontSize: this.state
 														.activeBarFontSize,
-													fontWeight: "700"
+													fontWeight: "700",
+													fontFamily: "Asap"
 												}
 											)
 										})
@@ -381,6 +384,7 @@ class StackedFour extends Component {
 							data: {
 								cursor: "pointer",
 								fontSize: this.state.activeBarFontSize,
+								fontFamily: "Asap",
 								fill: (d, active) =>
 									this.getCurFill(
 										this.state.barNames[idx],
@@ -399,7 +403,8 @@ class StackedFour extends Component {
 											active
 										),
 									fontWeight: "700",
-									fontSize: this.state.activeBarFontSize
+									fontSize: this.state.activeBarFontSize,
+									fontFamily: "Asap"
 								}}
 								dy={d => offset(d)}
 								text={d => `${d.y}%`}

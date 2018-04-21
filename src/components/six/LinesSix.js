@@ -27,6 +27,7 @@ class LinesSix extends Component {
 			activeLine: undefined,
 			activeMonth: null,
 			clicked: false,
+			activeLegend: undefined,
 			clickedKeys: [],
 			domainLength: this.props.data.data[0].values.length,
 			xLabels: this.props.data.data[0].values.map(item => {
@@ -267,14 +268,19 @@ class LinesSix extends Component {
 								childName: [...linenames],
 								eventKey: key,
 								mutation: props => {
-									if (this.state.activeLine === key) {
+									if (
+										this.state.activeLegend ===
+										"legend-" + key
+									) {
 										this.setState({
 											activeLine: undefined,
-											clicked: false
+											clicked: false,
+											activeLegend: undefined
 										});
 									} else {
 										this.setState({
 											activeLine: "line-" + key,
+											activeLegend: "legend-" + key,
 											clicked: true,
 											activeMonth: null
 										});
@@ -302,44 +308,85 @@ class LinesSix extends Component {
 						];
 					},
 					onMouseOver: (evt, obj, key) => {
-						return [
-							{
-								target: "data",
-								childName: [...linenames],
-								eventKey: key,
-								mutation: props => {
-									if (this.state.clicked !== true) {
-										if (this.state.activeLine === key) {
+						if (this.state.clicked !== true) {
+							return [
+								{
+									target: "data",
+									childName: [...linenames],
+									eventKey: key,
+									mutation: props => {
+										if (this.state.clicked !== true) {
+											if (this.state.activeLine === key) {
+												this.setState({
+													activeLine: undefined
+												});
+											} else {
+												this.setState({
+													activeLine: "line-" + key
+												});
+											}
+										}
+									}
+								},
+								{
+									eventKey: key,
+									target: "labels",
+									mutation: props => ({
+										style: Object.assign(props.style, {
+											fontWeight: 700
+										})
+									})
+								},
+								{
+									eventKey: key,
+									target: "data",
+									mutation: props => ({
+										style: Object.assign(props.style, {
+											fontWeight: 700
+										})
+									})
+								}
+							];
+						}
+					},
+					onMouseOut: (evt, obj, key) => {
+						if (this.state.clicked !== true) {
+							return [
+								{
+									target: "data",
+									childName: [...linenames],
+									eventKey: key,
+									mutation: props => {
+										if (this.state.clicked !== true) {
 											this.setState({
-												activeLine: undefined
-											});
-										} else {
-											this.setState({
-												activeLine: "line-" + key
+												activeLine: undefined,
+												activeMonth: null,
+												clicked: false
 											});
 										}
 									}
+								},
+								{
+									eventKey: key,
+									target: "labels",
+									mutation: props => ({
+										style: Object.assign(props.style, {
+											fontWeight: "normal",
+											fill: obj.datum.symbol.fill
+										})
+									})
+								},
+								{
+									eventKey: key,
+									target: "data",
+									mutation: props => ({
+										style: {
+											fill: obj.datum.symbol.fill
+										}
+									})
 								}
-							}
-						];
-					},
-					onMouseOut: (evt, obj, key) => {
-						return [
-							{
-								target: "data",
-								childName: [...linenames],
-								eventKey: key,
-								mutation: props => {
-									if (this.state.clicked !== true) {
-										this.setState({
-											activeLine: undefined,
-											activeMonth: null,
-											clicked: false
-										});
-									}
-								}
-							}
-						];
+							];
+						}
 					}
 				}
 			}

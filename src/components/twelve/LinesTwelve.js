@@ -26,6 +26,7 @@ class LinesTwelve extends Component {
 					: this.props.data.data,
 			activeLine: null,
 			activeMonth: null,
+			activeLegend: undefined,
 			clicked: false,
 			domainLength: this.props.data.data[0].values.length,
 			xLabels: this.props.data.data[0].values.map(item => {
@@ -38,29 +39,10 @@ class LinesTwelve extends Component {
 
 	makeLegend(data) {
 		let legData = data.map((item, idx) => {
-			let linename = "line-" + idx;
-			let eventStyles = () => {
-				if (linename === this.state.activeLine) {
-					return {
-						fill: this.props.activeColor,
-						fontWeight: "bold"
-					};
-				} else {
-					return {
-						fill: this.props.colorscale[3],
-						fontWeight: "normal"
-					};
-				}
-			};
-			//console.log(ballcolor);
 			return {
 				name: item.title,
 				symbol: {
-					fill: eventStyles().fill
-				},
-				labels: {
-					fill: eventStyles().fill,
-					fontWeight: eventStyles().fontWeight
+					fill: this.props.colorscale[3]
 				}
 			};
 		});
@@ -120,6 +102,7 @@ class LinesTwelve extends Component {
 						name={linename}
 						style={{
 							data: {
+								cursor: "pointer",
 								stroke: linecolor(),
 								strokeWidth: linewidth()
 							}
@@ -129,13 +112,19 @@ class LinesTwelve extends Component {
 			});
 
 		const legendLabelStyle = {
-			fontSize: 5,
-			fontFamily: "Asap"
+			labels: {
+				fontSize: 6,
+				fontFamily: "Asap",
+				cursor: "pointer",
+				fill: d => {
+					return d.symbol.fill;
+				}
+			}
 		};
 
 		const events = [
 			{
-				childName: "all",
+				childName: [...linenames],
 				target: "data",
 				eventHandlers: {
 					onClick: (evt, obj, key) => {
@@ -200,6 +189,162 @@ class LinesTwelve extends Component {
 								}
 							}
 						];
+					}
+				}
+			},
+			{
+				childName: "legend",
+				target: "labels",
+				eventHandlers: {
+					onClick: (evt, obj, key) => {
+						return [
+							{
+								target: "data",
+								childName: [...linenames],
+								eventKey: key,
+								mutation: props => {
+									if (
+										this.state.activeLegend ===
+										"legend-" + key
+									) {
+										this.setState({
+											activeLine: undefined,
+											clicked: false,
+											activeLegend: undefined
+										});
+									} else {
+										this.setState({
+											activeLine: "line-" + key,
+											activeLegend: "legend-" + key,
+											clicked: true,
+											activeMonth: null
+										});
+									}
+								}
+							},
+							{
+								eventKey: "all",
+								target: "labels",
+								mutation: props => ({
+									style: Object.assign(props.style, {
+										fontWeight: "normal",
+										fill: this.props.colorscale[3]
+									})
+								})
+							},
+							{
+								eventKey: "all",
+								target: "data",
+								mutation: props => ({
+									style: {
+										fill: this.props.colorscale[3]
+									}
+								})
+							},
+							{
+								eventKey: key,
+								target: "labels",
+								mutation: props => ({
+									style: Object.assign(props.style, {
+										fontWeight: 700,
+										fill: this.props.activeColor
+									})
+								})
+							},
+							{
+								eventKey: key,
+								target: "data",
+								mutation: props => ({
+									style: Object.assign(props.style, {
+										fontWeight: 700,
+										fill: this.props.activeColor
+									})
+								})
+							}
+						];
+					},
+					onMouseOver: (evt, obj, key) => {
+						if (this.state.clicked !== true) {
+							return [
+								{
+									target: "data",
+									childName: [...linenames],
+									eventKey: key,
+									mutation: props => {
+										if (this.state.clicked !== true) {
+											if (this.state.activeLine === key) {
+												this.setState({
+													activeLine: undefined
+												});
+											} else {
+												this.setState({
+													activeLine: "line-" + key
+												});
+											}
+										}
+									}
+								},
+								{
+									eventKey: key,
+									target: "labels",
+									mutation: props => ({
+										style: Object.assign(props.style, {
+											fontWeight: 700,
+											fill: this.props.activeColor
+										})
+									})
+								},
+								{
+									eventKey: key,
+									target: "data",
+									mutation: props => ({
+										style: Object.assign(props.style, {
+											fontWeight: 700,
+											fill: this.props.activeColor
+										})
+									})
+								}
+							];
+						}
+					},
+					onMouseOut: (evt, obj, key) => {
+						if (this.state.clicked !== true) {
+							return [
+								{
+									target: "data",
+									childName: [...linenames],
+									eventKey: key,
+									mutation: props => {
+										if (this.state.clicked !== true) {
+											this.setState({
+												activeLine: undefined,
+												activeMonth: null,
+												clicked: false
+											});
+										}
+									}
+								},
+								{
+									eventKey: key,
+									target: "labels",
+									mutation: props => ({
+										style: Object.assign(props.style, {
+											fontWeight: "normal",
+											fill: this.props.colorscale[3]
+										})
+									})
+								},
+								{
+									eventKey: key,
+									target: "data",
+									mutation: props => ({
+										style: {
+											fill: this.props.colorscale[3]
+										}
+									})
+								}
+							];
+						}
 					}
 				}
 			}
@@ -312,14 +457,12 @@ class LinesTwelve extends Component {
 						name="legend"
 						data={this.makeLegend(this.state.data)}
 						orientation="vertical"
-						itemsPerRow={3}
-						rowGutter={-15}
-						gutter={-60}
-						height={50}
+						itemsPerRow={4}
+						rowGutter={-2}
+						gutter={0}
+						height={60}
+						style={legendLabelStyle}
 						dataComponent={<Point size={2} />}
-						labelComponent={
-							<VictoryLabel dx={-10} style={legendLabelStyle} />
-						}
 					/>
 				</VictorySharedEvents>
 				<DownloadButton
