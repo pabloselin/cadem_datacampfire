@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   version="1.1"
+   id="svg5414"
+   viewBox="0 0 33.2025 33.20375"
+   height="9.3708363mm"
+   width="9.3704834mm">
+  <defs
+     id="defs5416">
+    <clipPath
+       id="clipPath2042"
+       clipPathUnits="userSpaceOnUse">
+      <path
+         id="path2044"
+         d="m 0,5697 2721,0 L 2721,0 0,0 0,5697 Z" />
+    </clipPath>
+  </defs>
+  <metadata
+     id="metadata5419">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     transform="translate(-157.68448,-215.76035)"
+     id="layer1">
+    <g
+       id="g2038"
+       transform="matrix(1.25,0,0,-1.25,-766.59927,4800.2266)">
+      <g
+         clip-path="url(#clipPath2042)"
+         id="g2040">
+        <path
+           id="path2046"
+           style="fill:#cccccc;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           d="m 765.989,3641.01 -26.562,0 0,26.563 26.562,0 0,-26.563 z" />
+        <g
+           transform="translate(752.708,3664.6221)"
+           id="g2048">
+          <path
+             id="path2050"
+             style="fill:none;stroke:#f4f5f7;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+             d="M 0,0 0,-16.507" />
+        </g>
+        <g
+           transform="translate(747.9082,3654.9502)"
+           id="g2052">
+          <path
+             id="path2054"
+             style="fill:#f4f5f7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+             d="M 0,0 C 0.232,0.148 0.542,0.079 0.69,-0.154 L 4.8,-6.606 8.909,-0.154 C 9.058,0.079 9.367,0.148 9.6,0 9.832,-0.148 9.899,-0.46 9.753,-0.691 L 5.222,-7.806 C 5.13,-7.949 4.971,-8.037 4.8,-8.037 c -0.171,0 -0.33,0.088 -0.422,0.231 l -4.531,7.115 c -0.053,0.084 -0.078,0.176 -0.078,0.268 0,0.165 0.082,0.327 0.231,0.423" />
+        </g>
+        <path
+           id="path2056"
+           style="fill:#f4f5f7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           d="m 763.405,3643.962 -21.395,0 0,1.476 21.395,0 0,-1.476 z" />
+      </g>
+    </g>
+  </g>
+</svg>
