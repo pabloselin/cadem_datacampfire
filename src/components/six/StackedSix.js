@@ -164,7 +164,7 @@ class StackedSix extends Component {
 				eventHandlers: {
 					onMouseOver: (evt, obj, idx) => {
 						let activeCat = obj.data[0].x;
-						let activeBar = `${obj.datum.x}-${idx}`;
+						let activeBar = `${obj.datum.x}-${idx}-${obj.y}`;
 						this.setState({
 							activeKey: activeCat,
 							activeBar: activeBar,
@@ -173,7 +173,7 @@ class StackedSix extends Component {
 						return activeStyle;
 					},
 					onClick: (evt, obj, idx) => {
-						let clicked = `${obj.datum.x}-${idx}`;
+						let clicked = `${obj.datum.x}-${idx}-${obj.y}`;
 						if (this.state.clickedBar !== true) {
 							this.setState({
 								clickedBar: true,
@@ -238,7 +238,7 @@ class StackedSix extends Component {
 						}
 					},
 					onMouseOut: (evt, obj, idx) => {
-						let clickedthing = `${obj.datum.x}-${idx}`;
+						let clickedthing = `${obj.datum.x}-${idx}-${obj.y}`;
 						if (this.state.activeClickedBar !== clickedthing) {
 							this.setState({
 								activeKey: null,

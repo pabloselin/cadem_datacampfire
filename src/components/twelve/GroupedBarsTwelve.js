@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import DownloadButton from "../mini/DownloadButton.js";
 import GroupedBarsCols from "../cols/GroupedBarsCols.js";
-import MiniLabel from "../mini/MiniLabel.js";
 import Title from "../mini/Title.js";
 import {
 	VictoryBar,

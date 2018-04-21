@@ -39,8 +39,6 @@ class LinesSix extends Component {
 
 	makeLegend(data) {
 		let legData = data.map((item, idx) => {
-			let linename = "line-" + idx;
-
 			return {
 				name: item.title,
 				symbol: {
@@ -122,7 +120,7 @@ class LinesSix extends Component {
 						? this.props.colorscale[idx]
 						: this.props.colorscale[idx];
 				const linewidth = () =>
-					this.state.activeLine === linename ? 2.8 : 1.2;
+					this.state.activeLine === linename ? 3.2 : 1.2;
 
 				return (
 					<VictoryLine

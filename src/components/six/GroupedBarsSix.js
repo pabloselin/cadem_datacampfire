@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import DownloadButton from "../mini/DownloadButton.js";
-import MiniLabel from "../mini/MiniLabel.js";
 import GroupedBarsCols from "../cols/GroupedBarsCols.js";
 import Title from "../mini/Title.js";
 import {
@@ -29,8 +28,8 @@ class GroupedBarsSix extends Component {
 			domainX: [0, 100],
 			activeBarFontSize: 12,
 			barWidth: 14,
-			barOffset: 20,
-			domainPadding: { x: 60, y: 0 }
+			barOffset: 24,
+			domainPadding: { x: 80, y: 0 }
 		};
 	}
 

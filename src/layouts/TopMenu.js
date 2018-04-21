@@ -1,5 +1,5 @@
 import React from "react";
-import { Menu, Dropdown } from "semantic-ui-react";
+import { Menu } from "semantic-ui-react";
 import { NavLink } from "react-router-dom";
 
 const TopMenu = props => (

@@ -51,8 +51,6 @@ import stacked_cuatro from "../../data/stacked_cuatro.json";
 import scatter_cuatro from "../../data/scatter_cuatro.json";
 import linebars_cuatro from "../../data/linebars_cuatro.json";
 
-import linebars_alerta from "../../data/linebars_alerta.json";
-
 import barras_doce from "../../data/barras_doce.json";
 import barras_single_doce from "../../data/barras_single_doce.json";
 

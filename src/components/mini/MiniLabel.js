@@ -1,5 +1,4 @@
 import React from "react";
-import { VictoryPortal } from "victory";
 
 const MiniLabel = props => (
 	<g>

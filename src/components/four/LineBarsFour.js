@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import DownloadButton from "../mini/DownloadButton.js";
-import LineFlyOut from "../mini/LineFlyOut.js";
+import CustomPoint from "../mini/CustomPoint.js";
 import Title from "../mini/Title.js";
 import {
 	VictoryChart,
@@ -10,8 +10,7 @@ import {
 	VictoryLabel,
 	VictoryStack,
 	VictoryAxis,
-	VictorySharedEvents,
-	Point
+	VictorySharedEvents
 } from "victory";
 
 class LineBarsFour extends Component {
@@ -93,7 +92,7 @@ class LineBarsFour extends Component {
 			},
 			{
 				name: this.state.data.line_title,
-				symbol: { fill: "#555", type: "minus" }
+				symbol: { fill: "#555", type: "line" }
 			}
 		];
 	}
@@ -178,7 +177,7 @@ class LineBarsFour extends Component {
 			}
 		];
 
-		let legendLabelStyle, legendDataStyle;
+		let legendLabelStyle;
 
 		if (this.props.semaforo === true) {
 			legendLabelStyle = {
@@ -204,31 +203,7 @@ class LineBarsFour extends Component {
 					}
 				}
 			};
-			legendDataStyle = {
-				cursor: "pointer",
-				fill: a => {
-					if (this.state.activeCat === a.name) {
-						if (a.name === this.props.positiveValue) {
-							return this.state.semaforo.verde[1];
-						} else if (a.name === this.props.negativeValue) {
-							return this.state.semaforo.rojo[1];
-						}
-					} else {
-						return a.symbol.fill;
-					}
-				}
-			};
 		} else {
-			legendDataStyle = {
-				cursor: "pointer",
-				fill: a => {
-					if (this.state.activeCat === a.name) {
-						return this.props.activeColor;
-					} else {
-						return a.symbol.fill;
-					}
-				}
-			};
 			legendLabelStyle = {
 				fontSize: 11,
 				fontFamily: "Asap",
@@ -344,28 +319,6 @@ class LineBarsFour extends Component {
 					})
 				}
 			];
-		};
-
-		const semaforoLegendLabelStyle = yval => {
-			return {
-				fontSize: 12,
-				fontFamily: "Asap",
-				cursor: "pointer",
-				fontWeight: a => {
-					if (this.state.activeCat === a.name) {
-						return 700;
-					} else {
-						return "normal";
-					}
-				},
-				fill: a => {
-					if (this.state.activeCat === a.name) {
-						return this.props.activeColor;
-					} else {
-						return "#555";
-					}
-				}
-			};
 		};
 
 		const events = [
@@ -707,7 +660,15 @@ class LineBarsFour extends Component {
 							<VictoryLabel style={legendLabelStyle} />
 						}
 						dataComponent={
-							<Point size={4} style={legendDataStyle} />
+							<CustomPoint
+								semaforo={this.props.semaforo}
+								semaforocolors={this.state.semaforo}
+								activeCat={this.state.activeCat}
+								positiveValue={this.props.positiveValue}
+								negativeValue={this.props.negativeValue}
+								size={4}
+								activeColor={this.props.activeColor}
+							/>
 						}
 						titleComponent={
 							<Title
