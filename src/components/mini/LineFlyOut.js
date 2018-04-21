@@ -11,7 +11,11 @@ class LineFlyOut extends React.Component {
 			<g>
 				<rect
 					x={this.props.x - this.props.width / 2}
-					y={this.props.y - this.props.height * 1.6}
+					y={
+						this.props.dy !== undefined
+							? this.props.y - this.props.height * 1.6
+							: this.props.y - this.props.dy
+					}
 					width={this.props.width}
 					height={this.props.height}
 					rx={3}

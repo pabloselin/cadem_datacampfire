@@ -41,7 +41,7 @@ class LinesFour extends Component {
 				if (linename === this.state.activeLine) {
 					return {
 						fill: this.props.colorscale[idx],
-						fontWeight: "bold"
+						fontWeight: 700
 					};
 				} else {
 					return {
@@ -311,6 +311,8 @@ class LinesFour extends Component {
 										theme={this.props.theme}
 										activateData={true}
 										style={{
+											fontSize: 10,
+											fontFamily: "Asap",
 											fontWeight: 700,
 											fill: (d, a) =>
 												fillScale(d, a) !== undefined
@@ -319,8 +321,8 @@ class LinesFour extends Component {
 										}}
 										flyoutComponent={
 											<LineFlyOut
-												width={40}
-												height={20}
+												width={30}
+												height={16}
 												graphHeight={this.props.height}
 												color={(d, a) =>
 													fillScale(d, a)

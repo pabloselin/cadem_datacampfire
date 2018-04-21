@@ -391,6 +391,7 @@ class LinesTwelve extends Component {
 										activateData={true}
 										labelComponent={
 											<VictoryLabel
+												dy={7}
 												style={{
 													fill: this.props
 														.activeColor,
@@ -405,7 +406,8 @@ class LinesTwelve extends Component {
 											<LineFlyOut
 												graphHeight={this.props.height}
 												width={20}
-												height={12}
+												height={9}
+												dy={102}
 												color={() =>
 													this.props.activeColor
 												}
